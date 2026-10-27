@@ -785,61 +785,60 @@ const Home = () => {
                     </div>
 
                     <div className="team-grid">
-                        <div className="card team-card">
+                        <div className="card team-card animate-on-scroll">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(255,101,132,0.2))" }}>👨‍💼</div>
                             </div>
                             <h3>Mr. Hariom Saini</h3>
                             <div className="role">Founder & CEO</div>
                             <p className="bio">Visionary entrepreneur with expertise in business strategy and digital transformation. Built Fitscalez to empower Indian businesses online.</p>
+                            <div className="team-social">
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
+                                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">🐦</a>
+                            </div>
                         </div>
 
-                        <div className="card team-card">
+                        <div className="card team-card animate-on-scroll delay-1">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(67,233,123,0.2), rgba(56,249,215,0.2))" }}>👩‍💼</div>
                             </div>
                             <h3>Ms. Anshul Sharma</h3>
                             <div className="role">Partner & Strategy Director</div>
                             <p className="bio">Expert in digital marketing strategy and brand development. Drives growth for clients with data-driven insights and creative solutions.</p>
+                            <div className="team-social">
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
+                                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">🐦</a>
+                            </div>
                         </div>
 
-                        <div className="card team-card">
+                        <div className="card team-card animate-on-scroll delay-2">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(108,99,255,0.2))" }}>👨‍💻</div>
                             </div>
                             <h3>Divyansh</h3>
                             <div className="role">Lead Web Developer</div>
-                            <p className="bio">MERN Stack expert specializing in building fast, scalable and stunning web applications.</p>
-                            <div style={{ marginTop: "14px" }}>
-                                <a
-                                    href="tel:+919599433616"
-                                    style={{
-                                        display: "inline-flex",
-                                        alignItems: "center",
-                                        gap: "6px",
-                                        fontSize: "0.82rem",
-                                        fontWeight: 600,
-                                        color: "var(--primary-light)",
-                                        background: "rgba(108, 99, 255, 0.12)",
-                                        border: "1px solid rgba(108, 99, 255, 0.3)",
-                                        padding: "6px 14px",
-                                        borderRadius: "50px",
-                                        textDecoration: "none",
-                                        transition: "all 0.25s ease"
-                                    }}
-                                >
-                                    📞 +91 9599433616
-                                </a>
+                            <p className="bio">MERN Stack expert specializing in building fast, scalable and stunning web applications. Contact: <a href="tel:+919599433616" style={{ color: "var(--primary-light)" }}>+91 9599433616</a></p>
+                            <div className="team-social">
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+                                <a href="tel:+919599433616" aria-label="Call Divyansh">📞</a>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">🐙</a>
                             </div>
                         </div>
 
-                        <div className="card team-card">
+                        <div className="card team-card animate-on-scroll delay-3">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(251,146,60,0.2), rgba(255,101,132,0.2))" }}>🎨</div>
                             </div>
                             <h3>Creative Team</h3>
                             <div className="role">Design & Content</div>
                             <p className="bio">Our talented designers, content creators and video editors work together to create stunning visual identities and engaging content.</p>
+                            <div className="team-social">
+                                <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" aria-label="Dribbble">🎨</a>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">🏀</a>
+                                <a href="https://behance.net" target="_blank" rel="noopener noreferrer" aria-label="Behance">📸</a>
+                            </div>
                         </div>
                     </div>
                 </div>
