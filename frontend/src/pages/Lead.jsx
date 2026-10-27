@@ -194,8 +194,15 @@ const Lead = () => {
                                             <textarea rows={3} required value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Briefly describe what you would like to build..." />
                                         </div>
 
-                                        <button type="submit" className="form-submit" disabled={loading}>
-                                            {loading ? "Generating Roadmap..." : "🚀 Submit & Get Proposal"}
+                                        <button type="submit" className="form-submit" disabled={loading} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+                                            {loading ? (
+                                                <>
+                                                    <span className="btn-spinner"></span>
+                                                    <span>Generating Custom Roadmap...</span>
+                                                </>
+                                            ) : (
+                                                "🚀 Submit & Get Proposal"
+                                            )}
                                         </button>
 
                                         <button

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import SeoHelmet from "../components/SeoHelmet";
 import { blogService } from "../services/api.service";
+import { ArticleSkeleton } from "../components/LoadingSkeleton";
 
 import articlesData from "../data/articles.json";
 
@@ -81,11 +82,7 @@ const BlogPost = () => {
     }, [slug]);
 
     if (loading) {
-        return (
-            <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div>Loading article...</div>
-            </div>
-        );
+        return <ArticleSkeleton />;
     }
 
     if (error || !blog) {

@@ -177,8 +177,15 @@ const ContactForm = ({ source = "contact_page", onSuccess }) => {
                 ></textarea>
             </div>
 
-            <button type="submit" className="form-submit" disabled={loading}>
-                {loading ? "Sending..." : "🚀 Send Message"}
+            <button type="submit" className="form-submit" disabled={loading} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+                {loading ? (
+                    <>
+                        <span className="btn-spinner"></span>
+                        <span>Dispatching Enquiry...</span>
+                    </>
+                ) : (
+                    "🚀 Send Message"
+                )}
             </button>
 
             <p style={{ textAlign: "center", fontSize: "0.8rem", color: "var(--text-dim)", marginTop: "16px" }}>

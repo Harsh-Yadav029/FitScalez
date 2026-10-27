@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SeoHelmet from "../components/SeoHelmet";
 import AdminLogin from "./AdminLogin";
 import { authService, API_BASE, getAuthHeaders } from "../services/api.service";
+import { BrandedSpinner } from "../components/LoadingSkeleton";
 
 const AdminDashboard = () => {
     const [user, setUser] = useState(null);
@@ -179,11 +180,7 @@ const AdminDashboard = () => {
     };
 
     if (checkingAuth) {
-        return (
-            <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                Checking authentication...
-            </div>
-        );
+        return <BrandedSpinner message="Verifying session & loading operations CRM..." />;
     }
 
     if (!user) {
