@@ -61,6 +61,10 @@ const Footer = () => {
 
                 <div className="footer-bottom">
                     <p>© {new Date().getFullYear()} <span>Fitscalez</span>. All rights reserved.</p>
+                    <div className="footer-status-badge">
+                        <span className="footer-status-dot"></span>
+                        <span>Systems Operational • 99.9% Uptime</span>
+                    </div>
                     <div className="footer-bottom-links">
                         <Link to="/privacy">Privacy Policy</Link>
                         <Link to="/terms">Terms of Service</Link>

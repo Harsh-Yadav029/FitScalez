@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import SeoHelmet from "../components/SeoHelmet";
+import { FadeIn, SpotlightCard } from "../components/Motion";
 
 const Services = () => {
     const [activeTab, setActiveTab] = useState("tab-dev");
@@ -52,7 +54,7 @@ const Services = () => {
 
             {/* Page Hero */}
             <div className="page-hero">
-                <div className="container">
+                <FadeIn className="container">
                     <div className="breadcrumb">
                         <Link to="/">Home</Link>
                         <span>›</span>
@@ -65,7 +67,7 @@ const Services = () => {
                     <p>
                         Comprehensive digital solutions designed to grow your business. From stunning websites to ROI-driven marketing campaigns — we do it all.
                     </p>
-                </div>
+                </FadeIn>
             </div>
 
             {/* Services Tabs Section */}
@@ -89,7 +91,7 @@ const Services = () => {
                             className={`tab-btn ${activeTab === "tab-creative" ? "active" : ""}`}
                             onClick={() => setActiveTab("tab-creative")}
                         >
-                            🎨 Creative Services
+                            🎬 Creative & Video
                         </button>
                         <button
                             className={`tab-btn ${activeTab === "tab-strategy" ? "active" : ""}`}
@@ -103,9 +105,9 @@ const Services = () => {
                     {activeTab === "tab-dev" && (
                         <div id="tab-dev" className="tab-content active">
                             <div className="section-header">
-                                <span className="section-tag">Web Development</span>
+                                <span className="section-tag">Web Solutions</span>
                                 <h2 className="section-title">
-                                    Build <span className="gradient-text">Powerful Websites</span>
+                                    High-Performance <span className="gradient-text">Web Development</span>
                                 </h2>
                                 <p className="section-desc">
                                     From simple landing pages to complex MERN Stack applications — fast, secure and beautiful.
@@ -113,7 +115,7 @@ const Services = () => {
                             </div>
 
                             <div className="services-grid">
-                                <div className="card service-card animate-on-scroll">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.22)">
                                     <div className="service-icon icon-purple">💻</div>
                                     <h3>MERN Stack Development</h3>
                                     <p>Full-stack web applications using MongoDB, Express.js, React.js and Node.js. Scalable, fast and modern. Starting from ₹25,000.</p>
@@ -124,9 +126,9 @@ const Services = () => {
                                         <span className="service-feature">REST API Development</span>
                                         <span className="service-feature">Authentication & Authorization</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-1">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.22)">
                                     <div className="service-icon icon-blue">🛒</div>
                                     <h3>E-Commerce Development</h3>
                                     <p>Feature-rich online stores with payment gateway integration, inventory management and seamless user experience that converts visitors.</p>
@@ -136,9 +138,9 @@ const Services = () => {
                                         <span className="service-feature">Order Management System</span>
                                         <span className="service-feature">Mobile-Responsive Design</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-2">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.22)">
                                     <div className="service-icon icon-green">🎨</div>
                                     <h3>UI/UX Design</h3>
                                     <p>User-centered design that looks stunning and converts visitors into customers. Figma designs, prototyping and implementation.</p>
@@ -148,9 +150,9 @@ const Services = () => {
                                         <span className="service-feature">User Research & Testing</span>
                                         <span className="service-feature">Conversion Rate Optimization</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-3">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(251, 146, 60, 0.22)">
                                     <div className="service-icon icon-orange">🔧</div>
                                     <h3>Website Maintenance</h3>
                                     <p>Keep your website secure, up-to-date and performing at peak level with our comprehensive maintenance and support plans.</p>
@@ -160,7 +162,7 @@ const Services = () => {
                                         <span className="service-feature">Content Updates</span>
                                         <span className="service-feature">99.9% Uptime Monitoring</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
                             </div>
 
                             {/* Verified Live Projects Callout */}
@@ -168,28 +170,42 @@ const Services = () => {
                                 style={{
                                     marginTop: "36px",
                                     padding: "22px 28px",
-                                    background: "rgba(108,99,255,0.08)",
-                                    border: "1px solid var(--border)",
-                                    borderRadius: "var(--radius)",
+                                    background: "rgba(108, 99, 255, 0.08)",
+                                    border: "1px solid rgba(108, 99, 255, 0.3)",
+                                    borderRadius: "16px",
                                     display: "flex",
                                     alignItems: "center",
                                     justifyContent: "space-between",
                                     flexWrap: "wrap",
                                     gap: "16px",
                                 }}
-                                className="animate-on-scroll"
                             >
                                 <div>
-                                    <span style={{ color: "var(--accent2)", fontSize: "0.75rem", fontStyle: "normal", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                                        🚀 Verified Live Deployments
-                                    </span>
-                                    <p style={{ margin: "6px 0 0", fontSize: "0.95rem", color: "var(--text)" }}>
-                                        See our work in action on <a href="https://walktheplan.in" target="_blank" rel="noopener noreferrer" style={{ color: "var(--primary-light)", fontWeight: 600, textDecoration: "underline" }}>Walk The Plan ↗</a> (1:1 Blueprint Projection) and <a href="https://www.houseofsymmetry.in" target="_blank" rel="noopener noreferrer" style={{ color: "var(--primary-light)", fontWeight: 600, textDecoration: "underline" }}>House of Symmetry ↗</a> (Luxury Architecture).
-                                    </p>
+                                    <div style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--text)", marginBottom: "4px" }}>
+                                        🚀 Live Client Work: Walk The Plan & House of Symmetry
+                                    </div>
+                                    <div style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+                                        Check out live platforms engineered by Fitscalez: architectural projection tech & luxury design studios.
+                                    </div>
                                 </div>
-                                <Link to="/projects" className="btn btn-outline btn-sm">
-                                    Explore Projects →
-                                </Link>
+                                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                                    <a
+                                        href="https://walktheplan.in"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn btn-outline btn-sm"
+                                    >
+                                        walktheplan.in ↗
+                                    </a>
+                                    <a
+                                        href="https://www.houseofsymmetry.in"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn btn-primary btn-sm"
+                                    >
+                                        houseofsymmetry.in ↗
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -208,7 +224,7 @@ const Services = () => {
                             </div>
 
                             <div className="services-grid">
-                                <div className="card service-card animate-on-scroll">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.22)">
                                     <div className="service-icon icon-green">🔍</div>
                                     <h3>Search Engine Optimization (SEO)</h3>
                                     <p>Rank #1 on Google with our proven SEO strategies. Comprehensive keyword research, technical SEO, content optimization and quality link building.</p>
@@ -218,9 +234,9 @@ const Services = () => {
                                         <span className="service-feature">Authority Link Building</span>
                                         <span className="service-feature">Local SEO for Delhi & India</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-1">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(255, 101, 132, 0.22)">
                                     <div className="service-icon icon-pink">📱</div>
                                     <h3>Social Media Marketing</h3>
                                     <p>Build a powerful social media presence across Instagram, Facebook, LinkedIn and Twitter. Strategic content that drives real engagement and growth.</p>
@@ -230,9 +246,9 @@ const Services = () => {
                                         <span className="service-feature">Community Management</span>
                                         <span className="service-feature">Influencer Collaboration</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-2">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.22)">
                                     <div className="service-icon icon-blue">💰</div>
                                     <h3>Pay-Per-Click Advertising</h3>
                                     <p>ROI-driven ad campaigns on Google, Facebook and Instagram. Every rupee optimized for maximum conversions and lowest cost-per-acquisition.</p>
@@ -242,9 +258,9 @@ const Services = () => {
                                         <span className="service-feature">Remarketing Campaigns</span>
                                         <span className="service-feature">A/B Testing & Optimization</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-3">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(239, 68, 68, 0.22)">
                                     <div className="service-icon icon-red">📧</div>
                                     <h3>Email Marketing</h3>
                                     <p>Automated email campaigns that nurture leads and retain customers. Personalized sequences that deliver the right message at the right time.</p>
@@ -254,7 +270,7 @@ const Services = () => {
                                         <span className="service-feature">Newsletter Creation</span>
                                         <span className="service-feature">Analytics & Reporting</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
                             </div>
                         </div>
                     )}
@@ -273,7 +289,7 @@ const Services = () => {
                             </div>
 
                             <div className="services-grid">
-                                <div className="card service-card animate-on-scroll">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(251, 146, 60, 0.22)">
                                     <div className="service-icon icon-orange">🎬</div>
                                     <h3>Video Production & Editing</h3>
                                     <p>Professional video content that tells your brand story. From corporate films to viral social media reels — every frame crafted with precision.</p>
@@ -283,9 +299,9 @@ const Services = () => {
                                         <span className="service-feature">Motion Graphics & Animation</span>
                                         <span className="service-feature">Color Grading & Audio Mix</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-1">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(234, 179, 8, 0.22)">
                                     <div className="service-icon icon-yellow">📸</div>
                                     <h3>Product Photography</h3>
                                     <p>High-quality product shoots that make your items irresistible. Studio and lifestyle photography for e-commerce, catalogs and marketing.</p>
@@ -295,9 +311,9 @@ const Services = () => {
                                         <span className="service-feature">360° Product Views</span>
                                         <span className="service-feature">Professional Photo Editing</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-2">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.22)">
                                     <div className="service-icon icon-purple">✍️</div>
                                     <h3>Content Writing & Copywriting</h3>
                                     <p>Compelling content that ranks on Google and converts readers into customers. SEO-optimized articles, landing page copy and brand storytelling.</p>
@@ -307,9 +323,9 @@ const Services = () => {
                                         <span className="service-feature">Product Descriptions</span>
                                         <span className="service-feature">Social Media Captions</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-3">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(56, 249, 215, 0.22)">
                                     <div className="service-icon icon-teal">🎨</div>
                                     <h3>Brand Identity Design</h3>
                                     <p>Complete brand identity that sets you apart — logo design, color palette, typography, brand guidelines and visual assets.</p>
@@ -319,7 +335,7 @@ const Services = () => {
                                         <span className="service-feature">Business Card & Stationery</span>
                                         <span className="service-feature">Social Media Branding Kit</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
                             </div>
                         </div>
                     )}
@@ -338,7 +354,7 @@ const Services = () => {
                             </div>
 
                             <div className="services-grid">
-                                <div className="card service-card animate-on-scroll">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.22)">
                                     <div className="service-icon icon-blue">📊</div>
                                     <h3>Market Research & Intelligence</h3>
                                     <p>Deep market analysis, competitor research and consumer insights that reveal untapped opportunities and inform smart business decisions.</p>
@@ -348,9 +364,9 @@ const Services = () => {
                                         <span className="service-feature">Consumer Behavior Research</span>
                                         <span className="service-feature">Opportunity Mapping</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-1">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.22)">
                                     <div className="service-icon icon-green">📈</div>
                                     <h3>Growth Strategy Consulting</h3>
                                     <p>Custom growth strategies and actionable roadmaps that help businesses scale sustainably — whether you're a startup or established enterprise.</p>
@@ -360,9 +376,9 @@ const Services = () => {
                                         <span className="service-feature">Partnership Development</span>
                                         <span className="service-feature">Performance KPI Setup</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-2">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.22)">
                                     <div className="service-icon icon-purple">📱</div>
                                     <h3>App Store Optimization (ASO)</h3>
                                     <p>Maximize your mobile app's visibility, downloads and user retention with specialized ASO strategies for Google Play and Apple App Store.</p>
@@ -372,9 +388,9 @@ const Services = () => {
                                         <span className="service-feature">Rating & Review Strategy</span>
                                         <span className="service-feature">User Acquisition Campaigns</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
 
-                                <div className="card service-card animate-on-scroll delay-3">
+                                <SpotlightCard className="service-card" spotlightColor="rgba(255, 101, 132, 0.22)">
                                     <div className="service-icon icon-pink">🤖</div>
                                     <h3>Marketing Automation</h3>
                                     <p>Set up powerful automation workflows that nurture leads, engage customers and drive revenue on autopilot 24/7.</p>
@@ -384,7 +400,7 @@ const Services = () => {
                                         <span className="service-feature">Chatbot Setup</span>
                                         <span className="service-feature">Analytics Dashboard</span>
                                     </div>
-                                </div>
+                                </SpotlightCard>
                             </div>
                         </div>
                     )}
@@ -394,69 +410,68 @@ const Services = () => {
             {/* Pricing Section */}
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Pricing</span>
                         <h2 className="section-title">
-                            Simple, <span className="gradient-text">Transparent Pricing</span>
+                            Transparent & Simple <span className="gradient-text">Pricing</span>
                         </h2>
                         <p className="section-desc">
-                            Quality work at fair prices. No hidden fees. Custom quotes available for all project sizes.
+                            No hidden costs. Choose a plan that fits your business needs, or contact us for a custom quote.
                         </p>
-                    </div>
+                    </FadeIn>
 
                     <div className="pricing-grid">
-                        <div className="card pricing-card animate-on-scroll">
+                        <SpotlightCard className="pricing-card" spotlightColor="rgba(255, 255, 255, 0.12)">
                             <div className="pricing-tag">Starter</div>
                             <div className="pricing-name">Business Website</div>
                             <div className="pricing-price">
                                 <span className="price-amount">₹25K</span>
                                 <span className="price-period">one-time</span>
                             </div>
-                            <p className="pricing-desc">Perfect for small businesses and startups needing a professional online presence.</p>
+                            <p className="pricing-desc">Ideal for small businesses wanting a sleek, modern web presence that establishes credibility.</p>
                             <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check">✓</span> 5-7 Page Responsive Website</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Modern UI/UX Design</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Basic SEO Setup</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Contact Form</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Google Analytics</li>
+                                <li className="pricing-feature"><span className="check">✓</span> 5-7 Custom Designed Pages</li>
+                                <li className="pricing-feature"><span className="check">✓</span> 100% Mobile Responsive</li>
+                                <li className="pricing-feature"><span className="check">✓</span> Contact Form & WhatsApp Button</li>
+                                <li className="pricing-feature"><span className="check">✓</span> Basic SEO & Google Maps</li>
                                 <li className="pricing-feature"><span className="check">✓</span> 1 Month Free Support</li>
                             </ul>
                             <Link to="/contact" className="btn btn-outline" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
                                 Get Started
                             </Link>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card pricing-card featured animate-on-scroll delay-1">
+                        <SpotlightCard className="pricing-card featured" spotlightColor="rgba(108, 99, 255, 0.28)" borderColor="rgba(108, 99, 255, 0.45)">
                             <div className="popular-badge">🔥 Most Popular</div>
-                            <div className="pricing-name">MERN Full Stack</div>
+                            <div className="pricing-name">Full-Stack MERN App</div>
                             <div className="pricing-price">
                                 <span className="price-amount">₹49K</span>
                                 <span className="price-period">starting</span>
                             </div>
-                            <p className="pricing-desc">Complete web application with database, admin panel, APIs and full deployment.</p>
+                            <p className="pricing-desc">For ambitious businesses needing full functionality — databases, auth, APIs, payments & admin panel.</p>
                             <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check">✓</span> React.js Frontend</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Node.js + Express API</li>
-                                <li className="pricing-feature"><span className="check">✓</span> MongoDB Database</li>
-                                <li className="pricing-feature"><span className="check">✓</span> User Auth & Roles</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Admin Dashboard</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Cloud Deployment</li>
+                                <li className="pricing-feature"><span className="check">✓</span> React Frontend + Node.js Backend</li>
+                                <li className="pricing-feature"><span className="check">✓</span> MongoDB Database Design</li>
+                                <li className="pricing-feature"><span className="check">✓</span> User Authentication & Roles</li>
+                                <li className="pricing-feature"><span className="check">✓</span> Custom Admin Dashboard</li>
+                                <li className="pricing-feature"><span className="check">✓</span> Payment Gateway Integration</li>
+                                <li className="pricing-feature"><span className="check">✓</span> 3 Months Free Support</li>
                             </ul>
                             <Link to="/contact" className="btn btn-primary" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
-                                Start Project
+                                Start Project →
                             </Link>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card pricing-card animate-on-scroll delay-2">
-                            <div className="pricing-tag">Monthly</div>
-                            <div className="pricing-name">Digital Marketing</div>
+                        <SpotlightCard className="pricing-card" spotlightColor="rgba(255, 255, 255, 0.12)">
+                            <div className="pricing-tag">Growth</div>
+                            <div className="pricing-name">Growth Marketing</div>
                             <div className="pricing-price">
                                 <span className="price-amount">₹15K</span>
                                 <span className="price-period">/month</span>
                             </div>
-                            <p className="pricing-desc">Complete social media + SEO management for consistent monthly growth.</p>
+                            <p className="pricing-desc">Comprehensive digital marketing retainer for businesses serious about continuous online growth.</p>
                             <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check">✓</span> 3 Social Platforms Managed</li>
+                                <li className="pricing-feature"><span className="check">✓</span> Social Media (3 Platforms)</li>
                                 <li className="pricing-feature"><span className="check">✓</span> 20 Posts / Month</li>
                                 <li className="pricing-feature"><span className="check">✓</span> SEO Optimization</li>
                                 <li className="pricing-feature"><span className="check">✓</span> Monthly Analytics Report</li>
@@ -466,7 +481,7 @@ const Services = () => {
                             <Link to="/contact" className="btn btn-outline" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
                                 Get Started
                             </Link>
-                        </div>
+                        </SpotlightCard>
                     </div>
 
                     <p style={{ textAlign: "center", color: "var(--text-muted)", marginTop: "28px", fontSize: "0.9rem" }}>
@@ -478,14 +493,14 @@ const Services = () => {
             {/* FAQ Section */}
             <section className="section-padding">
                 <div className="container" style={{ maxWidth: "800px" }}>
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">FAQ</span>
                         <h2 className="section-title">
                             Frequently Asked <span className="gradient-text">Questions</span>
                         </h2>
-                    </div>
+                    </FadeIn>
 
-                    <div className="faq-grid animate-on-scroll">
+                    <div className="faq-grid">
                         {[
                             {
                                 q: "How much does a website cost at Fitscalez?",
@@ -512,16 +527,62 @@ const Services = () => {
                                 a: "Yes! All projects include 1 month of free support after launch, followed by flexible maintenance plans starting from ₹3,000/month.",
                             },
                         ].map((faq, idx) => (
-                            <div key={idx} className={`faq-item ${openFaq === idx ? "open" : ""}`}>
-                                <div className="faq-question" onClick={() => toggleFaq(idx)}>
-                                    <span>{faq.q}</span>
-                                    <span className="faq-arrow">▼</span>
-                                </div>
-                                <div className="faq-answer">
-                                    <div className="faq-answer-inner">
-                                        <p>{faq.a}</p>
-                                    </div>
-                                </div>
+                            <div
+                                key={idx}
+                                className={`faq-item ${openFaq === idx ? "open" : ""}`}
+                                style={{
+                                    borderRadius: "16px",
+                                    overflow: "hidden",
+                                    border: openFaq === idx ? "1px solid rgba(108, 99, 255, 0.45)" : "1px solid rgba(255, 255, 255, 0.08)",
+                                    transition: "border-color 0.3s ease, background 0.3s ease",
+                                    marginBottom: "14px",
+                                    background: openFaq === idx ? "rgba(24, 27, 40, 0.85)" : "rgba(18, 20, 29, 0.6)",
+                                    backdropFilter: "blur(16px)",
+                                }}
+                            >
+                                <button
+                                    type="button"
+                                    className="faq-question"
+                                    onClick={() => toggleFaq(idx)}
+                                    aria-expanded={openFaq === idx}
+                                    style={{
+                                        width: "100%",
+                                        textAlign: "left",
+                                        background: "none",
+                                        border: "none",
+                                        color: "inherit",
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        padding: "20px 24px",
+                                        fontFamily: "inherit",
+                                    }}
+                                >
+                                    <span style={{ fontSize: "1.05rem", fontWeight: 600, paddingRight: "16px" }}>{faq.q}</span>
+                                    <motion.span
+                                        animate={{ rotate: openFaq === idx ? 180 : 0 }}
+                                        transition={{ duration: 0.25 }}
+                                        style={{ display: "inline-block", fontSize: "0.85rem", color: "var(--primary-light)", flexShrink: 0 }}
+                                    >
+                                        ▼
+                                    </motion.span>
+                                </button>
+                                <AnimatePresence initial={false}>
+                                    {openFaq === idx && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                                            style={{ overflow: "hidden" }}
+                                        >
+                                            <div style={{ padding: "0 24px 22px 24px", color: "var(--text-muted)", lineHeight: 1.7, fontSize: "0.95rem" }}>
+                                                <p style={{ margin: 0 }}>{faq.a}</p>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
                         ))}
                     </div>
@@ -531,7 +592,7 @@ const Services = () => {
             {/* CTA Section */}
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="cta-section animate-on-scroll">
+                    <FadeIn className="cta-section">
                         <h2>
                             Let's Build Something <span className="gradient-text">Great Together</span>
                         </h2>
@@ -551,7 +612,7 @@ const Services = () => {
                             <div className="divider"></div>
                             <a href="https://wa.me/919599433616" target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
                         </div>
-                    </div>
+                    </FadeIn>
                 </div>
             </section>
         </>

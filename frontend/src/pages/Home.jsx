@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import SeoHelmet from "../components/SeoHelmet";
+import {
+    FadeIn,
+    StaggerContainer,
+    StaggerItem,
+    SpotlightCard,
+    CountUp,
+    appleSpring,
+} from "../components/Motion";
 
 const Home = () => {
     // Typewriter effect state
@@ -58,7 +67,7 @@ const Home = () => {
         setOpenFaq(openFaq === idx ? null : idx);
     };
 
-    // Scroll animations and counter observer
+    // Scroll animations observer for backward compatibility
     useEffect(() => {
         const animatedElements = document.querySelectorAll(".animate-on-scroll");
         const observerOptions = {
@@ -77,40 +86,8 @@ const Home = () => {
 
         animatedElements.forEach((el) => observer.observe(el));
 
-        // Counter animation
-        const animateCounter = (el) => {
-            const target = parseInt(el.getAttribute("data-target"), 10);
-            const suffix = el.getAttribute("data-suffix") || "";
-            const duration = 1800;
-            const step = target / (duration / 16);
-            let current = 0;
-
-            const timer = setInterval(() => {
-                current += step;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                el.textContent = Math.floor(current) + suffix;
-            }, 16);
-        };
-
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    animateCounter(entry.target);
-                    counterObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        document.querySelectorAll(".counter-number[data-target]").forEach((el) => {
-            counterObserver.observe(el);
-        });
-
         return () => {
             observer.disconnect();
-            counterObserver.disconnect();
         };
     }, []);
 
@@ -163,39 +140,47 @@ const Home = () => {
 
                 <div className="hero-content">
                     <div className="hero-text">
-                        <div className="hero-badge animate-on-scroll">
+                        <FadeIn delay={0.05} className="hero-badge">
                             <span className="badge">#TOP DIGITAL AGENCY IN DELHI</span>
-                        </div>
+                        </FadeIn>
 
-                        <h1 className="hero-title animate-on-scroll delay-1">
-                            <span className="line1">We Build</span>
-                            <span className="gradient-text line2" id="typedText">
-                                {typedText}
-                            </span>
-                            <span className="line2">That Converts</span>
-                        </h1>
+                        <FadeIn delay={0.15}>
+                            <h1 className="hero-title">
+                                <span className="line1">We Build</span>
+                                <span className="gradient-text line2" id="typedText">
+                                    {typedText}
+                                </span>
+                                <span className="line2">That Converts</span>
+                            </h1>
+                        </FadeIn>
 
-                        <p className="hero-subtitle animate-on-scroll delay-2">
-                            Fitscalez is a premium <strong>Web Development & Digital Marketing Agency</strong> helping businesses across
-                            India grow online. From MERN Stack apps to SEO & Social Media — we scale your brand with precision.
-                        </p>
+                        <FadeIn delay={0.25}>
+                            <p className="hero-subtitle">
+                                Fitscalez is a premium <strong>Web Development & Digital Marketing Agency</strong> helping businesses across
+                                India grow online. From MERN Stack apps to SEO & Social Media — we scale your brand with precision.
+                            </p>
+                        </FadeIn>
 
-                        <div className="hero-actions animate-on-scroll delay-3">
+                        <FadeIn delay={0.35} className="hero-actions">
                             <Link to="/contact" className="btn btn-primary">
                                 🚀 Start Your Project
                             </Link>
                             <Link to="/services" className="btn btn-outline">
                                 View Services →
                             </Link>
-                        </div>
+                        </FadeIn>
 
-                        <div className="hero-stats animate-on-scroll delay-4">
+                        <FadeIn delay={0.45} className="hero-stats">
                             <div className="stat-item">
-                                <span className="stat-number">150+</span>
+                                <span className="stat-number">
+                                    <CountUp value={150} suffix="+" />
+                                </span>
                                 <span className="stat-label">Projects Delivered</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number">80+</span>
+                                <span className="stat-number">
+                                    <CountUp value={80} suffix="+" />
+                                </span>
                                 <span className="stat-label">Happy Clients</span>
                             </div>
                             <div className="stat-item">
@@ -203,16 +188,22 @@ const Home = () => {
                                 <span className="stat-label">Avg Rating</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number">3+</span>
+                                <span className="stat-number">
+                                    <CountUp value={3} suffix="+" />
+                                </span>
                                 <span className="stat-label">Years Exp.</span>
                             </div>
-                        </div>
+                        </FadeIn>
                     </div>
 
                     {/* Hero Visual Card Stack */}
-                    <div className="hero-visual animate-on-scroll delay-2">
+                    <FadeIn delay={0.2} direction="left" className="hero-visual">
                         <div className="hero-card-stack float-animation">
-                            <div className="glass-card hero-main-card">
+                            <motion.div
+                                whileHover={{ y: -8, scale: 1.01 }}
+                                transition={appleSpring}
+                                className="glass-card hero-main-card"
+                            >
                                 <div className="card-header">
                                     <div className="card-header-icon" aria-hidden="true">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -231,7 +222,9 @@ const Home = () => {
 
                                 <div className="metric-grid">
                                     <div className="metric-item">
-                                        <div className="metric-value">+342%</div>
+                                        <div className="metric-value">
+                                            <CountUp value={342} prefix="+" suffix="%" />
+                                        </div>
                                         <div className="metric-label">Organic Traffic</div>
                                     </div>
                                     <div className="metric-item">
@@ -239,11 +232,15 @@ const Home = () => {
                                         <div className="metric-label">Revenue Generated</div>
                                     </div>
                                     <div className="metric-item">
-                                        <div className="metric-value">89%</div>
+                                        <div className="metric-value">
+                                            <CountUp value={89} suffix="%" />
+                                        </div>
                                         <div className="metric-label">Client Satisfaction</div>
                                     </div>
                                     <div className="metric-item">
-                                        <div className="metric-value">12x</div>
+                                        <div className="metric-value">
+                                            <CountUp value={12} suffix="x" />
+                                        </div>
                                         <div className="metric-label">ROI Delivered</div>
                                     </div>
                                 </div>
@@ -255,7 +252,13 @@ const Home = () => {
                                             <span>94%</span>
                                         </div>
                                         <div className="progress-bar">
-                                            <div className="progress-fill" style={{ width: "94%" }}></div>
+                                            <motion.div
+                                                className="progress-fill"
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: "94%" }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 1.2, ease: "easeOut" }}
+                                            ></motion.div>
                                         </div>
                                     </div>
                                     <div className="progress-item">
@@ -264,7 +267,13 @@ const Home = () => {
                                             <span>78%</span>
                                         </div>
                                         <div className="progress-bar">
-                                            <div className="progress-fill" style={{ width: "78%" }}></div>
+                                            <motion.div
+                                                className="progress-fill"
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: "78%" }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 1.2, delay: 0.15, ease: "easeOut" }}
+                                            ></motion.div>
                                         </div>
                                     </div>
                                     <div className="progress-item">
@@ -273,22 +282,36 @@ const Home = () => {
                                             <span>87%</span>
                                         </div>
                                         <div className="progress-bar">
-                                            <div className="progress-fill" style={{ width: "87%" }}></div>
+                                            <motion.div
+                                                className="progress-fill"
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: "87%" }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+                                            ></motion.div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
 
-                            <div className="floating-badge floating-badge-1">
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                transition={appleSpring}
+                                className="floating-badge floating-badge-1"
+                            >
                                 <div className="dot"></div>
                                 Live Projects: 12
-                            </div>
+                            </motion.div>
 
-                            <div className="floating-badge floating-badge-2">
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                transition={appleSpring}
+                                className="floating-badge floating-badge-2"
+                            >
                                 🏆 Top Rated Agency 2024
-                            </div>
+                            </motion.div>
                         </div>
-                    </div>
+                    </FadeIn>
                 </div>
             </section>
 
@@ -320,26 +343,34 @@ const Home = () => {
             <section className="counters-section">
                 <div className="container">
                     <div className="counters-grid">
-                        <div className="counter-item animate-on-scroll">
+                        <FadeIn delay={0.05} className="counter-item">
                             <div className="counter-icon">🌐</div>
-                            <div className="counter-number" data-target="150" data-suffix="+">0+</div>
+                            <div className="counter-number">
+                                <CountUp value={150} suffix="+" />
+                            </div>
                             <div className="counter-label">Websites Launched</div>
-                        </div>
-                        <div className="counter-item animate-on-scroll delay-1">
+                        </FadeIn>
+                        <FadeIn delay={0.15} className="counter-item">
                             <div className="counter-icon">📈</div>
-                            <div className="counter-number" data-target="300" data-suffix="%">0%</div>
+                            <div className="counter-number">
+                                <CountUp value={300} suffix="%" />
+                            </div>
                             <div className="counter-label">Avg Traffic Growth</div>
-                        </div>
-                        <div className="counter-item animate-on-scroll delay-2">
+                        </FadeIn>
+                        <FadeIn delay={0.25} className="counter-item">
                             <div className="counter-icon">😊</div>
-                            <div className="counter-number" data-target="80" data-suffix="+">0+</div>
+                            <div className="counter-number">
+                                <CountUp value={80} suffix="+" />
+                            </div>
                             <div className="counter-label">Happy Clients</div>
-                        </div>
-                        <div className="counter-item animate-on-scroll delay-3">
+                        </FadeIn>
+                        <FadeIn delay={0.35} className="counter-item">
                             <div className="counter-icon">⭐</div>
-                            <div className="counter-number" data-target="98" data-suffix="%">0%</div>
+                            <div className="counter-number">
+                                <CountUp value={98} suffix="%" />
+                            </div>
                             <div className="counter-label">Satisfaction Rate</div>
-                        </div>
+                        </FadeIn>
                     </div>
                 </div>
             </section>
@@ -348,7 +379,7 @@ const Home = () => {
             <section className="section-padding" id="about">
                 <div className="container">
                     <div className="about-grid">
-                        <div className="about-img-wrap animate-on-scroll">
+                        <FadeIn direction="right" className="about-img-wrap">
                             <div className="about-img-placeholder">
                                 <div className="about-img-icon">🚀</div>
                                 <div className="about-img-text">Fitscalez</div>
@@ -360,9 +391,9 @@ const Home = () => {
                                 <div className="number">3+</div>
                                 <div className="label">Years of Excellence</div>
                             </div>
-                        </div>
+                        </FadeIn>
 
-                        <div className="about-text animate-on-scroll delay-2">
+                        <FadeIn direction="left" className="about-text">
                             <span className="section-tag">About Fitscalez</span>
                             <h2 className="section-title">
                                 Your Growth Partner in the <span className="gradient-text">Digital Age</span>
@@ -410,7 +441,7 @@ const Home = () => {
                             <Link to="/about" className="btn btn-primary" style={{ marginTop: "24px" }}>
                                 Know More About Us →
                             </Link>
-                        </div>
+                        </FadeIn>
                     </div>
                 </div>
             </section>
@@ -418,14 +449,14 @@ const Home = () => {
             {/* ============ SERVICES SECTION ============ */}
             <section className="section-padding" id="services" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">What We Do</span>
                         <h2 className="section-title">Services That Scale Your <span className="gradient-text">Business</span></h2>
                         <p className="section-desc">From stunning websites to viral marketing campaigns — we have everything your business needs to dominate online.</p>
-                    </div>
+                    </FadeIn>
 
                     <div className="services-grid">
-                        <div className="card service-card">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.22)">
                             <div className="service-icon icon-purple">💻</div>
                             <h3>MERN Stack Web Development</h3>
                             <p>Full-stack web applications using MongoDB, Express, React & Node.js. Fast, scalable, modern websites starting from ₹25,000.</p>
@@ -435,9 +466,9 @@ const Home = () => {
                                 <span className="service-feature">API Integration & Backend</span>
                                 <span className="service-feature">Mobile Responsive & SEO Ready</span>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card service-card">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(255, 101, 132, 0.22)">
                             <div className="service-icon icon-pink">📱</div>
                             <h3>Social Media Marketing</h3>
                             <p>Create, Connect, Convert — our strategic social media approach builds genuine audiences and turns followers into loyal paying customers.</p>
@@ -447,9 +478,9 @@ const Home = () => {
                                 <span className="service-feature">Influencer Partnerships</span>
                                 <span className="service-feature">Instagram, Facebook, LinkedIn</span>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card service-card">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.22)">
                             <div className="service-icon icon-green">🔍</div>
                             <h3>SEO & Search Rankings</h3>
                             <p>Rank #1 on Google with our proven SEO strategies. Keyword research, on-page optimization, technical SEO & quality link building.</p>
@@ -459,9 +490,9 @@ const Home = () => {
                                 <span className="service-feature">Link Building Campaigns</span>
                                 <span className="service-feature">Monthly Reporting</span>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card service-card">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.22)">
                             <div className="service-icon icon-blue">💰</div>
                             <h3>Paid Ads (PPC)</h3>
                             <p>ROI-driven advertising campaigns on Google, Facebook, Instagram & LinkedIn. Every rupee spent generates maximum returns.</p>
@@ -471,9 +502,9 @@ const Home = () => {
                                 <span className="service-feature">LinkedIn Advertising</span>
                                 <span className="service-feature">Performance Analytics</span>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card service-card">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(251, 146, 60, 0.22)">
                             <div className="service-icon icon-orange">🎬</div>
                             <h3>Video Production & Editing</h3>
                             <p>Turning moments into masterpieces. Professional video editing that blends storytelling with stunning visuals for maximum impact.</p>
@@ -483,9 +514,9 @@ const Home = () => {
                                 <span className="service-feature">Motion Graphics & Animation</span>
                                 <span className="service-feature">Color Grading & Post-Production</span>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card service-card">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(56, 249, 215, 0.22)">
                             <div className="service-icon icon-teal">📊</div>
                             <h3>Business Growth Strategy</h3>
                             <p>Data-driven market research and business intelligence that reveals untapped opportunities and empowers visionary decisions.</p>
@@ -495,9 +526,9 @@ const Home = () => {
                                 <span className="service-feature">Growth Planning & Roadmap</span>
                                 <span className="service-feature">Business Consulting</span>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card service-card">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(239, 68, 68, 0.22)">
                             <div className="service-icon icon-red">📧</div>
                             <h3>Email Marketing</h3>
                             <p>Targeted email campaigns that nurture leads, retain customers and drive conversions with personalized automation workflows.</p>
@@ -507,9 +538,9 @@ const Home = () => {
                                 <span className="service-feature">Automated Drip Campaigns</span>
                                 <span className="service-feature">Analytics & A/B Testing</span>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card service-card">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(234, 179, 8, 0.22)">
                             <div className="service-icon icon-yellow">📸</div>
                             <h3>Product Shoots & Content</h3>
                             <p>High-quality product photography and creative content production that showcases your brand with clarity, style and impact.</p>
@@ -519,7 +550,7 @@ const Home = () => {
                                 <span className="service-feature">Lifestyle Shoots</span>
                                 <span className="service-feature">Catalog & E-commerce Shoots</span>
                             </div>
-                        </div>
+                        </SpotlightCard>
                     </div>
 
                     <div style={{ textAlign: "center", marginTop: "48px" }}>
@@ -533,15 +564,15 @@ const Home = () => {
             {/* ============ FEATURED PROJECTS ============ */}
             <section className="section-padding" id="portfolio">
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Featured Work</span>
                         <h2 className="section-title">Client Projects That <span className="gradient-text">Deliver Impact</span></h2>
                         <p className="section-desc">Take a look at some of our live, production web applications and digital platforms engineered for ambitious businesses.</p>
-                    </div>
+                    </FadeIn>
 
                     <div className="projects-grid">
                         {/* Walk The Plan */}
-                        <div className="card project-card">
+                        <SpotlightCard className="project-card" spotlightColor="rgba(0, 229, 153, 0.16)">
                             <div className="project-image">
                                 <img
                                     src="/images/project-walktheplan.jpg"
@@ -569,10 +600,10 @@ const Home = () => {
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
                         {/* House of Symmetry */}
-                        <div className="card project-card">
+                        <SpotlightCard className="project-card" spotlightColor="rgba(108, 99, 255, 0.18)">
                             <div className="project-image">
                                 <img
                                     src="/images/project-houseofsymmetry.jpg"
@@ -600,10 +631,10 @@ const Home = () => {
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </SpotlightCard>
                     </div>
 
-                    <div style={{ textAlign: "center", marginTop: "40px" }} className="animate-on-scroll">
+                    <div style={{ textAlign: "center", marginTop: "40px" }}>
                         <Link to="/projects" className="btn btn-outline">
                             Explore All Projects →
                         </Link>
@@ -614,53 +645,53 @@ const Home = () => {
             {/* ============ PROCESS SECTION ============ */}
             <section className="section-padding">
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">How We Work</span>
                         <h2 className="section-title">Our <span className="gradient-text">Proven Process</span></h2>
                         <p className="section-desc">A streamlined 5-step approach that ensures quality, transparency and results every single time.</p>
-                    </div>
+                    </FadeIn>
 
-                    <div className="process-steps">
-                        <div className="process-step animate-on-scroll">
+                    <StaggerContainer className="process-steps">
+                        <StaggerItem className="process-step">
                             <div className="step-number">01</div>
                             <h3>Discovery Call</h3>
                             <p>We understand your business, goals, target audience and competition through a deep-dive consultation.</p>
-                        </div>
-                        <div className="process-step animate-on-scroll delay-1">
+                        </StaggerItem>
+                        <StaggerItem className="process-step">
                             <div className="step-number">02</div>
                             <h3>Strategy & Plan</h3>
                             <p>Our experts craft a customized strategy with clear milestones, deliverables and expected outcomes.</p>
-                        </div>
-                        <div className="process-step animate-on-scroll delay-2">
+                        </StaggerItem>
+                        <StaggerItem className="process-step">
                             <div className="step-number">03</div>
                             <h3>Design & Build</h3>
                             <p>We design, develop and create — with regular updates and your feedback integrated at every step.</p>
-                        </div>
-                        <div className="process-step animate-on-scroll delay-3">
+                        </StaggerItem>
+                        <StaggerItem className="process-step">
                             <div className="step-number">04</div>
                             <h3>Launch & Deploy</h3>
                             <p>After rigorous testing, we launch your project live and ensure everything runs perfectly.</p>
-                        </div>
-                        <div className="process-step animate-on-scroll delay-4">
+                        </StaggerItem>
+                        <StaggerItem className="process-step">
                             <div className="step-number">05</div>
                             <h3>Grow & Optimize</h3>
                             <p>We monitor performance, optimize continuously and scale what works to maximize your ROI.</p>
-                        </div>
-                    </div>
+                        </StaggerItem>
+                    </StaggerContainer>
                 </div>
             </section>
 
             {/* ============ PRICING HIGHLIGHTS ============ */}
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Transparent Pricing</span>
                         <h2 className="section-title">Affordable Plans for <span className="gradient-text">Every Business</span></h2>
                         <p className="section-desc">No hidden fees. No surprises. Clear pricing that delivers maximum value for your investment.</p>
-                    </div>
+                    </FadeIn>
 
                     <div className="pricing-grid">
-                        <div className="card pricing-card">
+                        <SpotlightCard className="pricing-card" spotlightColor="rgba(255, 255, 255, 0.12)">
                             <div className="pricing-tag">Starter</div>
                             <div className="pricing-name">Business Website</div>
                             <div className="pricing-price">
@@ -679,9 +710,9 @@ const Home = () => {
                             <Link to="/contact" className="btn btn-outline" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
                                 Get Started →
                             </Link>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card pricing-card featured">
+                        <SpotlightCard className="pricing-card featured" spotlightColor="rgba(108, 99, 255, 0.28)" borderColor="rgba(108, 99, 255, 0.45)">
                             <div className="popular-badge">🔥 Most Popular</div>
                             <div className="pricing-name">Full-Stack MERN App</div>
                             <div className="pricing-price">
@@ -700,9 +731,9 @@ const Home = () => {
                             <Link to="/contact" className="btn btn-primary" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
                                 Start Project →
                             </Link>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card pricing-card">
+                        <SpotlightCard className="pricing-card" spotlightColor="rgba(255, 255, 255, 0.12)">
                             <div className="pricing-tag">Growth</div>
                             <div className="pricing-name">Digital Marketing</div>
                             <div className="pricing-price">
@@ -721,10 +752,10 @@ const Home = () => {
                             <Link to="/contact" className="btn btn-outline" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
                                 Get Started →
                             </Link>
-                        </div>
+                        </SpotlightCard>
                     </div>
 
-                    <p style={{ textAlign: "center", color: "var(--text-muted)", marginTop: "32px", fontSize: "0.9rem" }} className="animate-on-scroll">
+                    <p style={{ textAlign: "center", color: "var(--text-muted)", marginTop: "32px", fontSize: "0.9rem" }}>
                         💬 Need a custom quote? <a href="tel:+919599433616" style={{ color: "var(--primary-light)" }}>Call Divyansh: +91 9599433616</a> or <Link to="/contact" style={{ color: "var(--primary-light)" }}>send us a message</Link>
                     </p>
                 </div>
@@ -733,14 +764,14 @@ const Home = () => {
             {/* ============ TESTIMONIALS ============ */}
             <section className="section-padding">
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Client Love</span>
                         <h2 className="section-title">What Our <span className="gradient-text">Clients Say</span></h2>
                         <p className="section-desc">Real results. Real businesses. Real growth stories from clients who trusted Fitscalez.</p>
-                    </div>
+                    </FadeIn>
 
                     <div className="testimonials-grid">
-                        <div className="card testimonial-card">
+                        <SpotlightCard className="testimonial-card" spotlightColor="rgba(108, 99, 255, 0.16)">
                             <div className="stars">★★★★★</div>
                             <p className="testimonial-text">"Fitscalez built our entire e-commerce platform from scratch using MERN Stack. The website is blazing fast, looks premium and our sales have doubled since launch. Highly recommend Divyansh and the team!"</p>
                             <div className="testimonial-author">
@@ -750,9 +781,9 @@ const Home = () => {
                                     <div className="author-company">CEO, FashionWave India</div>
                                 </div>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card testimonial-card">
+                        <SpotlightCard className="testimonial-card" spotlightColor="rgba(0, 229, 153, 0.14)">
                             <div className="stars">★★★★★</div>
                             <p className="testimonial-text">"Our organic traffic grew by 400% in just 6 months with Fitscalez's SEO strategy. We now rank #1 for all our target keywords in Delhi. The ROI has been absolutely incredible!"</p>
                             <div className="testimonial-author">
@@ -762,9 +793,9 @@ const Home = () => {
                                     <div className="author-company">Founder, MedCare Solutions</div>
                                 </div>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card testimonial-card">
+                        <SpotlightCard className="testimonial-card" spotlightColor="rgba(56, 189, 248, 0.16)">
                             <div className="stars">★★★★★</div>
                             <p className="testimonial-text">"The social media campaigns Fitscalez ran for us increased our Instagram followers from 2K to 50K in 4 months. Our brand engagement has never been better. Professional team that truly delivers!"</p>
                             <div className="testimonial-author">
@@ -774,7 +805,7 @@ const Home = () => {
                                     <div className="author-company">Marketing Head, GreenLeaf Organics</div>
                                 </div>
                             </div>
-                        </div>
+                        </SpotlightCard>
                     </div>
                 </div>
             </section>
@@ -782,14 +813,14 @@ const Home = () => {
             {/* ============ TEAM SECTION ============ */}
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Our Team</span>
                         <h2 className="section-title">The <span className="gradient-text">Experts</span> Behind Your Growth</h2>
                         <p className="section-desc">Passionate professionals dedicated to making your business succeed in the digital world.</p>
-                    </div>
+                    </FadeIn>
 
                     <div className="team-grid">
-                        <div className="card team-card animate-on-scroll">
+                        <SpotlightCard className="team-card" spotlightColor="rgba(108, 99, 255, 0.18)">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(255,101,132,0.2))" }}>👨‍💼</div>
                             </div>
@@ -801,9 +832,9 @@ const Home = () => {
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
                                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">🐦</a>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card team-card animate-on-scroll delay-1">
+                        <SpotlightCard className="team-card" spotlightColor="rgba(67, 233, 123, 0.18)">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(67,233,123,0.2), rgba(56,249,215,0.2))" }}>👩‍💼</div>
                             </div>
@@ -815,9 +846,9 @@ const Home = () => {
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
                                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">🐦</a>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card team-card animate-on-scroll delay-2">
+                        <SpotlightCard className="team-card" spotlightColor="rgba(56, 189, 248, 0.2)">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(108,99,255,0.2))" }}>👨‍💻</div>
                             </div>
@@ -829,9 +860,9 @@ const Home = () => {
                                 <a href="tel:+919599433616" aria-label="Call Divyansh">📞</a>
                                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">🐙</a>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card team-card animate-on-scroll delay-3">
+                        <SpotlightCard className="team-card" spotlightColor="rgba(251, 146, 60, 0.18)">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(251,146,60,0.2), rgba(255,101,132,0.2))" }}>🎨</div>
                             </div>
@@ -843,7 +874,7 @@ const Home = () => {
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">🏀</a>
                                 <a href="https://behance.net" target="_blank" rel="noopener noreferrer" aria-label="Behance">📸</a>
                             </div>
-                        </div>
+                        </SpotlightCard>
                     </div>
                 </div>
             </section>
@@ -851,13 +882,13 @@ const Home = () => {
             {/* ============ FAQ ACCORDION ============ */}
             <section className="section-padding" id="faq">
                 <div className="container" style={{ maxWidth: "860px" }}>
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Got Questions?</span>
                         <h2 className="section-title">Frequently Asked <span className="gradient-text">Questions</span></h2>
                         <p className="section-desc">Got questions about our web development and marketing services? We have answers.</p>
-                    </div>
+                    </FadeIn>
 
-                    <div className="faq-grid animate-on-scroll">
+                    <div className="faq-grid">
                         {[
                             {
                                 q: "What web development and digital marketing services does Fitscalez offer in Delhi?",
@@ -887,19 +918,59 @@ const Home = () => {
                             <div
                                 key={idx}
                                 className={`faq-item ${openFaq === idx ? "open" : ""}`}
+                                style={{
+                                    borderRadius: "16px",
+                                    overflow: "hidden",
+                                    border: openFaq === idx ? "1px solid rgba(108, 99, 255, 0.45)" : "1px solid rgba(255, 255, 255, 0.08)",
+                                    transition: "border-color 0.3s ease, background 0.3s ease",
+                                    marginBottom: "14px",
+                                    background: openFaq === idx ? "rgba(24, 27, 40, 0.85)" : "rgba(18, 20, 29, 0.6)",
+                                    backdropFilter: "blur(16px)",
+                                }}
                             >
-                                <div
+                                <button
+                                    type="button"
                                     className="faq-question"
                                     onClick={() => toggleFaq(idx)}
+                                    aria-expanded={openFaq === idx}
+                                    style={{
+                                        width: "100%",
+                                        textAlign: "left",
+                                        background: "none",
+                                        border: "none",
+                                        color: "inherit",
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        padding: "20px 24px",
+                                        fontFamily: "inherit",
+                                    }}
                                 >
-                                    <span>{faq.q}</span>
-                                    <span className="faq-arrow">▼</span>
-                                </div>
-                                <div className="faq-answer">
-                                    <div className="faq-answer-inner">
-                                        <p>{faq.a}</p>
-                                    </div>
-                                </div>
+                                    <span style={{ fontSize: "1.05rem", fontWeight: 600, paddingRight: "16px" }}>{faq.q}</span>
+                                    <motion.span
+                                        animate={{ rotate: openFaq === idx ? 180 : 0 }}
+                                        transition={{ duration: 0.25 }}
+                                        style={{ display: "inline-block", fontSize: "0.85rem", color: "var(--primary-light)", flexShrink: 0 }}
+                                    >
+                                        ▼
+                                    </motion.span>
+                                </button>
+                                <AnimatePresence initial={false}>
+                                    {openFaq === idx && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                                            style={{ overflow: "hidden" }}
+                                        >
+                                            <div style={{ padding: "0 24px 22px 24px", color: "var(--text-muted)", lineHeight: 1.7, fontSize: "0.95rem" }}>
+                                                <p style={{ margin: 0 }}>{faq.a}</p>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
                         ))}
                     </div>
@@ -909,7 +980,7 @@ const Home = () => {
             {/* ============ CTA BANNER SECTION ============ */}
             <section className="section-padding">
                 <div className="container">
-                    <div className="cta-section animate-on-scroll">
+                    <FadeIn className="cta-section">
                         <h2>Ready to <span className="gradient-text">Scale Your Business?</span></h2>
                         <p>Join 80+ businesses that have transformed their online presence with Fitscalez. Let's build something extraordinary together.</p>
                         <div className="cta-actions">
@@ -923,7 +994,7 @@ const Home = () => {
                             <div className="divider"></div>
                             <a href="https://wa.me/919599433616" target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
                         </div>
-                    </div>
+                    </FadeIn>
                 </div>
             </section>
         </>

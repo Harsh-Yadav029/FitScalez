@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SeoHelmet from "../components/SeoHelmet";
+import { FadeIn, SpotlightCard, CountUp } from "../components/Motion";
 
 const About = () => {
     const aboutSchema = {
@@ -36,7 +37,7 @@ const About = () => {
 
             {/* Page Hero */}
             <div className="page-hero">
-                <div className="container">
+                <FadeIn className="container">
                     <div className="breadcrumb">
                         <Link to="/">Home</Link>
                         <span>›</span>
@@ -49,14 +50,14 @@ const About = () => {
                     <p>
                         Your trusted partner for web development and digital marketing — helping Indian businesses scale to new heights since 2021.
                     </p>
-                </div>
+                </FadeIn>
             </div>
 
             {/* Story Section */}
             <section className="section-padding">
                 <div className="container">
                     <div className="about-grid">
-                        <div className="about-img-wrap animate-on-scroll">
+                        <FadeIn direction="right" className="about-img-wrap">
                             <div
                                 className="about-img-placeholder"
                                 style={{
@@ -82,9 +83,9 @@ const About = () => {
                                 <div className="number">2021</div>
                                 <div className="label">Founded in Delhi</div>
                             </div>
-                        </div>
+                        </FadeIn>
 
-                        <div className="about-text animate-on-scroll delay-2">
+                        <FadeIn direction="left" className="about-text">
                             <span className="section-tag">Our Journey</span>
                             <h2 className="section-title">
                                 From a Vision to <span className="gradient-text">India's Top Agency</span>
@@ -101,7 +102,7 @@ const About = () => {
                             <Link to="/contact" className="btn btn-primary" style={{ marginTop: "14px" }}>
                                 Work With Us →
                             </Link>
-                        </div>
+                        </FadeIn>
                     </div>
                 </div>
             </section>
@@ -110,26 +111,32 @@ const About = () => {
             <section className="counters-section">
                 <div className="container">
                     <div className="counters-grid">
-                        <div className="counter-item animate-on-scroll">
+                        <FadeIn delay={0.05} className="counter-item">
                             <div className="counter-icon">📅</div>
-                            <div className="counter-number" data-target="3" data-suffix="+ Yrs">0 Yrs</div>
+                            <div className="counter-number">
+                                <CountUp value={3} suffix="+ Yrs" />
+                            </div>
                             <div className="counter-label">In Business</div>
-                        </div>
-                        <div className="counter-item animate-on-scroll delay-1">
+                        </FadeIn>
+                        <FadeIn delay={0.15} className="counter-item">
                             <div className="counter-icon">👥</div>
-                            <div className="counter-number" data-target="80" data-suffix="+">0+</div>
+                            <div className="counter-number">
+                                <CountUp value={80} suffix="+" />
+                            </div>
                             <div className="counter-label">Happy Clients</div>
-                        </div>
-                        <div className="counter-item animate-on-scroll delay-2">
+                        </FadeIn>
+                        <FadeIn delay={0.25} className="counter-item">
                             <div className="counter-icon">🌐</div>
-                            <div className="counter-number" data-target="150" data-suffix="+">0+</div>
+                            <div className="counter-number">
+                                <CountUp value={150} suffix="+" />
+                            </div>
                             <div className="counter-label">Projects Completed</div>
-                        </div>
-                        <div className="counter-item animate-on-scroll delay-3">
+                        </FadeIn>
+                        <FadeIn delay={0.35} className="counter-item">
                             <div className="counter-icon">⭐</div>
-                            <div className="counter-number" data-target="5" data-suffix="★">0★</div>
+                            <div className="counter-number">5★</div>
                             <div className="counter-label">Average Rating</div>
-                        </div>
+                        </FadeIn>
                     </div>
                 </div>
             </section>
@@ -137,7 +144,7 @@ const About = () => {
             {/* Core Values */}
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">What We Stand For</span>
                         <h2 className="section-title">
                             Our Core <span className="gradient-text">Values</span>
@@ -145,29 +152,29 @@ const About = () => {
                         <p className="section-desc">
                             These aren't just words on a wall. These are the principles that guide every decision, every project, every interaction at Fitscalez.
                         </p>
-                    </div>
+                    </FadeIn>
 
                     <div className="services-grid">
-                        <div className="card service-card animate-on-scroll">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.2)">
                             <div className="service-icon icon-purple">🎯</div>
                             <h3>Mission-Driven</h3>
                             <p>Our mission is to empower businesses with innovative digital solutions that drive sustainable growth. Every strategy we build is aligned with your specific business goals.</p>
-                        </div>
-                        <div className="card service-card animate-on-scroll delay-1">
+                        </SpotlightCard>
+                        <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.2)">
                             <div className="service-icon icon-blue">💡</div>
                             <h3>Innovation First</h3>
                             <p>We constantly push boundaries and embrace the latest technologies. From AI-powered tools to cutting-edge frameworks, we ensure your business stays ahead of the curve.</p>
-                        </div>
-                        <div className="card service-card animate-on-scroll delay-2">
+                        </SpotlightCard>
+                        <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.2)">
                             <div className="service-icon icon-green">🤝</div>
                             <h3>True Partnership</h3>
                             <p>We don't just work for you — we work with you. Building genuine partnerships, maintaining transparency, and celebrating your wins as our own.</p>
-                        </div>
-                        <div className="card service-card animate-on-scroll delay-3">
+                        </SpotlightCard>
+                        <SpotlightCard className="service-card" spotlightColor="rgba(251, 146, 60, 0.2)">
                             <div className="service-icon icon-orange">🏆</div>
                             <h3>Excellence Always</h3>
                             <p>Quality is non-negotiable. We strive for perfection in every line of code, every piece of content, every campaign — because your business deserves nothing less.</p>
-                        </div>
+                        </SpotlightCard>
                     </div>
                 </div>
             </section>
@@ -175,7 +182,7 @@ const About = () => {
             {/* Team Section */}
             <section className="section-padding">
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Meet the Team</span>
                         <h2 className="section-title">
                             The People Who Drive <span className="gradient-text">Your Success</span>
@@ -183,10 +190,10 @@ const About = () => {
                         <p className="section-desc">
                             A passionate team of experts — developers, marketers, designers and strategists — all dedicated to your business growth.
                         </p>
-                    </div>
+                    </FadeIn>
 
                     <div className="team-grid">
-                        <div className="card team-card animate-on-scroll">
+                        <SpotlightCard className="team-card" spotlightColor="rgba(108, 99, 255, 0.18)">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(255,101,132,0.2))" }}>👨‍💼</div>
                             </div>
@@ -196,9 +203,9 @@ const About = () => {
                             <div className="team-social">
                                 <a href="#">💼</a><a href="#">📸</a><a href="#">🐦</a>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card team-card animate-on-scroll delay-1">
+                        <SpotlightCard className="team-card" spotlightColor="rgba(67, 233, 123, 0.18)">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(67,233,123,0.2), rgba(56,249,215,0.2))" }}>👩‍💼</div>
                             </div>
@@ -208,9 +215,9 @@ const About = () => {
                             <div className="team-social">
                                 <a href="#">💼</a><a href="#">📸</a><a href="#">🐦</a>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card team-card animate-on-scroll delay-2">
+                        <SpotlightCard className="team-card" spotlightColor="rgba(56, 189, 248, 0.2)">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(108,99,255,0.2))" }}>👨‍💻</div>
                             </div>
@@ -220,9 +227,9 @@ const About = () => {
                             <div className="team-social">
                                 <a href="tel:+919599433616">📞</a><a href="#">💼</a><a href="#">🐙</a>
                             </div>
-                        </div>
+                        </SpotlightCard>
 
-                        <div className="card team-card animate-on-scroll delay-3">
+                        <SpotlightCard className="team-card" spotlightColor="rgba(251, 146, 60, 0.18)">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(251,146,60,0.2), rgba(255,101,132,0.2))" }}>🎨</div>
                             </div>
@@ -232,7 +239,7 @@ const About = () => {
                             <div className="team-social">
                                 <a href="#">🎨</a><a href="#">📸</a><a href="#">🐦</a>
                             </div>
-                        </div>
+                        </SpotlightCard>
                     </div>
                 </div>
             </section>
@@ -240,34 +247,34 @@ const About = () => {
             {/* Why Choose Us */}
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Why Fitscalez</span>
                         <h2 className="section-title">
                             What Makes Us <span className="gradient-text">Different</span>
                         </h2>
-                    </div>
+                    </FadeIn>
 
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
-                        <div className="card service-card animate-on-scroll">
+                        <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.2)">
                             <div className="service-icon icon-green">✅</div>
                             <h3>Proven Track Record</h3>
                             <p>150+ successful projects across web development, digital marketing, SEO and brand building. Our results speak louder than promises.</p>
-                        </div>
-                        <div className="card service-card animate-on-scroll delay-1">
+                        </SpotlightCard>
+                        <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.2)">
                             <div className="service-icon icon-purple">🔒</div>
                             <h3>Transparent & Honest</h3>
                             <p>No hidden fees, no false promises. Clear communication, regular updates and honest advice that puts your business interests first.</p>
-                        </div>
-                        <div className="card service-card animate-on-scroll delay-2">
+                        </SpotlightCard>
+                        <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.2)">
                             <div className="service-icon icon-blue">⚡</div>
                             <h3>Fast Turnaround</h3>
                             <p>We respect your time. Projects are delivered on schedule with agile processes that allow quick iteration and rapid deployment.</p>
-                        </div>
-                        <div className="card service-card animate-on-scroll delay-3">
+                        </SpotlightCard>
+                        <SpotlightCard className="service-card" spotlightColor="rgba(255, 101, 132, 0.2)">
                             <div className="service-icon icon-pink">💰</div>
                             <h3>Best Value for Money</h3>
                             <p>Premium quality at competitive pricing. We optimize every rupee of your budget to maximize ROI and deliver outstanding results.</p>
-                        </div>
+                        </SpotlightCard>
                     </div>
                 </div>
             </section>
@@ -275,7 +282,7 @@ const About = () => {
             {/* CTA Section */}
             <section className="section-padding">
                 <div className="container">
-                    <div className="cta-section animate-on-scroll" style={{ textAlign: "center", padding: "60px 20px", background: "linear-gradient(135deg, rgba(108,99,255,0.1), rgba(255,101,132,0.1))", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)" }}>
+                    <FadeIn className="cta-section" style={{ textAlign: "center", padding: "60px 20px", background: "linear-gradient(135deg, rgba(108,99,255,0.1), rgba(255,101,132,0.1))", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)" }}>
                         <h2>
                             Ready to <span className="gradient-text">Work Together?</span>
                         </h2>
@@ -290,7 +297,7 @@ const About = () => {
                                 Call +91 9599433616
                             </a>
                         </div>
-                    </div>
+                    </FadeIn>
                 </div>
             </section>
         </>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SeoHelmet from "../components/SeoHelmet";
 import { careerService } from "../services/api.service";
+import { FadeIn, SpotlightCard } from "../components/Motion";
 
 const defaultRoles = [
     {
@@ -158,7 +159,7 @@ const Career = () => {
 
             {/* Page Hero */}
             <div className="page-hero">
-                <div className="container">
+                <FadeIn className="container">
                     <div className="breadcrumb">
                         <Link to="/">Home</Link>
                         <span>›</span>
@@ -167,49 +168,49 @@ const Career = () => {
                     <div className="badge" style={{ marginBottom: "16px" }}>🚀 Join Our Team</div>
                     <h1>Careers at <span className="gradient-text">Fitscalez</span></h1>
                     <p>Build your career with Delhi's fastest-growing digital agency. Work on exciting projects, learn cutting-edge skills and grow alongside passionate professionals.</p>
-                </div>
+                </FadeIn>
             </div>
 
             {/* Why Work With Us */}
             <section className="section-padding">
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Why Join Us</span>
                         <h2 className="section-title">A Workplace Where You <span className="gradient-text">Actually Grow</span></h2>
                         <p className="section-desc">We believe great work happens when talented people are given freedom, support and exciting challenges. Here's what makes Fitscalez special.</p>
-                    </div>
+                    </FadeIn>
 
-                    <div className="benefits-grid animate-on-scroll">
-                        <div className="card benefit-card">
+                    <div className="benefits-grid">
+                        <SpotlightCard className="benefit-card" spotlightColor="rgba(108, 99, 255, 0.2)">
                             <div className="benefit-icon">📈</div>
                             <h3>Rapid Career Growth</h3>
                             <p>Fast-track promotions based on performance. Our team members grow 2-3x faster than at traditional companies.</p>
-                        </div>
-                        <div className="card benefit-card">
+                        </SpotlightCard>
+                        <SpotlightCard className="benefit-card" spotlightColor="rgba(56, 189, 248, 0.2)">
                             <div className="benefit-icon">🏠</div>
                             <h3>Flexible Work</h3>
                             <p>Hybrid work model — work from our Delhi office or remotely. We judge by results, not attendance.</p>
-                        </div>
-                        <div className="card benefit-card">
+                        </SpotlightCard>
+                        <SpotlightCard className="benefit-card" spotlightColor="rgba(67, 233, 123, 0.2)">
                             <div className="benefit-icon">🎓</div>
                             <h3>Continuous Learning</h3>
                             <p>Access to premium courses, certifications and conferences. We invest in your skills development.</p>
-                        </div>
-                        <div className="card benefit-card">
+                        </SpotlightCard>
+                        <SpotlightCard className="benefit-card" spotlightColor="rgba(251, 146, 60, 0.2)">
                             <div className="benefit-icon">💰</div>
                             <h3>Competitive Salary</h3>
                             <p>Above-market compensation with performance bonuses, annual hikes and project incentives.</p>
-                        </div>
-                        <div className="card benefit-card">
+                        </SpotlightCard>
+                        <SpotlightCard className="benefit-card" spotlightColor="rgba(255, 101, 132, 0.2)">
                             <div className="benefit-icon">🤝</div>
                             <h3>Collaborative Culture</h3>
                             <p>A tight-knit team that celebrates wins together, supports each other and has fun while working hard.</p>
-                        </div>
-                        <div className="card benefit-card">
+                        </SpotlightCard>
+                        <SpotlightCard className="benefit-card" spotlightColor="rgba(56, 249, 215, 0.2)">
                             <div className="benefit-icon">🌍</div>
                             <h3>Real-World Impact</h3>
                             <p>Work on meaningful projects that genuinely help Indian businesses grow and succeed online.</p>
-                        </div>
+                        </SpotlightCard>
                     </div>
                 </div>
             </section>
@@ -217,18 +218,18 @@ const Career = () => {
             {/* Open Positions */}
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="section-header animate-on-scroll">
+                    <FadeIn className="section-header">
                         <span className="section-tag">Open Positions</span>
                         <h2 className="section-title">We're <span className="gradient-text">Hiring!</span></h2>
                         <p className="section-desc">Find your perfect role at Fitscalez and start making an impact from day one.</p>
-                    </div>
+                    </FadeIn>
 
-                    <div className="job-listings animate-on-scroll">
+                    <div className="job-listings">
                         {loading ? (
                             <div style={{ textAlign: "center", padding: "40px", color: "var(--text-muted)" }}>Loading active positions...</div>
                         ) : (
                             jobs.map((job) => (
-                                <div key={job._id || job.title} className="card job-card">
+                                <SpotlightCard key={job._id || job.title} className="job-card" spotlightColor="rgba(0, 229, 153, 0.14)">
                                     <div className="job-info">
                                         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
                                             <h3>{job.title}</h3>
@@ -249,7 +250,7 @@ const Career = () => {
                                             Apply Now →
                                         </button>
                                     </div>
-                                </div>
+                                </SpotlightCard>
                             ))
                         )}
                     </div>

@@ -178,7 +178,7 @@ export const SpotlightCard = ({
                 }}
             />
             {/* Content Container */}
-            <div style={{ position: "relative", zIndex: 2 }}>{children}</div>
+            <div style={{ position: "relative", zIndex: 2, height: "100%" }}>{children}</div>
         </motion.div>
     );
 };

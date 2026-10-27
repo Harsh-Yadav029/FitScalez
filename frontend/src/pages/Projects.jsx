@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SeoHelmet from "../components/SeoHelmet";
+import { FadeIn, SpotlightCard } from "../components/Motion";
 
 const Projects = () => {
     const [selectedCategory, setSelectedCategory] = useState("all");
@@ -149,7 +150,7 @@ const Projects = () => {
 
             {/* Page Hero */}
             <div className="page-hero">
-                <div className="container">
+                <FadeIn className="container">
                     <div className="breadcrumb">
                         <Link to="/">Home</Link>
                         <span>›</span>
@@ -162,7 +163,7 @@ const Projects = () => {
                     <p>
                         Real projects, real results. Explore how we've helped 80+ businesses transform their online presence and achieve measurable growth.
                     </p>
-                </div>
+                </FadeIn>
             </div>
 
             {/* Filter Buttons */}
@@ -194,7 +195,11 @@ const Projects = () => {
                 <div className="container">
                     <div className="projects-grid" id="projectsGrid">
                         {filtered.map((proj, idx) => (
-                            <div key={idx} className="card project-card animate-on-scroll">
+                            <SpotlightCard
+                                key={idx}
+                                className="project-card"
+                                spotlightColor={proj.link ? "rgba(0, 229, 153, 0.16)" : "rgba(108, 99, 255, 0.16)"}
+                            >
                                 <div className="project-image">
                                     {proj.image ? (
                                         <>
@@ -274,7 +279,7 @@ const Projects = () => {
                                         </div>
                                     )}
                                 </div>
-                            </div>
+                            </SpotlightCard>
                         ))}
                     </div>
                 </div>
@@ -283,7 +288,7 @@ const Projects = () => {
             {/* CTA */}
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
-                    <div className="cta-section animate-on-scroll" style={{ textAlign: "center", padding: "60px 20px" }}>
+                    <FadeIn className="cta-section" style={{ textAlign: "center", padding: "60px 20px" }}>
                         <h2>
                             Want to See Your Project <span className="gradient-text">Here?</span>
                         </h2>
@@ -298,7 +303,7 @@ const Projects = () => {
                                 View All Services
                             </Link>
                         </div>
-                    </div>
+                    </FadeIn>
                 </div>
             </section>
         </>
