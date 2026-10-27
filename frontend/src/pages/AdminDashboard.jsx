@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SeoHelmet from "../components/SeoHelmet";
 import AdminLogin from "./AdminLogin";
-import { authService } from "../services/api.service";
-
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+import { authService, API_BASE, getAuthHeaders } from "../services/api.service";
 
 const AdminDashboard = () => {
     const [user, setUser] = useState(null);
@@ -31,7 +29,7 @@ const AdminDashboard = () => {
         const verifyUser = async () => {
             try {
                 const res = await authService.getCurrentUser();
-                setUser(res.data);
+                setUser(res?.data || null);
             } catch (err) {
                 setUser(null);
             } finally {
@@ -44,7 +42,10 @@ const AdminDashboard = () => {
     const fetchLeads = async () => {
         setLoadingLeads(true);
         try {
-            const res = await fetch(`${API_BASE}/leads`, { credentials: "include" });
+            const res = await fetch(`${API_BASE}/leads`, {
+                headers: { ...getAuthHeaders() },
+                credentials: "include",
+            });
             const data = await res.json();
             setLeads(data.data?.leads || []);
         } catch (err) {
@@ -57,7 +58,10 @@ const AdminDashboard = () => {
     const fetchApplications = async () => {
         setLoadingApps(true);
         try {
-            const res = await fetch(`${API_BASE}/careers/applications`, { credentials: "include" });
+            const res = await fetch(`${API_BASE}/careers/applications`, {
+                headers: { ...getAuthHeaders() },
+                credentials: "include",
+            });
             const data = await res.json();
             setApplications(data.data?.applications || []);
         } catch (err) {
@@ -70,7 +74,10 @@ const AdminDashboard = () => {
     const fetchAnalytics = async () => {
         setLoadingStats(true);
         try {
-            const res = await fetch(`${API_BASE}/analytics/stats`, { credentials: "include" });
+            const res = await fetch(`${API_BASE}/analytics/stats`, {
+                headers: { ...getAuthHeaders() },
+                credentials: "include",
+            });
             const data = await res.json();
             setAnalyticsStats(data.data || null);
         } catch (err) {
@@ -92,7 +99,10 @@ const AdminDashboard = () => {
         try {
             await fetch(`${API_BASE}/leads/${leadId}/status`, {
                 method: "PATCH",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    ...getAuthHeaders(),
+                },
                 credentials: "include",
                 body: JSON.stringify({ status: newStatus }),
             });
@@ -107,6 +117,9 @@ const AdminDashboard = () => {
         try {
             await fetch(`${API_BASE}/leads/${leadId}`, {
                 method: "DELETE",
+                headers: {
+                    ...getAuthHeaders(),
+                },
                 credentials: "include",
             });
             fetchLeads();

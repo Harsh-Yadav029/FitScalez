@@ -19,12 +19,19 @@ app.use(
             if (!origin) return callback(null, true);
             const allowedOrigins = [
                 process.env.CORS_ORIGIN,
+                "https://fit-scalez.vercel.app",
+                "https://www.fitscalez.com",
+                "https://fitscalez.com",
                 "http://localhost:5173",
                 "http://localhost:5174",
                 "http://localhost:3000",
             ].filter(Boolean);
 
-            if (allowedOrigins.includes(origin) || origin.startsWith("http://localhost:")) {
+            if (
+                allowedOrigins.includes(origin) ||
+                origin.startsWith("http://localhost:") ||
+                origin.endsWith(".vercel.app")
+            ) {
                 return callback(null, true);
             }
             return callback(new Error("Not allowed by CORS"));
