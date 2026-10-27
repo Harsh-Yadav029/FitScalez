@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Control Center &amp; Analytics — Fitscalez</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ========================================================
+       FITSCALEZ CONTROL CENTER — CLEAN, SIMPLE & RESPONSIVE
+       ======================================================== */
+
+    :root {
+      --dash-bg: #0a0b0f;
+      --dash-card: #13151e;
+      --dash-card2: #1a1d2b;
+      --dash-bg2: #0f1117;
+      --dash-border: rgba(108, 99, 255, 0.16);
+      --dash-border-strong: rgba(108, 99, 255, 0.35);
+      --dash-primary: #6c63ff;
+      --dash-primary-light: #8b85ff;
+      --dash-accent: #ff6584;
+      --dash-accent2: #43e97b;
+      --dash-text: #e8e9f0;
+      --dash-text-muted: #8b8fa8;
+      --dash-text-dim: #5a5e7a;
+      --dash-radius: 12px;
+      --dash-radius-lg: 16px;
+      --dash-nav-h: 70px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dash-bg);
+      color: var(--dash-text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    /* ---- Login Overlay ---- */
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 11, 15, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 20px;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+    .login-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .login-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: var(--dash-radius-lg);
+      padding: 36px 28px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(108, 99, 255, 0.15);
+      text-align: center;
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.94) translateY(15px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .login-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6c63ff, #ff6584);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
+    }
+    .login-card h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+    .login-card p {
+      font-size: 0.88rem;
+      color: var(--dash-text-muted);
+      margin-bottom: 24px;
+    }
+    .login-field {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+    .login-field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--dash-text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .login-field input {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--dash-bg2);
+      border: 1px solid var(--dash-border);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .login-field input:focus {
+      border-color: var(--dash-primary);
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+    }
+    .login-btn {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #6c63ff, #ff6584);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.2s ease;
+    }
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(108, 99, 255, 0.45);
+    }
+    .login-error {
+      color: var(--dash-accent);
+      font-size: 0.84rem;
+      margin-top: 12px;
+      min-height: 20px;
+      font-weight: 500;
+    }
+    .login-error.shake {
+      animation: shake 0.35s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-3px); }
+    }
+
+    /* ---- Dashboard Shell ---- */
+    .dashboard {
+      display: none;
+      min-height: 100vh;
+      padding-top: var(--dash-nav-h);
+      padding-bottom: 40px;
+    }
+    .dashboard.active {
+      display: block;
+    }
+
+    /* Top Sticky Navigation */
+    .dash-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--dash-nav-h);
+      background: rgba(10, 11, 15, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--dash-border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+    .dash-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 16px;
+      gap: 12px;
+    }
+    .dash-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .dash-logo-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .dash-logo-img {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
+    .dash-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      background: rgba(67, 233, 123, 0.12);
+      border: 1px solid rgba(67, 233, 123, 0.3);
+      color: var(--dash-accent2);
+      white-space: nowrap;
+    }
+    .dash-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--dash-accent2);
+      box-shadow: 0 0 8px var(--dash-accent2);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .dash-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* Common Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid var(--dash-border);
+      background: var(--dash-card);
+      color: var(--dash-text);
+      text-decoration: none;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      background: var(--dash-card2);
+      border-color: var(--dash-primary);
+      transform: translateY(-1px);
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, #6c63ff, #ff6584);
+      color: #fff;
+      border: none;
+      box-shadow: 0 3px 12px rgba(108, 99, 255, 0.3);
+    }
+    .btn.primary:hover {
+      box-shadow: 0 5px 18px rgba(108, 99, 255, 0.5);
+    }
+    .btn.sm {
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      border-radius: 6px;
+    }
+    .btn.danger {
+      border-color: rgba(255, 101, 132, 0.35);
+      color: var(--dash-accent);
+    }
+    .btn.danger:hover {
+      background: rgba(255, 101, 132, 0.12);
+      border-color: var(--dash-accent);
+    }
+    .btn.whatsapp {
+      color: #25d366;
+      border-color: rgba(37, 211, 102, 0.35);
+      background: rgba(37, 211, 102, 0.08);
+    }
+    .btn.whatsapp:hover {
+      background: rgba(37, 211, 102, 0.18);
+      border-color: #25d366;
+    }
+
+    /* Main Container */
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Page Header */
+    .dash-header {
+      padding: 24px 0 20px;
+      border-bottom: 1px solid var(--dash-border);
+      margin-bottom: 24px;
+    }
+    .dash-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .dash-title h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.4rem, 3.5vw, 1.85rem);
+      font-weight: 700;
+      color: #fff;
+    }
+    .dash-title h1 span {
+      background: linear-gradient(135deg, #6c63ff, #ff6584);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .dash-title p {
+      color: var(--dash-text-muted);
+      font-size: 0.88rem;
+      margin-top: 4px;
+    }
+    .dash-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Tab Switcher Bar */
+    .dash-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid rgba(108, 99, 255, 0.12);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0;
+    }
+    .dash-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--dash-text-muted);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      border-radius: 8px 8px 0 0;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .dash-tab:hover {
+      color: var(--dash-text);
+      background: rgba(108, 99, 255, 0.06);
+    }
+    .dash-tab.active {
+      color: #fff;
+      border-bottom-color: var(--dash-primary);
+      background: rgba(108, 99, 255, 0.1);
+    }
+    .dash-tab-badge {
+      padding: 2px 8px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--dash-bg2);
+      color: var(--dash-text-muted);
+      border: 1px solid var(--dash-border);
+    }
+    .dash-tab.active .dash-tab-badge {
+      background: rgba(108, 99, 255, 0.25);
+      color: var(--dash-primary-light);
+      border-color: rgba(108, 99, 255, 0.4);
+    }
+
+    /* Tab Views */
+    .tab-view {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+    .tab-view.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- KPI Grid ---- */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: var(--dash-radius);
+      padding: 16px 18px;
+      transition: all 0.2s ease;
+    }
+    .kpi-card:hover {
+      border-color: var(--dash-primary);
+      transform: translateY(-2px);
+    }
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .kpi-icon {
+      font-size: 1.25rem;
+    }
+    .kpi-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 50px;
+      background: rgba(67, 233, 123, 0.1);
+      color: var(--dash-accent2);
+      border: 1px solid rgba(67, 233, 123, 0.25);
+    }
+    .kpi-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .kpi-lbl {
+      font-size: 0.78rem;
+      color: var(--dash-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    /* ---- Toolbar & Filters ---- */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: var(--dash-radius);
+      padding: 12px 14px;
+    }
+    .toolbar-search {
+      flex: 1 1 200px;
+      min-width: 160px;
+      padding: 9px 12px;
+      background: var(--dash-bg2);
+      border: 1px solid var(--dash-border);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.85rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .toolbar-search:focus {
+      border-color: var(--dash-primary);
+      box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+    }
+    .toolbar-select {
+      padding: 9px 12px;
+      background: var(--dash-bg2);
+      border: 1px solid var(--dash-border);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.82rem;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .toolbar-select:focus {
+      border-color: var(--dash-primary);
+    }
+
+    /* ---- Lead Cards List ---- */
+    .leads-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .lead-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: var(--dash-radius);
+      padding: 20px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .lead-card:hover {
+      border-color: var(--dash-border-strong);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    }
+    .lead-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .lead-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .lead-company-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: var(--dash-primary-light);
+      background: rgba(108, 99, 255, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 6px;
+      font-weight: 500;
+    }
+    .lead-date {
+      font-size: 0.78rem;
+      color: var(--dash-text-dim);
+      margin-top: 2px;
+    }
+    .lead-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .lead-status-pill.new {
+      background: rgba(108, 99, 255, 0.15);
+      color: var(--dash-primary-light);
+      border: 1px solid rgba(108, 99, 255, 0.3);
+    }
+    .lead-status-pill.contacted {
+      background: rgba(67, 233, 123, 0.12);
+      color: var(--dash-accent2);
+      border: 1px solid rgba(67, 233, 123, 0.3);
+    }
+    .lead-status-pill.closed {
+      background: rgba(139, 143, 168, 0.15);
+      color: var(--dash-text-muted);
+      border: 1px solid rgba(139, 143, 168, 0.3);
+    }
+
+    /* Contact Details Grid */
+    .lead-details-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      font-size: 0.85rem;
+      color: var(--dash-text);
+      margin-bottom: 12px;
+    }
+    .lead-detail-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lead-detail-item a {
+      color: var(--dash-text);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .lead-detail-item a:hover {
+      color: var(--dash-primary-light);
+      text-decoration: underline;
+    }
+    .lead-tag {
+      padding: 2px 8px;
+      background: var(--dash-bg2);
+      border: 1px solid var(--dash-border);
+      border-radius: 6px;
+      font-size: 0.76rem;
+      color: var(--dash-text-muted);
+    }
+
+    /* Lead Visitor Intelligence Ribbon */
+    .lead-intel-ribbon {
+      background: var(--dash-bg2);
+      border: 1px solid rgba(108, 99, 255, 0.15);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .lead-intel-info {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      font-size: 0.8rem;
+      color: var(--dash-text-muted);
+    }
+    .device-pill {
+      font-family: monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--dash-primary-light);
+      background: rgba(108, 99, 255, 0.12);
+      border: 1px solid rgba(108, 99, 255, 0.25);
+      padding: 3px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .device-pill:hover {
+      background: rgba(108, 99, 255, 0.22);
+      border-color: var(--dash-primary);
+    }
+    .visit-tag {
+      padding: 3px 8px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .visit-tag.new {
+      background: rgba(67, 233, 123, 0.12);
+      color: var(--dash-accent2);
+      border: 1px solid rgba(67, 233, 123, 0.25);
+    }
+    .visit-tag.returning {
+      background: rgba(108, 99, 255, 0.15);
+      color: #b5b0ff;
+      border: 1px solid rgba(108, 99, 255, 0.3);
+    }
+    .location-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      background: rgba(67, 233, 123, 0.1);
+      border: 1px solid rgba(67, 233, 123, 0.28);
+      border-radius: 6px;
+      color: var(--dash-accent2);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .location-btn:hover {
+      background: rgba(67, 233, 123, 0.22);
+      border-color: var(--dash-accent2);
+      transform: translateY(-1px);
+    }
+
+    /* Prospect Message */
+    .lead-msg {
+      background: var(--dash-bg2);
+      border-left: 3px solid var(--dash-primary);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: var(--dash-text);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    /* Lead Card Action Buttons */
+    .lead-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* ---- Tab 2: Visual Insights Grid ---- */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .insight-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: var(--dash-radius);
+      padding: 18px;
+    }
+    .insight-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    /* Device Progress Bar */
+    .dev-bar-track {
+      height: 10px;
+      border-radius: 50px;
+      background: var(--dash-bg2);
+      overflow: hidden;
+      display: flex;
+      margin-bottom: 12px;
+      border: 1px solid var(--dash-border);
+    }
+    .dev-bar-seg {
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+    .dev-bar-seg.desktop { background: #6c63ff; }
+    .dev-bar-seg.mobile { background: #ff6584; }
+    .dev-bar-seg.tablet { background: #43e97b; }
+    .dev-legend {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--dash-text-muted);
+    }
+    .dev-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dev-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .dev-dot.desktop { background: #6c63ff; }
+    .dev-dot.mobile { background: #ff6584; }
+    .dev-dot.tablet { background: #43e97b; }
+
+    /* Ranking Rows */
+    .rank-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .rank-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      background: var(--dash-bg2);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      gap: 10px;
+    }
+    .rank-text {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--dash-text);
+      font-weight: 500;
+    }
+    .rank-count {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--dash-primary-light);
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    /* ---- Live Activity Stream Section ---- */
+    .activity-section {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: var(--dash-radius);
+      padding: 20px;
+    }
+    .activity-section-header {
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--dash-border);
+    }
+    .activity-section-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .activity-section-header p {
+      font-size: 0.82rem;
+      color: var(--dash-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Activity Feed Container */
+    .activity-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 700px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .activity-feed::-webkit-scrollbar {
+      width: 5px;
+    }
+    .activity-feed::-webkit-scrollbar-thumb {
+      background: var(--dash-border);
+      border-radius: 10px;
+    }
+
+    /* Responsive Activity Item:
+       Desktop: Clean wide row
+       Mobile: Clean card
+    */
+    .act-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--dash-bg2);
+      border: 1px solid rgba(108, 99, 255, 0.08);
+      border-radius: 8px;
+      font-size: 0.83rem;
+      transition: all 0.2s ease;
+    }
+    .act-item:hover {
+      background: var(--dash-card2);
+      border-color: var(--dash-border);
+    }
+    .act-left {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      min-width: 0;
+      flex: 1;
+    }
+    .act-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      background: rgba(108, 99, 255, 0.12);
+      border: 1px solid rgba(108, 99, 255, 0.25);
+      flex-shrink: 0;
+    }
+    .act-icon.mobile {
+      background: rgba(255, 101, 132, 0.12);
+      border-color: rgba(255, 101, 132, 0.25);
+    }
+    .act-icon.tablet {
+      background: rgba(67, 233, 123, 0.12);
+      border-color: rgba(67, 233, 123, 0.25);
+    }
+    .act-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .act-time {
+      font-size: 0.76rem;
+      color: var(--dash-text-dim);
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    /* ---- Empty State ---- */
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      background: var(--dash-card);
+      border: 1px dashed var(--dash-border);
+      border-radius: var(--dash-radius);
+    }
+    .empty-state .icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+    .empty-state h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .empty-state p {
+      font-size: 0.85rem;
+      color: var(--dash-text-muted);
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    /* ---- Location & Dossier Modal ---- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      background: rgba(10, 11, 15, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-dialog {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border-strong);
+      border-radius: var(--dash-radius-lg);
+      width: 100%;
+      max-width: 720px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(108, 99, 255, 0.2);
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+    }
+    .modal-backdrop.open .modal-dialog {
+      transform: scale(1);
+    }
+    .modal-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--dash-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--dash-card);
+      z-index: 2;
+    }
+    .modal-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--dash-bg2);
+      border: 1px solid var(--dash-border);
+      color: var(--dash-text-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .modal-close:hover {
+      background: rgba(255, 101, 132, 0.2);
+      color: var(--dash-accent);
+      border-color: var(--dash-accent);
+    }
+    .modal-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Google Map Box */
+    .map-box {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--dash-border);
+      background: var(--dash-bg2);
+    }
+    .map-iframe {
+      width: 100%;
+      height: 240px;
+      border: none;
+      display: block;
+    }
+    .map-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--dash-bg2);
+      border-top: 1px solid var(--dash-border);
+      font-size: 0.8rem;
+      color: var(--dash-text-muted);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Spec Grid */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .spec-card {
+      background: var(--dash-bg2);
+      border: 1px solid var(--dash-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .spec-lbl {
+      font-size: 0.7rem;
+      color: var(--dash-text-dim);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .spec-val {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      word-break: break-all;
+    }
+
+    /* Timeline in Modal */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 10px;
+      background: var(--dash-bg2);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      border-left: 2px solid var(--dash-primary);
+    }
+    .timeline-time {
+      color: var(--dash-text-dim);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+    .timeline-path {
+      font-family: monospace;
+      color: var(--dash-primary-light);
+      font-weight: 600;
+    }
+    .timeline-title {
+      color: var(--dash-text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Toast */
+    .dash-toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--dash-card2);
+      color: #fff;
+      border: 1px solid var(--dash-primary);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      z-index: 10005;
+      animation: popIn 0.25s ease;
+    }
+
+    /* ========================================================
+       RESPONSIVE MEDIA QUERIES (ENHANCED MOBILE COMPATIBILITY)
+       ======================================================== */
+    @media (max-width: 900px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .insights-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      :root {
+        --dash-nav-h: 56px;
+      }
+      .dash-nav-inner {
+        padding: 0 12px;
+      }
+      .dash-logo-img {
+        height: 24px;
+      }
+      .dash-live-badge span:last-child {
+        display: none; /* Just pulse dot on tiny screens */
+      }
+      .dash-live-badge {
+        padding: 4px 6px;
+      }
+      .dash-nav-right .btn {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+      }
+      .container {
+        padding: 0 10px;
+      }
+      .dash-header {
+        padding: 14px 0 12px;
+        margin-bottom: 14px;
+      }
+      .dash-header-row {
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .dash-title h1 {
+        font-size: 1.3rem;
+      }
+      .dash-title p {
+        font-size: 0.8rem;
+      }
+      .dash-header-actions {
+        width: 100%;
+      }
+      .dash-header-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* iOS-Style Segmented Tabs */
+      .dash-tabs {
+        width: 100%;
+        background: var(--dash-bg2);
+        border-radius: 10px;
+        padding: 3px;
+        border: 1px solid var(--dash-border);
+        margin-bottom: 14px;
+        gap: 4px;
+      }
+      .dash-tab {
+        flex: 1 1 50%;
+        justify-content: center;
+        padding: 8px 6px;
+        font-size: 0.8rem;
+        border-radius: 7px;
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+      .dash-tab.active {
+        background: var(--dash-card);
+        border: 1px solid var(--dash-border-strong);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Compact KPI Grid */
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .kpi-card {
+        padding: 10px 12px;
+      }
+      .kpi-val {
+        font-size: 1.25rem;
+        margin-bottom: 2px;
+      }
+      .kpi-lbl {
+        font-size: 0.68rem;
+      }
+      .kpi-badge {
+        font-size: 0.65rem;
+        padding: 1px 5px;
+      }
+
+      /* Native-style 2-column filter row */
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px;
+        margin-bottom: 14px;
+      }
+      .toolbar-search {
+        width: 100%;
+        flex: 1 1 100%;
+        font-size: 0.82rem;
+        padding: 8px 10px;
+      }
+      .toolbar-select {
+        flex: 1 1 calc(50% - 4px);
+        min-width: 0;
+        font-size: 0.78rem;
+        padding: 8px 6px;
+      }
+
+      /* Lead Card Enhancements */
+      .lead-card {
+        padding: 14px 12px;
+      }
+      .lead-name {
+        font-size: 1.05rem;
+      }
+      .lead-details-grid {
+        gap: 8px 12px;
+        font-size: 0.8rem;
+      }
+      .lead-intel-ribbon {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px 10px;
+      }
+      .lead-intel-info {
+        gap: 6px 10px;
+      }
+      .lead-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        width: 100%;
+      }
+      .lead-actions .btn {
+        width: 100%;
+        padding: 8px 4px;
+        font-size: 0.76rem;
+        justify-content: center;
+      }
+
+      /* Visitor Stream Card on Mobile */
+      .act-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 12px;
+        gap: 8px;
+      }
+      .act-left {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px 8px;
+      }
+      .act-right {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 6px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        gap: 6px;
+      }
+      .act-time {
+        font-size: 0.72rem;
+      }
+
+      /* Modal on Mobile */
+      .modal-backdrop {
+        padding: 8px;
+      }
+      .modal-dialog {
+        max-height: 94vh;
+        border-radius: 12px;
+      }
+      .modal-header {
+        padding: 14px 16px;
+      }
+      .modal-header h3 {
+        font-size: 1rem;
+      }
+      .modal-content {
+        padding: 14px 12px;
+        gap: 14px;
+      }
+      .map-iframe {
+        height: 180px;
+      }
+      .spec-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .spec-card {
+        padding: 8px 10px;
+      }
+
+      /* Login card on Mobile */
+      .login-card {
+        padding: 28px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================
+       LOGIN OVERLAY
+       ==================================================== -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-icon">🔐</div>
+      <h2>Fitscalez Control Center</h2>
+      <p>Sign in to manage inquiries &amp; real-time visitor intelligence</p>
+      <form id="loginForm">
+        <div class="login-field">
+          <label for="loginUser">Username</label>
+          <input type="text" id="loginUser" placeholder="Enter username" autocomplete="username" required />
+        </div>
+        <div class="login-field">
+          <label for="loginPass">Password</label>
+          <input type="password" id="loginPass" placeholder="Enter password" autocomplete="current-password" required />
+        </div>
+        <button type="submit" class="login-btn">Sign In to Dashboard</button>
+        <p class="login-error" id="loginError"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================
+       DASHBOARD APP
+       ==================================================== -->
+  <div class="dashboard" id="dashboard">
+
+    <!-- Sticky Navigation -->
+    <nav class="dash-nav">
+      <div class="dash-nav-inner">
+        <div class="dash-nav-left">
+          <a href="index.html" class="dash-logo-link" aria-label="Fitscalez Home">
+            <img src="images/logo.png" alt="Fitscalez" class="dash-logo-img" />
+          </a>
+          <div class="dash-live-badge" title="Live tracking active across all pages">
+            <span class="dash-live-dot"></span>
+            <span>Live Tracking</span>
+          </div>
+        </div>
+        <div class="dash-nav-right">
+          <button class="btn sm" id="refreshBtn" title="Refresh Live Data">🔄 Refresh</button>
+          <button class="btn danger sm" id="logoutBtn" title="Log out">🚪 Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+
+      <!-- Header Section -->
+      <div class="dash-header">
+        <div class="dash-header-row">
+          <div class="dash-title">
+            <h1>Fitscalez <span>Control Center</span></h1>
+            <p>Manage website inquiries and monitor live visitor intelligence</p>
+          </div>
+          <div class="dash-header-actions">
+            <button class="btn primary sm" id="exportBtn">📥 Export CSV</button>
+          </div>
+        </div>
+
+        <!-- Tab Switcher -->
+        <div class="dash-tabs">
+          <button class="dash-tab active" id="tabLeadsBtn" onclick="switchTab('leads')">
+            <span>💼 Inquiries &amp; Leads</span>
+            <span class="dash-tab-badge" id="leadsBadge">0</span>
+          </button>
+          <button class="dash-tab" id="tabTrafficBtn" onclick="switchTab('traffic')">
+            <span>📊 Visitor Traffic &amp; Log</span>
+            <span class="dash-tab-badge" id="trafficBadge">0 Views</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ====================================================
+           TAB 1: INQUIRIES & LEADS MANAGEMENT
+           ==================================================== -->
+      <div class="tab-view active" id="viewLeads">
+
+        <!-- Leads KPI Summary -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-icon">📋</span>
+              <span class="kpi-badge">Total</span>
+            </div>
+            <div class="kpi-val" id="kpiTotalLeads">0</div>
+            <div class="kpi-lbl">Total Inquiries</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-icon">🔵</span>
+              <span class="kpi-badge" style="color: var(--dash-primary-light); background: rgba(108,99,255,0.1);">Needs Reply</span>
+            </div>
+            <div class="kpi-val" id="kpiNewLeads">0</div>
+            <div class="kpi-lbl">New Leads</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-icon">🟢</span>
+              <span class="kpi-badge">In Progress</span>
+            </div>
+            <div class="kpi-val" id="kpiContactedLeads">0</div>
+            <div class="kpi-lbl">Contacted</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-icon">⚡</span>
+              <span class="kpi-badge">Today</span>
+            </div>
+            <div class="kpi-val" id="kpiTodayLeads">0</div>
+            <div class="kpi-lbl">Received Today</div>
+          </div>
+        </div>
+
+        <!-- Filter Toolbar -->
+        <div class="toolbar">
+          <input type="text" class="toolbar-search" id="leadSearch" placeholder="🔍 Search by name, email, phone, city, or device ID..." />
+          <select class="toolbar-select" id="leadStatusFilter">
+            <option value="all">All Statuses</option>
+            <option value="new">🔵 New Inquiries</option>
+            <option value="contacted">🟢 Contacted</option>
+            <option value="closed">⚪ Closed</option>
+          </select>
+          <select class="toolbar-select" id="leadSortFilter">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="name">Sort by Name</option>
+          </select>
+        </div>
+
+        <!-- Leads List Container -->
+        <div class="leads-list" id="leadsContainer">
+          <!-- Rendered dynamically -->
+        </div>
+
+      </div>
+
+      <!-- ====================================================
+           TAB 2: VISITOR TRAFFIC & REAL-TIME LOG
+           ==================================================== -->
+      <div class="tab-view" id="viewTraffic">
+
+        <!-- Traffic KPI Summary -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-icon">👁️</span>
+              <span class="kpi-badge" id="trafficTodayBadge">0 today</span>
+            </div>
+            <div class="kpi-val" id="kpiTotalViews">0</div>
+            <div class="kpi-lbl">Total Page Views</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-icon">💻</span>
+              <span class="kpi-badge">Unique</span>
+            </div>
+            <div class="kpi-val" id="kpiUniqueDevs">0</div>
+            <div class="kpi-lbl">Unique Visitors</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-icon">🔁</span>
+              <span class="kpi-badge" id="kpiReturnRate">0% Rate</span>
+            </div>
+            <div class="kpi-val" id="kpiReturning">0</div>
+            <div class="kpi-lbl">Returning Visitors</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-icon">📍</span>
+              <span class="kpi-badge">Top Origin</span>
+            </div>
+            <div class="kpi-val" id="kpiTopCity" style="font-size: 1.3rem;">—</div>
+            <div class="kpi-lbl" id="kpiTopCitySub">Primary Location</div>
+          </div>
+        </div>
+
+        <!-- Visual Insights Grid -->
+        <div class="insights-grid">
+          <!-- Device Breakdown -->
+          <div class="insight-card">
+            <div class="insight-title">
+              <span>💻 Device Types</span>
+              <span style="font-size: 0.76rem; color: var(--dash-text-dim);" id="deviceTotalLbl">0 visitors</span>
+            </div>
+            <div class="dev-bar-track">
+              <div class="dev-bar-seg desktop" id="segDesktop" style="width: 50%;"></div>
+              <div class="dev-bar-seg mobile" id="segMobile" style="width: 40%;"></div>
+              <div class="dev-bar-seg tablet" id="segTablet" style="width: 10%;"></div>
+            </div>
+            <div class="dev-legend">
+              <div class="dev-legend-item">
+                <span class="dev-dot desktop"></span>
+                <span>Desktop: <strong id="lblDesktop">0%</strong></span>
+              </div>
+              <div class="dev-legend-item">
+                <span class="dev-dot mobile"></span>
+                <span>Mobile: <strong id="lblMobile">0%</strong></span>
+              </div>
+              <div class="dev-legend-item">
+                <span class="dev-dot tablet"></span>
+                <span>Tablet: <strong id="lblTablet">0%</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Visited Pages -->
+          <div class="insight-card">
+            <div class="insight-title">
+              <span>📄 Top Visited Pages</span>
+              <span style="font-size: 0.76rem; color: var(--dash-primary-light);">Views</span>
+            </div>
+            <div class="rank-list" id="topPagesList">
+              <p style="color: var(--dash-text-muted); font-size: 0.8rem; text-align: center; padding: 12px;">No page views recorded yet.</p>
+            </div>
+          </div>
+
+          <!-- Top Visitor Locations -->
+          <div class="insight-card">
+            <div class="insight-title">
+              <span>🌍 Visitor Locations</span>
+              <span style="font-size: 0.76rem; color: var(--dash-accent2);">Visitors</span>
+            </div>
+            <div class="rank-list" id="topCitiesList">
+              <p style="color: var(--dash-text-muted); font-size: 0.8rem; text-align: center; padding: 12px;">No location data yet.</p>
+            </div>
+          </div>
+
+          <!-- Traffic Sources -->
+          <div class="insight-card">
+            <div class="insight-title">
+              <span>🧭 Traffic Sources</span>
+              <span style="font-size: 0.76rem; color: var(--dash-text-dim);">Channels</span>
+            </div>
+            <div class="rank-list" id="topSourcesList">
+              <p style="color: var(--dash-text-muted); font-size: 0.8rem; text-align: center; padding: 12px;">Direct traffic only.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Activity Stream Section -->
+        <div class="activity-section">
+          <div class="activity-section-header">
+            <h2>📈 Live Visitor Activity Stream</h2>
+            <p>Real-time log of visitors browsing pages, their devices, visit counts, and location maps</p>
+          </div>
+
+          <!-- Activity Toolbar -->
+          <div class="toolbar" style="margin-bottom: 14px;">
+            <input type="text" class="toolbar-search" id="trafficSearch" placeholder="🔍 Filter by Device ID, city, OS, or browser..." />
+            <select class="toolbar-select" id="trafficDevFilter">
+              <option value="all">All Devices</option>
+              <option value="desktop">💻 Desktop</option>
+              <option value="mobile">📱 Mobile</option>
+              <option value="tablet">📟 Tablet</option>
+            </select>
+            <select class="toolbar-select" id="trafficTypeFilter">
+              <option value="all">All Visitors</option>
+              <option value="returning">🔁 Returning Only</option>
+              <option value="new">🌟 New Only</option>
+            </select>
+            <select class="toolbar-select" id="trafficPeriodFilter">
+              <option value="30">Last 30 Days</option>
+              <option value="7">Last 7 Days</option>
+              <option value="1">Today Only</option>
+              <option value="365">All Time</option>
+            </select>
+          </div>
+
+          <!-- Activity List -->
+          <div class="activity-feed" id="activityList">
+            <!-- Rendered dynamically -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ====================================================
+       VISITOR LOCATION & DETAILS MODAL
+       ==================================================== -->
+  <div class="modal-backdrop" id="dossierModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>
+          <span>📍</span>
+          <span id="modalTitle">Visitor Location &amp; Profile</span>
+        </h3>
+        <button class="modal-close" onclick="closeModal()" title="Close dialog">✕</button>
+      </div>
+      <div class="modal-content">
+
+        <!-- Google Map Embed Box -->
+        <div class="map-box">
+          <iframe id="mapIframe" class="map-iframe" src="about:blank" title="Visitor Location Map" loading="lazy"></iframe>
+          <div class="map-bar">
+            <span id="mapCaption">📍 Loading location...</span>
+            <a href="#" id="mapLink" target="_blank" rel="noopener noreferrer" class="location-btn" style="text-decoration:none;">
+              Open in Google Maps ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Location & Network Specs -->
+        <div>
+          <h4 style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--dash-text-muted); margin-bottom: 8px; letter-spacing: 0.5px;">
+            🌍 Geolocation &amp; Network
+          </h4>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <div class="spec-lbl">City &amp; Region</div>
+              <div class="spec-val" id="specCityRegion">—</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-lbl">Country</div>
+              <div class="spec-val" id="specCountry">—</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-lbl">IP Address</div>
+              <div class="spec-val" style="display: flex; align-items: center; justify-content: space-between;">
+                <span id="specIp">—</span>
+                <button class="btn sm" style="padding: 2px 6px; font-size: 0.7rem;" onclick="copyVal(document.getElementById('specIp').textContent, 'IP Address')">📋</button>
+              </div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-lbl">ISP / Network</div>
+              <div class="spec-val" id="specIsp">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Device Specs -->
+        <div>
+          <h4 style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--dash-text-muted); margin-bottom: 8px; letter-spacing: 0.5px;">
+            💻 Device &amp; Environment
+          </h4>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <div class="spec-lbl">Device ID</div>
+              <div class="spec-val" style="display: flex; align-items: center; justify-content: space-between;">
+                <span class="device-pill" id="specDeviceId">—</span>
+                <button class="btn sm" style="padding: 2px 6px; font-size: 0.7rem;" onclick="copyVal(document.getElementById('specDeviceId').textContent, 'Device ID')">📋</button>
+              </div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-lbl">Device Type &amp; Screen</div>
+              <div class="spec-val" id="specDeviceType">—</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-lbl">Operating System</div>
+              <div class="spec-val" id="specOs">—</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-lbl">Browser</div>
+              <div class="spec-val" id="specBrowser">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visit History -->
+        <div>
+          <h4 style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--dash-text-muted); margin-bottom: 8px; letter-spacing: 0.5px;">
+            🔁 Visit History
+          </h4>
+          <div class="spec-grid">
+            <div class="spec-card">
+              <div class="spec-lbl">Total Visits</div>
+              <div class="spec-val" id="specVisits">—</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-lbl">First Seen</div>
+              <div class="spec-val" id="specFirstSeen">—</div>
+            </div>
+            <div class="spec-card" style="grid-column: span 2;">
+              <div class="spec-lbl">Last Active</div>
+              <div class="spec-val" id="specLastVisit">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Timeline -->
+        <div>
+          <h4 style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--dash-text-muted); margin-bottom: 8px; letter-spacing: 0.5px;">
+            🧭 Pages Viewed by this Visitor
+          </h4>
+          <div class="timeline" id="specTimeline">
+            <!-- Timeline items rendered dynamically -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Analytics Engine -->
+  <script src="js/analytics.js"></script>
+
+  <!-- Control Center Controller -->
+  <script>
+    // ========================================================
+    // FITSCALEZ CONTROL CENTER APP SCRIPT
+    // ========================================================
+
+    const AUTH_KEY = 'fitscalez_lead_auth';
+    const LEADS_KEY = 'fitscalez_leads';
+
+    let currentTab = 'leads';
+
+    // Purge any legacy demo data immediately on load
+    if (window.FitscalezTracker && typeof window.FitscalezTracker.purgeDemoData === 'function') {
+      window.FitscalezTracker.purgeDemoData();
+    }
+
+    // Elements
+    const loginOverlay = document.getElementById('loginOverlay');
+    const dashboard = document.getElementById('dashboard');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+
+    // ---- Authentication ---- //
+    if (sessionStorage.getItem(AUTH_KEY) === 'true') {
+      showDashboard();
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = document.getElementById('loginUser').value.trim();
+      const pass = document.getElementById('loginPass').value;
+
+      if (user === 'jain' && pass === '1234') {
+        sessionStorage.setItem(AUTH_KEY, 'true');
+        showDashboard();
+      } else {
+        loginError.textContent = '❌ Invalid credentials. Please try again.';
+        loginError.classList.remove('shake');
+        void loginError.offsetWidth;
+        loginError.classList.add('shake');
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      sessionStorage.removeItem(AUTH_KEY);
+      location.reload();
+    });
+
+    function showDashboard() {
+      loginOverlay.classList.add('hidden');
+      dashboard.classList.add('active');
+      renderAll();
+    }
+
+    // ---- Tab Switching ---- //
+    function switchTab(tab) {
+      currentTab = tab;
+      const btnLeads = document.getElementById('tabLeadsBtn');
+      const btnTraffic = document.getElementById('tabTrafficBtn');
+      const viewLeads = document.getElementById('viewLeads');
+      const viewTraffic = document.getElementById('viewTraffic');
+
+      if (tab === 'leads') {
+        btnLeads.classList.add('active');
+        btnTraffic.classList.remove('active');
+        viewLeads.classList.add('active');
+        viewTraffic.classList.remove('active');
+        renderLeads();
+      } else {
+        btnTraffic.classList.add('active');
+        btnLeads.classList.remove('active');
+        viewTraffic.classList.add('active');
+        viewLeads.classList.remove('active');
+        renderTraffic();
+      }
+    }
+
+    // ---- Refresh and Reset ---- //
+    function renderAll() {
+      // Clean any demo data if present
+      if (window.FitscalezTracker && typeof window.FitscalezTracker.purgeDemoData === 'function') {
+        window.FitscalezTracker.purgeDemoData();
+      }
+      renderLeads();
+      renderTraffic();
+    }
+
+    document.getElementById('refreshBtn')?.addEventListener('click', () => {
+      renderAll();
+      showToast('Dashboard updated with latest data!');
+    });
+
+    // ---- Leads Management ---- //
+    function getStoredLeads() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(LEADS_KEY)) || [];
+        // Filter out demo leads if any remain
+        return raw.filter(l => !l.id?.startsWith('lead_demo_') && !l.deviceId?.toLowerCase().includes('demo'));
+      } catch {
+        return [];
+      }
+    }
+
+    function saveStoredLeads(leads) {
+      localStorage.setItem(LEADS_KEY, JSON.stringify(leads));
+      renderLeads();
+    }
+
+    function updateLeadStatus(id, newStatus) {
+      const leads = getStoredLeads();
+      const lead = leads.find(l => l.id === id);
+      if (lead) {
+        lead.status = newStatus;
+        saveStoredLeads(leads);
+        showToast(`Lead marked as ${newStatus}`);
+      }
+    }
+
+    function deleteLead(id) {
+      if (!confirm('Are you sure you want to delete this inquiry?')) return;
+      const leads = getStoredLeads().filter(l => l.id !== id);
+      saveStoredLeads(leads);
+      showToast('Inquiry deleted.');
+    }
+
+    function renderLeads() {
+      const leads = getStoredLeads();
+      const searchVal = (document.getElementById('leadSearch')?.value || '').toLowerCase().trim();
+      const statusFilter = document.getElementById('leadStatusFilter')?.value || 'all';
+      const sortFilter = document.getElementById('leadSortFilter')?.value || 'newest';
+
+      // Update KPI counters
+      const todayStr = new Date().toDateString();
+      const totalCount = leads.length;
+      const newCount = leads.filter(l => (l.status || 'new') === 'new').length;
+      const contactedCount = leads.filter(l => l.status === 'contacted').length;
+      const todayCount = leads.filter(l => new Date(l.timestamp).toDateString() === todayStr).length;
+
+      document.getElementById('kpiTotalLeads').textContent = totalCount;
+      document.getElementById('kpiNewLeads').textContent = newCount;
+      document.getElementById('kpiContactedLeads').textContent = contactedCount;
+      document.getElementById('kpiTodayLeads').textContent = todayCount;
+      document.getElementById('leadsBadge').textContent = totalCount;
+
+      // Filter
+      let filtered = leads.filter(lead => {
+        if (statusFilter !== 'all' && (lead.status || 'new') !== statusFilter) return false;
+        if (searchVal) {
+          const haystack = `${lead.name} ${lead.email} ${lead.phone} ${lead.company} ${lead.service} ${lead.message} ${lead.deviceId || ''} ${lead.location?.city || ''} ${lead.location?.region || ''}`.toLowerCase();
+          return haystack.includes(searchVal);
+        }
+        return true;
+      });
+
+      // Sort
+      if (sortFilter === 'newest') filtered.sort((a, b) => b.timestamp - a.timestamp);
+      else if (sortFilter === 'oldest') filtered.sort((a, b) => a.timestamp - b.timestamp);
+      else if (sortFilter === 'name') filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+      const container = document.getElementById('leadsContainer');
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">📭</div>
+            <h3>${searchVal || statusFilter !== 'all' ? 'No matching inquiries found' : 'No inquiries received yet'}</h3>
+            <p>${searchVal || statusFilter !== 'all' ? 'Try adjusting your search query or status filter.' : 'Inquiries submitted through your contact form will appear here automatically with full visitor intelligence and location.'}</p>
+          </div>
+        `;
+        return;
+      }
+
+      const serviceMap = {
+        'web-dev': '💻 Web Development',
+        'website': '🌐 Business Website',
+        'ecommerce': '🛒 E-Commerce Store',
+        'seo': '🔍 SEO Services',
+        'social-media': '📱 Social Media Marketing',
+        'ppc': '💰 PPC Advertising',
+        'video': '🎬 Video Production',
+        'branding': '🎨 Brand Identity',
+        'marketing': '📈 Digital Marketing',
+        'other': '📋 General Inquiry'
+      };
+
+      const budgetMap = {
+        'under-25k': '💰 Under ₹25K',
+        '25k-50k': '💰 ₹25K–50K',
+        '50k-1l': '💰 ₹50K–1L',
+        '1l-3l': '💰 ₹1L–3L',
+        '3l-above': '💰 ₹3L+'
+      };
+
+      container.innerHTML = filtered.map(lead => {
+        const date = new Date(lead.timestamp);
+        const dateStr = date.toLocaleDateString('en-IN', {
+          day: 'numeric', month: 'short', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+        const status = lead.status || 'new';
+
+        // Visitor intel
+        const deviceId = lead.deviceId || 'DEV-SITE';
+        const simpleId = (window.FitscalezTracker && window.FitscalezTracker.formatSimpleDeviceId)
+          ? window.FitscalezTracker.formatSimpleDeviceId(deviceId)
+          : (deviceId.length > 8 ? deviceId.substring(0, 8) : deviceId);
+        const visitCount = lead.visitCount || 1;
+        const isReturning = lead.isReturning || visitCount > 1;
+        const loc = lead.location || {};
+        const locFlag = loc.flag || '📍';
+        const locName = loc.city ? `${locFlag} ${loc.city}${loc.region ? ', ' + loc.region : ''}` : '📍 Location not recorded';
+
+        const devInfo = lead.device || {};
+        const devSummary = `${devInfo.type === 'mobile' ? '📱 Mobile' : devInfo.type === 'tablet' ? '📟 Tablet' : '💻 Desktop'} • ${devInfo.os || 'OS'} • ${devInfo.browser || 'Browser'}`;
+
+        return `
+          <div class="lead-card">
+            <div class="lead-header">
+              <div>
+                <span class="lead-name">${escapeHtml(lead.name || 'Website Prospect')}</span>
+                ${lead.company ? `<span class="lead-company-badge">🏢 ${escapeHtml(lead.company)}</span>` : ''}
+                <div class="lead-date">Submitted on ${dateStr}</div>
+              </div>
+              <span class="lead-status-pill ${status}">${status}</span>
+            </div>
+
+            <!-- Contact Details -->
+            <div class="lead-details-grid">
+              ${lead.email ? `
+                <div class="lead-detail-item">
+                  <span>📧</span>
+                  <a href="mailto:${encodeURIComponent(lead.email)}">${escapeHtml(lead.email)}</a>
+                </div>
+              ` : ''}
+              ${lead.phone ? `
+                <div class="lead-detail-item">
+                  <span>📞</span>
+                  <a href="tel:${(lead.phone || '').replace(/[^0-9+]/g, '')}">${escapeHtml(lead.phone)}</a>
+                </div>
+              ` : ''}
+              ${lead.service ? `<span class="lead-tag">${serviceMap[lead.service] || escapeHtml(lead.service)}</span>` : ''}
+              ${lead.budget ? `<span class="lead-tag">${budgetMap[lead.budget] || escapeHtml(lead.budget)}</span>` : ''}
+            </div>
+
+            <!-- Visitor Intelligence Ribbon -->
+            <div class="lead-intel-ribbon">
+              <div class="lead-intel-info">
+                <span class="device-pill" onclick="copyVal('${deviceId}', 'Device ID')" title="Click to copy full Device ID: ${deviceId}">
+                  💻 ${simpleId} 📋
+                </span>
+                <span class="visit-tag ${isReturning ? 'returning' : 'new'}">
+                  ${isReturning ? `🔁 ${visitCount} Visits` : '🌟 1st Visit'}
+                </span>
+                <span>${escapeHtml(locName)}</span>
+                <span style="font-size: 0.75rem; color: var(--dash-text-dim);">${escapeHtml(devSummary)}</span>
+              </div>
+              ${loc.city ? `
+                <button class="location-btn" onclick="openLocationModalForLead('${lead.id}')">
+                  📍 See Location &amp; Map
+                </button>
+              ` : ''}
+            </div>
+
+            <!-- Message -->
+            ${lead.message ? `
+              <div class="lead-msg">
+                "${escapeHtml(lead.message)}"
+              </div>
+            ` : ''}
+
+            <!-- Card Actions -->
+            <div class="lead-actions">
+              ${status === 'new' ? `
+                <button class="btn sm primary" onclick="updateLeadStatus('${lead.id}', 'contacted')">✅ Mark Contacted</button>
+              ` : status === 'contacted' ? `
+                <button class="btn sm" onclick="updateLeadStatus('${lead.id}', 'closed')">🔒 Close Inquiry</button>
+              ` : `
+                <button class="btn sm" onclick="updateLeadStatus('${lead.id}', 'new')">🔄 Reopen Lead</button>
+              `}
+
+              ${lead.email ? `
+                <a href="mailto:${encodeURIComponent(lead.email)}" class="btn sm">📧 Send Email</a>
+              ` : ''}
+
+              ${lead.phone ? `
+                <a href="https://wa.me/${(lead.phone || '').replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" class="btn sm whatsapp">
+                  💬 WhatsApp
+                </a>
+              ` : ''}
+
+              <button class="btn sm" onclick="openLocationModalForLead('${lead.id}')">🔍 Full Details</button>
+              <button class="btn sm danger" onclick="deleteLead('${lead.id}')">🗑️ Delete</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Lead filter event listeners
+    document.getElementById('leadSearch')?.addEventListener('input', renderLeads);
+    document.getElementById('leadStatusFilter')?.addEventListener('change', renderLeads);
+    document.getElementById('leadSortFilter')?.addEventListener('change', renderLeads);
+
+    // ---- Traffic & Analytics Management ---- //
+    function renderTraffic() {
+      if (!window.FitscalezTracker) return;
+
+      const periodDays = parseInt(document.getElementById('trafficPeriodFilter')?.value || '30', 10);
+      const summary = FitscalezTracker.getAnalyticsSummary(periodDays);
+
+      // KPI Cards
+      document.getElementById('kpiTotalViews').textContent = summary.totalPageViews.toLocaleString();
+      document.getElementById('trafficTodayBadge').textContent = `${summary.todayViews} today`;
+      document.getElementById('trafficBadge').textContent = `${summary.totalPageViews} Views`;
+
+      document.getElementById('kpiUniqueDevs').textContent = summary.uniqueDevices.toLocaleString();
+      document.getElementById('kpiReturning').textContent = summary.returningVisitors.toLocaleString();
+      document.getElementById('kpiReturnRate').textContent = `${summary.returningRate}% Rate`;
+
+      const topLoc = summary.topLocations[0];
+      if (topLoc) {
+        document.getElementById('kpiTopCity').textContent = `${topLoc.flag || '📍'} ${topLoc.city}`;
+        document.getElementById('kpiTopCitySub').textContent = `${topLoc.country} (${topLoc.count} visits)`;
+      } else {
+        document.getElementById('kpiTopCity').textContent = '—';
+        document.getElementById('kpiTopCitySub').textContent = 'No traffic yet';
+      }
+
+      // Device Bar
+      const devTotal = Math.max(1, summary.deviceBreakdown.desktop + summary.deviceBreakdown.mobile + summary.deviceBreakdown.tablet);
+      const pctDesktop = Math.round((summary.deviceBreakdown.desktop / devTotal) * 100);
+      const pctMobile = Math.round((summary.deviceBreakdown.mobile / devTotal) * 100);
+      const pctTablet = Math.max(0, 100 - pctDesktop - pctMobile);
+
+      document.getElementById('deviceTotalLbl').textContent = `${devTotal} visitor${devTotal === 1 ? '' : 's'}`;
+      document.getElementById('segDesktop').style.width = `${pctDesktop}%`;
+      document.getElementById('segMobile').style.width = `${pctMobile}%`;
+      document.getElementById('segTablet').style.width = `${pctTablet}%`;
+
+      document.getElementById('lblDesktop').textContent = `${pctDesktop}% (${summary.deviceBreakdown.desktop})`;
+      document.getElementById('lblMobile').textContent = `${pctMobile}% (${summary.deviceBreakdown.mobile})`;
+      document.getElementById('lblTablet').textContent = `${pctTablet}% (${summary.deviceBreakdown.tablet})`;
+
+      // Top Pages
+      const topPagesContainer = document.getElementById('topPagesList');
+      if (summary.topPages.length > 0) {
+        topPagesContainer.innerHTML = summary.topPages.slice(0, 5).map(p => `
+          <div class="rank-row">
+            <span class="rank-text" title="${escapeHtml(p.path)}">${escapeHtml(p.path)}</span>
+            <span class="rank-count">${p.views}</span>
+          </div>
+        `).join('');
+      } else {
+        topPagesContainer.innerHTML = '<p style="color: var(--dash-text-muted); font-size: 0.8rem; text-align: center; padding: 12px;">No page views yet.</p>';
+      }
+
+      // Top Locations
+      const topCitiesContainer = document.getElementById('topCitiesList');
+      if (summary.topLocations.length > 0) {
+        topCitiesContainer.innerHTML = summary.topLocations.slice(0, 5).map(l => `
+          <div class="rank-row">
+            <span class="rank-text">${l.flag || '📍'} ${escapeHtml(l.city)}, ${escapeHtml(l.country)}</span>
+            <span class="rank-count">${l.count}</span>
+          </div>
+        `).join('');
+      } else {
+        topCitiesContainer.innerHTML = '<p style="color: var(--dash-text-muted); font-size: 0.8rem; text-align: center; padding: 12px;">No location records yet.</p>';
+      }
+
+      // Traffic Sources
+      const topSourcesContainer = document.getElementById('topSourcesList');
+      if (summary.topReferrers.length > 0) {
+        topSourcesContainer.innerHTML = summary.topReferrers.slice(0, 5).map(r => `
+          <div class="rank-row">
+            <span class="rank-text">${escapeHtml(r.source)}</span>
+            <span class="rank-count">${r.views}</span>
+          </div>
+        `).join('');
+      } else {
+        topSourcesContainer.innerHTML = '<p style="color: var(--dash-text-muted); font-size: 0.8rem; text-align: center; padding: 12px;">Direct traffic only.</p>';
+      }
+
+      // Render activity feed
+      renderActivityFeed();
+    }
+
+    function renderActivityFeed() {
+      const container = document.getElementById('activityList');
+      const searchVal = (document.getElementById('trafficSearch')?.value || '').toLowerCase().trim();
+      const devFilter = document.getElementById('trafficDevFilter')?.value || 'all';
+      const typeFilter = document.getElementById('trafficTypeFilter')?.value || 'all';
+      const periodDays = parseInt(document.getElementById('trafficPeriodFilter')?.value || '30', 10);
+      const cutoff = Date.now() - periodDays * 24 * 60 * 60 * 1000;
+
+      let pvs = (JSON.parse(localStorage.getItem(FitscalezTracker.KEYS.PAGE_VIEWS)) || [])
+        .filter(p => !p.id?.startsWith('pv_demo_') && !p.deviceId?.toLowerCase().includes('demo'))
+        .filter(p => p.timestamp >= cutoff);
+
+      // Filters
+      if (devFilter !== 'all') {
+        pvs = pvs.filter(p => (p.device?.type || 'desktop') === devFilter);
+      }
+      if (typeFilter === 'returning') {
+        pvs = pvs.filter(p => p.isReturning || (p.visitNumber && p.visitNumber > 1));
+      } else if (typeFilter === 'new') {
+        pvs = pvs.filter(p => !p.isReturning && (!p.visitNumber || p.visitNumber <= 1));
+      }
+      if (searchVal) {
+        pvs = pvs.filter(p => {
+          const h = `${p.path} ${p.title} ${p.deviceId} ${p.referrer} ${p.location?.city || ''} ${p.location?.region || ''} ${p.location?.country || ''} ${p.device?.os || ''} ${p.device?.browser || ''}`.toLowerCase();
+          return h.includes(searchVal);
+        });
+      }
+
+      if (pvs.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">📈</div>
+            <h3>No visitor activity recorded yet</h3>
+            <p>As real visitors browse through Fitscalez, their page views, devices, and location maps will appear here automatically.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = pvs.map(p => {
+        const dev = p.device || {};
+        const devType = dev.type || 'desktop';
+        const devIcon = devType === 'mobile' ? '📱' : devType === 'tablet' ? '📟' : '💻';
+        const isRet = p.isReturning || (p.visitNumber && p.visitNumber > 1);
+        const loc = p.location || {};
+        const locCity = loc.city || 'Unknown';
+        const locFlag = loc.flag || '📍';
+        const devId = p.deviceId || 'DEV-USER';
+        const simpleId = (window.FitscalezTracker && window.FitscalezTracker.formatSimpleDeviceId)
+          ? window.FitscalezTracker.formatSimpleDeviceId(devId)
+          : (devId.length > 8 ? devId.substring(0, 8) : devId);
+        const relTime = FitscalezTracker.formatRelativeTime(p.timestamp);
+        const devSummary = `${dev.os || 'OS'} • ${dev.browser || 'Browser'}`;
+
+        return `
+          <div class="act-item">
+            <div class="act-left">
+              <div class="act-icon ${devType}" title="${dev.os || 'OS'} • ${dev.browser || 'Browser'}">${devIcon}</div>
+              <span class="device-pill" onclick="copyVal('${devId}', 'Device ID')" title="Click to copy full Device ID: ${devId}">
+                ${simpleId} 📋
+              </span>
+              <span class="visit-tag ${isRet ? 'returning' : 'new'}">
+                ${isRet ? `🔁 ${p.visitNumber || 2} Visits` : '🌟 New'}
+              </span>
+              <span style="font-size: 0.78rem; color: var(--dash-text-dim);">${escapeHtml(devSummary)}</span>
+            </div>
+
+            <div class="act-right">
+              <button class="location-btn" onclick="openLocationModalForDevice('${p.deviceId}')">
+                ${locFlag} ${escapeHtml(locCity)}
+              </button>
+              <div class="act-time">${relTime}</div>
+              <button class="btn sm" onclick="openLocationModalForDevice('${p.deviceId}')" title="Inspect full visitor profile">
+                🔍 Details
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Traffic filter event listeners
+    document.getElementById('trafficSearch')?.addEventListener('input', renderActivityFeed);
+    document.getElementById('trafficDevFilter')?.addEventListener('change', renderActivityFeed);
+    document.getElementById('trafficTypeFilter')?.addEventListener('change', renderActivityFeed);
+    document.getElementById('trafficPeriodFilter')?.addEventListener('change', renderTraffic);
+
+    // ---- CSV Export Handler ---- //
+    document.getElementById('exportBtn')?.addEventListener('click', () => {
+      if (currentTab === 'leads') {
+        exportLeadsCSV();
+      } else {
+        FitscalezTracker.exportAnalyticsCSV();
+      }
+    });
+
+    function exportLeadsCSV() {
+      const leads = getStoredLeads();
+      if (leads.length === 0) {
+        alert('No leads to export yet.');
+        return;
+      }
+
+      const headers = ['Timestamp', 'Date', 'Name', 'Email', 'Phone', 'Company', 'Service', 'Budget', 'Message', 'Status', 'Device ID', 'City', 'Country'];
+      const rows = leads.map(l => [
+        l.timestamp,
+        new Date(l.timestamp).toLocaleString('en-IN'),
+        l.name || '',
+        l.email || '',
+        l.phone || '',
+        l.company || '',
+        l.service || '',
+        l.budget || '',
+        (l.message || '').replace(/"/g, '""'),
+        l.status || 'new',
+        l.deviceId || '',
+        l.location?.city || '',
+        l.location?.country || ''
+      ]);
+
+      const csv = [headers.join(',')].concat(rows.map(r => r.map(c => `"${String(c || '')}"`).join(','))).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `fitscalez_leads_${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // ---- Modal & Google Maps Integration ---- //
+    function openLocationModalForLead(leadId) {
+      const leads = getStoredLeads();
+      const lead = leads.find(l => l.id === leadId);
+      if (!lead) return;
+
+      const deviceId = lead.deviceId || 'DEV-SITE';
+      const dossier = FitscalezTracker.getDeviceDossier(deviceId);
+      if (lead.location) dossier.location = lead.location;
+      if (lead.device) dossier.device = lead.device;
+
+      populateModal(dossier);
+    }
+
+    function openLocationModalForDevice(deviceId) {
+      const dossier = FitscalezTracker.getDeviceDossier(deviceId);
+      populateModal(dossier);
+    }
+
+    function populateModal(dossier) {
+      const loc = dossier.location || {};
+      const dev = dossier.device || {};
+
+      const simpleId = (window.FitscalezTracker && window.FitscalezTracker.formatSimpleDeviceId)
+        ? window.FitscalezTracker.formatSimpleDeviceId(dossier.deviceId)
+        : (dossier.deviceId && dossier.deviceId.length > 8 ? dossier.deviceId.substring(0, 8) : (dossier.deviceId || 'DEV-USER'));
+
+      document.getElementById('modalTitle').textContent = `Visitor: ${simpleId} (${loc.city || 'Location'})`;
+
+      // Map Setup
+      const mapIframe = document.getElementById('mapIframe');
+      const mapLink = document.getElementById('mapLink');
+      const mapCaption = document.getElementById('mapCaption');
+
+      let query = '';
+      if (loc.lat && loc.lon) {
+        query = `${loc.lat},${loc.lon}`;
+      } else if (loc.city) {
+        query = `${loc.city}, ${loc.country || 'India'}`;
+      } else {
+        query = 'India';
+      }
+
+      mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=12&output=embed`;
+      mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+      mapCaption.textContent = `📍 ${loc.flag || '📍'} ${loc.city || 'Unknown City'}${loc.region ? ', ' + loc.region : ''}, ${loc.country || 'India'}`;
+
+      // Specs
+      document.getElementById('specCityRegion').textContent = `${loc.city || 'Unknown'}${loc.region ? ' (' + loc.region + ')' : ''}`;
+      document.getElementById('specCountry').textContent = `${loc.flag || ''} ${loc.country || 'India'}`;
+      document.getElementById('specIp').textContent = loc.ip || '—';
+      document.getElementById('specIsp').textContent = loc.isp || 'Broadband Network';
+
+      document.getElementById('specDeviceId').textContent = simpleId;
+      document.getElementById('specDeviceId').setAttribute('title', 'Full ID: ' + (dossier.deviceId || ''));
+      document.getElementById('specDeviceType').textContent = `${dev.type || 'Desktop'} (${dev.screen || 'Unknown Resolution'})`;
+      document.getElementById('specOs').textContent = dev.os || 'Unknown OS';
+      document.getElementById('specBrowser').textContent = dev.browser || 'Unknown Browser';
+
+      document.getElementById('specVisits').textContent = `${dossier.visitCount || 1} session${(dossier.visitCount || 1) === 1 ? '' : 's'} (${dossier.isReturning ? 'Returning' : 'New'})`;
+      document.getElementById('specFirstSeen').textContent = FitscalezTracker.formatExactTime(dossier.firstVisit);
+      document.getElementById('specLastVisit').textContent = FitscalezTracker.formatExactTime(dossier.lastVisit);
+
+      // Timeline
+      const timeline = document.getElementById('specTimeline');
+      if (dossier.pageViews && dossier.pageViews.length > 0) {
+        timeline.innerHTML = dossier.pageViews.slice(0, 10).map(pv => `
+          <div class="timeline-item">
+            <span class="timeline-time">${new Date(pv.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>
+            <span class="timeline-path">${escapeHtml(pv.path)}</span>
+            <span class="timeline-title">${escapeHtml(pv.title || '')}</span>
+          </div>
+        `).join('');
+      } else {
+        timeline.innerHTML = '<p style="color: var(--dash-text-muted); font-size: 0.8rem; padding: 6px;">No recorded page views for this session.</p>';
+      }
+
+      document.getElementById('dossierModal').classList.add('open');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('dossierModal');
+      modal.classList.remove('open');
+      document.getElementById('mapIframe').src = 'about:blank';
+    }
+
+    // Close on click outside or Escape
+    document.getElementById('dossierModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'dossierModal') closeModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // ---- Copy Value Helper ---- //
+    function copyVal(text, label) {
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`📋 ${label || 'Text'} copied!`);
+      }).catch(() => {
+        const input = document.createElement('input');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        showToast(`📋 ${label || 'Text'} copied!`);
+      });
+    }
+
+    // ---- Toast Notification ---- //
+    function showToast(msg) {
+      const existing = document.querySelector('.dash-toast');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'dash-toast';
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+
+    // HTML escape utility
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Auto-listen to pageview / geo ready events
+    window.addEventListener('fitscalez_pageview', () => {
+      if (dashboard.classList.contains('active')) {
+        renderTraffic();
+      }
+    });
+    window.addEventListener('fitscalez_geo_ready', () => {
+      if (dashboard.classList.contains('active')) {
+        renderTraffic();
+      }
+    });
+  </script>
+
+</body>
+</html>
