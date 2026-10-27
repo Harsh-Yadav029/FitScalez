@@ -214,11 +214,15 @@ const Home = () => {
                         <div className="hero-card-stack float-animation">
                             <div className="glass-card hero-main-card">
                                 <div className="card-header">
-                                    <img
-                                        src="/images/logo.png"
-                                        alt="Fitscalez"
-                                        style={{ width: "36px", height: "36px", borderRadius: "8px", flexShrink: 0 }}
-                                    />
+                                    <div className="card-header-icon" aria-hidden="true">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="18" y1="20" x2="18" y2="10" strokeWidth="2.5"></line>
+                                            <line x1="12" y1="20" x2="12" y2="14" strokeWidth="2.5"></line>
+                                            <line x1="6" y1="20" x2="6" y2="17" strokeWidth="2.5"></line>
+                                            <polyline points="4 14 10 8 14 12 20 5"></polyline>
+                                            <polyline points="15 5 20 5 20 10"></polyline>
+                                        </svg>
+                                    </div>
                                     <div>
                                         <div className="card-title">Campaign Performance</div>
                                         <div className="card-sub">Fitscalez Growth Engine</div>
@@ -231,7 +235,7 @@ const Home = () => {
                                         <div className="metric-label">Organic Traffic</div>
                                     </div>
                                     <div className="metric-item">
-                                        <div className="metric-value">₹4.2L</div>
+                                        <div className="metric-value"><span className="currency-symbol">₹</span>4.2L</div>
                                         <div className="metric-label">Revenue Generated</div>
                                     </div>
                                     <div className="metric-item">
