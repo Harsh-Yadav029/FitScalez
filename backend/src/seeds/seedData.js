@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import dns from "dns";
 import { Blog } from "../models/blog.model.js";
 import { Job } from "../models/job.model.js";
+import { User } from "../models/user.model.js";
 
 dotenv.config({
     path: "./.env",
@@ -111,6 +112,30 @@ const seedDatabase = async () => {
                 { upsert: true, new: true }
             );
             console.log(`  Seeded job: ${job.title}`);
+        // 3. Seed Default Admin Users
+        const defaultAdmins = [
+            {
+                username: "jain",
+                email: "jain@fitscalez.com",
+                fullName: "Jain Admin",
+                password: "1234",
+                role: "admin",
+            },
+            {
+                username: "admin",
+                email: "admin@fitscalez.com",
+                fullName: "Fitscalez Admin",
+                password: "admin",
+                role: "admin",
+            },
+        ];
+
+        for (const adminData of defaultAdmins) {
+            const exists = await User.findOne({ username: adminData.username });
+            if (!exists) {
+                await User.create(adminData);
+                console.log(`  Seeded admin user: ${adminData.username}`);
+            }
         }
 
         console.log("\nDatabase seeding completed successfully!");
