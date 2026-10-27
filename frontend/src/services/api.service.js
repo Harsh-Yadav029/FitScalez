@@ -1,4 +1,18 @@
-export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+const getNormalizedApiBase = () => {
+    let raw = (import.meta.env.VITE_API_URL || "").trim();
+    if (!raw) {
+        return "http://localhost:5000/api/v1";
+    }
+    // Remove any trailing slashes
+    raw = raw.replace(/\/+$/, "");
+    // If user provided https://fitscalez.onrender.com (without /api/v1), auto-append /api/v1
+    if (!raw.endsWith("/api/v1")) {
+        raw = `${raw}/api/v1`;
+    }
+    return raw;
+};
+
+export const API_BASE = getNormalizedApiBase();
 
 export const getAuthToken = () => {
     if (typeof window === "undefined") return null;
@@ -17,6 +31,20 @@ export const setAuthToken = (token) => {
 export const getAuthHeaders = () => {
     const token = getAuthToken();
     return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+const parseJsonResponse = async (response) => {
+    const text = await response.text();
+    let data;
+    try {
+        data = text ? JSON.parse(text) : {};
+    } catch {
+        if (!response.ok) {
+            throw new Error(`Server returned HTTP ${response.status} (${response.statusText || "Route not found or server error"}). Verify that your backend is running.`);
+        }
+        throw new Error("Invalid response format from server (expected JSON).");
+    }
+    return data;
 };
 
 const handleFetchError = (err) => {
@@ -43,7 +71,7 @@ export const leadService = {
                 },
                 body: JSON.stringify(leadData),
             });
-            const data = await response.json();
+            const data = await parseJsonResponse(response);
             if (!response.ok) {
                 throw new Error(data.message || "Failed to submit lead");
             }
@@ -59,7 +87,7 @@ export const blogService = {
         try {
             const query = new URLSearchParams(params).toString();
             const response = await fetch(`${API_BASE}/blogs${query ? `?${query}` : ""}`);
-            const data = await response.json();
+            const data = await parseJsonResponse(response);
             if (!response.ok) {
                 throw new Error(data.message || "Failed to fetch blogs");
             }
@@ -71,7 +99,7 @@ export const blogService = {
     getBlogBySlug: async (slug) => {
         try {
             const response = await fetch(`${API_BASE}/blogs/${slug}`);
-            const data = await response.json();
+            const data = await parseJsonResponse(response);
             if (!response.ok) {
                 throw new Error(data.message || "Failed to fetch blog post");
             }
@@ -86,7 +114,7 @@ export const careerService = {
     getAllJobs: async () => {
         try {
             const response = await fetch(`${API_BASE}/careers/jobs`);
-            const data = await response.json();
+            const data = await parseJsonResponse(response);
             if (!response.ok) {
                 throw new Error(data.message || "Failed to fetch jobs");
             }
@@ -101,7 +129,7 @@ export const careerService = {
                 method: "POST",
                 body: formData, // Sending FormData directly for multipart/form-data
             });
-            const data = await response.json();
+            const data = await parseJsonResponse(response);
             if (!response.ok) {
                 throw new Error(data.message || "Failed to submit application");
             }
@@ -123,7 +151,7 @@ export const authService = {
                 credentials: "include",
                 body: JSON.stringify(credentials),
             });
-            const data = await response.json();
+            const data = await parseJsonResponse(response);
             if (!response.ok) {
                 throw new Error(data.message || "Login failed");
             }
@@ -143,7 +171,7 @@ export const authService = {
                 },
                 credentials: "include",
             });
-            const data = await response.json();
+            const data = await parseJsonResponse(response);
             if (!response.ok) {
                 throw new Error(data.message || "Not authenticated");
             }
@@ -161,7 +189,7 @@ export const authService = {
                 },
                 credentials: "include",
             });
-            const data = await response.json();
+            const data = await parseJsonResponse(response);
             return data;
         } catch (err) {
             handleFetchError(err);

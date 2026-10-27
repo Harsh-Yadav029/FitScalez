@@ -45,17 +45,26 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-// Base health check
-app.get("/api/v1/health", (req, res) => {
+// Base health check (supports both /api/v1/health and /health)
+app.get(["/api/v1/health", "/health"], (req, res) => {
     res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-// Route Declaration
+// Route Declaration (supports both /api/v1/* and root route aliases)
 app.use("/api/v1/users", userRouter);
+app.use("/users", userRouter);
+
 app.use("/api/v1/leads", leadRouter);
+app.use("/leads", leadRouter);
+
 app.use("/api/v1/blogs", blogRouter);
+app.use("/blogs", blogRouter);
+
 app.use("/api/v1/careers", careerRouter);
+app.use("/careers", careerRouter);
+
 app.use("/api/v1/analytics", analyticsRouter);
+app.use("/analytics", analyticsRouter);
 
 // Centralized Error Handling Middleware
 app.use((err, req, res, next) => {

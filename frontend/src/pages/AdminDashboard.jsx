@@ -39,6 +39,15 @@ const AdminDashboard = () => {
         verifyUser();
     }, []);
 
+    const safeJson = async (res) => {
+        try {
+            const text = await res.text();
+            return text ? JSON.parse(text) : {};
+        } catch {
+            return {};
+        }
+    };
+
     const fetchLeads = async () => {
         setLoadingLeads(true);
         try {
@@ -46,7 +55,7 @@ const AdminDashboard = () => {
                 headers: { ...getAuthHeaders() },
                 credentials: "include",
             });
-            const data = await res.json();
+            const data = await safeJson(res);
             setLeads(data.data?.leads || []);
         } catch (err) {
             console.error(err);
@@ -62,7 +71,7 @@ const AdminDashboard = () => {
                 headers: { ...getAuthHeaders() },
                 credentials: "include",
             });
-            const data = await res.json();
+            const data = await safeJson(res);
             setApplications(data.data?.applications || []);
         } catch (err) {
             console.error(err);
@@ -78,7 +87,7 @@ const AdminDashboard = () => {
                 headers: { ...getAuthHeaders() },
                 credentials: "include",
             });
-            const data = await res.json();
+            const data = await safeJson(res);
             setAnalyticsStats(data.data || null);
         } catch (err) {
             console.error(err);
