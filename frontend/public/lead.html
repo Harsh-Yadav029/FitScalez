@@ -1787,10 +1787,10 @@
 
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const user = document.getElementById('loginUser').value.trim();
+      const user = document.getElementById('loginUser').value.trim().toLowerCase();
       const pass = document.getElementById('loginPass').value;
 
-      if (user === 'jain' && pass === '1234') {
+      if ((user === 'jain' && pass === '1234') || (user === 'admin' && pass === 'admin')) {
         sessionStorage.setItem(AUTH_KEY, 'true');
         showDashboard();
       } else {
