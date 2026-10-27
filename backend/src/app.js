@@ -8,6 +8,7 @@ import userRouter from "./routes/user.routes.js";
 import leadRouter from "./routes/lead.routes.js";
 import blogRouter from "./routes/blog.routes.js";
 import careerRouter from "./routes/career.routes.js";
+import analyticsRouter from "./routes/analytics.routes.js";
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/leads", leadRouter);
 app.use("/api/v1/blogs", blogRouter);
 app.use("/api/v1/careers", careerRouter);
+app.use("/api/v1/analytics", analyticsRouter);
 
 // Centralized Error Handling Middleware
 app.use((err, req, res, next) => {

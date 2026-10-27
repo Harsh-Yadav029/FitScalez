@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SeoHelmet from "../components/SeoHelmet";
 import { leadService } from "../services/api.service";
+import { getLeadTelemetryContext } from "../services/tracker.service";
 
 const Lead = () => {
     const [step, setStep] = useState(1);
@@ -22,6 +23,7 @@ const Lead = () => {
         setError("");
 
         try {
+            const telemetry = await getLeadTelemetryContext();
             await leadService.createLead({
                 name,
                 email,
@@ -31,6 +33,7 @@ const Lead = () => {
                 budget: budget || "Not specified",
                 message: `Timeline: ${timeline}. Details: ${message}`,
                 source: "lead_funnel",
+                ...telemetry,
             });
             setSuccess(true);
         } catch (err) {

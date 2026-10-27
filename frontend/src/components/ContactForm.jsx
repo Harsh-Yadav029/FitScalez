@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { leadService } from "../services/api.service";
+import { getLeadTelemetryContext } from "../services/tracker.service";
 
 const ContactForm = ({ source = "contact_page", onSuccess }) => {
     const [formData, setFormData] = useState({
@@ -26,9 +27,11 @@ const ContactForm = ({ source = "contact_page", onSuccess }) => {
         setError("");
 
         try {
+            const telemetry = await getLeadTelemetryContext();
             await leadService.createLead({
                 ...formData,
                 source,
+                ...telemetry,
             });
             setSuccess(true);
             if (onSuccess) onSuccess();

@@ -20,6 +20,10 @@ const AdminDashboard = () => {
     const [applications, setApplications] = useState([]);
     const [loadingApps, setLoadingApps] = useState(false);
 
+    // Live Traffic Analytics state
+    const [analyticsStats, setAnalyticsStats] = useState(null);
+    const [loadingStats, setLoadingStats] = useState(false);
+
     // Selected lead for dossier / location modal
     const [selectedLead, setSelectedLead] = useState(null);
 
@@ -63,10 +67,24 @@ const AdminDashboard = () => {
         }
     };
 
+    const fetchAnalytics = async () => {
+        setLoadingStats(true);
+        try {
+            const res = await fetch(`${API_BASE}/analytics/stats`, { credentials: "include" });
+            const data = await res.json();
+            setAnalyticsStats(data.data || null);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoadingStats(false);
+        }
+    };
+
     useEffect(() => {
         if (user) {
             if (activeTab === "leads") fetchLeads();
             if (activeTab === "apps") fetchApplications();
+            if (activeTab === "traffic") fetchAnalytics();
         }
     }, [user, activeTab]);
 
@@ -103,7 +121,7 @@ const AdminDashboard = () => {
             return;
         }
 
-        const headers = ["Timestamp", "Name", "Email", "Phone", "Company", "Service", "Budget", "Message", "Status", "Source"];
+        const headers = ["Timestamp", "Name", "Email", "Phone", "Company", "Service", "Budget", "Message", "Status", "City", "Country", "Device", "OS", "IP"];
         const rows = leads.map((l) => [
             new Date(l.createdAt).toLocaleString("en-IN"),
             l.name || "",
@@ -114,7 +132,11 @@ const AdminDashboard = () => {
             l.budget || "",
             (l.message || "").replace(/"/g, '""'),
             l.status || "new",
-            l.source || "web",
+            l.location?.city || "",
+            l.location?.country || "",
+            l.device?.type || "",
+            l.device?.os || "",
+            l.location?.ip || "",
         ]);
 
         const csvContent = [headers.join(","), ...rows.map((r) => r.map((c) => `"${String(c || "")}"`).join(","))].join("\n");
@@ -155,7 +177,8 @@ const AdminDashboard = () => {
             l.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             l.phone?.includes(searchTerm) ||
             l.service?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            l.company?.toLowerCase().includes(searchTerm.toLowerCase());
+            l.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            l.location?.city?.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesStatus && matchesSearch;
     });
 
@@ -181,9 +204,9 @@ const AdminDashboard = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn btn-outline btn-sm"
-                            title="Open standalone live tracking & intelligence view"
+                            title="Open standalone local telemetry view"
                         >
-                            📊 Visitor Telemetry
+                            📊 Local Dossier
                         </a>
                         <button className="btn btn-outline btn-sm" onClick={handleLogout}>
                             🔒 Logout
@@ -213,12 +236,18 @@ const AdminDashboard = () => {
 
                 {/* Dashboard Tabs & Actions */}
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px", marginBottom: "20px" }}>
-                    <div style={{ display: "flex", gap: "10px" }}>
+                    <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                         <button
                             className={`btn ${activeTab === "leads" ? "btn-primary" : "btn-outline"}`}
                             onClick={() => setActiveTab("leads")}
                         >
                             📋 Inbound Leads ({leads.length})
+                        </button>
+                        <button
+                            className={`btn ${activeTab === "traffic" ? "btn-primary" : "btn-outline"}`}
+                            onClick={() => setActiveTab("traffic")}
+                        >
+                            🌐 Live Traffic (MongoDB)
                         </button>
                         <button
                             className={`btn ${activeTab === "apps" ? "btn-primary" : "btn-outline"}`}
@@ -238,6 +267,12 @@ const AdminDashboard = () => {
                             </button>
                         </div>
                     )}
+
+                    {activeTab === "traffic" && (
+                        <button className="btn btn-outline btn-sm" onClick={fetchAnalytics}>
+                            🔄 Refresh Traffic
+                        </button>
+                    )}
                 </div>
 
                 {/* Leads Tab Content */}
@@ -247,7 +282,7 @@ const AdminDashboard = () => {
                         <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", alignItems: "center", marginBottom: "20px" }}>
                             <input
                                 type="text"
-                                placeholder="🔍 Search by name, email, phone, company..."
+                                placeholder="🔍 Search by name, email, phone, city..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 style={{
@@ -292,9 +327,9 @@ const AdminDashboard = () => {
                                 <thead>
                                     <tr style={{ borderBottom: "1px solid var(--border)", color: "var(--text-muted)" }}>
                                         <th style={{ padding: "12px 8px" }}>Name / Contact</th>
+                                        <th style={{ padding: "12px 8px" }}>Location & Device</th>
                                         <th style={{ padding: "12px 8px" }}>Service</th>
                                         <th style={{ padding: "12px 8px" }}>Budget</th>
-                                        <th style={{ padding: "12px 8px" }}>Source / Date</th>
                                         <th style={{ padding: "12px 8px" }}>Status</th>
                                         <th style={{ padding: "12px 8px" }}>Message</th>
                                         <th style={{ padding: "12px 8px", textAlign: "center" }}>Actions</th>
@@ -318,17 +353,26 @@ const AdminDashboard = () => {
                                                 )}
                                             </td>
                                             <td style={{ padding: "14px 8px" }}>
-                                                <span style={{ fontWeight: "500" }}>{l.service}</span>
-                                            </td>
-                                            <td style={{ padding: "14px 8px" }}>{l.budget || "—"}</td>
-                                            <td style={{ padding: "14px 8px" }}>
-                                                <span style={{ fontSize: "0.75rem", background: "rgba(255,255,255,0.06)", padding: "3px 8px", borderRadius: "4px" }}>
-                                                    {l.source}
-                                                </span>
+                                                {l.location?.city ? (
+                                                    <div>
+                                                        <span style={{ fontSize: "0.82rem", fontWeight: "600" }}>
+                                                            📍 {l.location.city}, {l.location.country}
+                                                        </span>
+                                                        <div style={{ fontSize: "0.75rem", color: "var(--text-dim)" }}>
+                                                            {l.device?.type || "Desktop"} ({l.device?.os || "OS"})
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <span style={{ color: "var(--text-dim)", fontSize: "0.8rem" }}>Direct Web Form</span>
+                                                )}
                                                 <div style={{ fontSize: "0.72rem", color: "var(--text-dim)", marginTop: "4px" }}>
                                                     {new Date(l.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                                                 </div>
                                             </td>
+                                            <td style={{ padding: "14px 8px" }}>
+                                                <span style={{ fontWeight: "500" }}>{l.service}</span>
+                                            </td>
+                                            <td style={{ padding: "14px 8px" }}>{l.budget || "—"}</td>
                                             <td style={{ padding: "14px 8px" }}>
                                                 <select
                                                     value={l.status}
@@ -358,9 +402,9 @@ const AdminDashboard = () => {
                                                         onClick={() => setSelectedLead(l)}
                                                         className="btn btn-outline btn-sm"
                                                         style={{ padding: "4px 8px", fontSize: "0.75rem" }}
-                                                        title="View full lead info"
+                                                        title="View full lead dossier"
                                                     >
-                                                        👁️ View
+                                                        👁️ Dossier
                                                     </button>
                                                     <button
                                                         type="button"
@@ -377,6 +421,75 @@ const AdminDashboard = () => {
                                     ))}
                                 </tbody>
                             </table>
+                        )}
+                    </div>
+                )}
+
+                {/* Live Traffic Tab Content */}
+                {activeTab === "traffic" && (
+                    <div className="card" style={{ padding: "24px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "10px" }}>
+                            <h3>Real-Time Visitors & Telemetry (Stored in MongoDB)</h3>
+                            <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>Auto-purges after 90 days</div>
+                        </div>
+
+                        {loadingStats ? (
+                            <p style={{ padding: "30px 0", textAlign: "center", color: "var(--text-muted)" }}>Loading visitor metrics from MongoDB...</p>
+                        ) : !analyticsStats ? (
+                            <p style={{ padding: "30px 0", textAlign: "center", color: "var(--text-muted)" }}>No analytics records found yet. Browse pages on the website to populate!</p>
+                        ) : (
+                            <div>
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px", marginBottom: "24px" }}>
+                                    <div style={{ padding: "16px", background: "var(--bg2)", borderRadius: "8px", border: "1px solid var(--border)" }}>
+                                        <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", textTransform: "uppercase" }}>Total Page Views</div>
+                                        <div style={{ fontSize: "1.6rem", fontWeight: "700", marginTop: "4px" }}>{analyticsStats.totalPageViews}</div>
+                                    </div>
+                                    <div style={{ padding: "16px", background: "var(--bg2)", borderRadius: "8px", border: "1px solid var(--border)" }}>
+                                        <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", textTransform: "uppercase" }}>Unique Visitors</div>
+                                        <div style={{ fontSize: "1.6rem", fontWeight: "700", marginTop: "4px", color: "var(--primary-light)" }}>{analyticsStats.uniqueVisitors}</div>
+                                    </div>
+                                    <div style={{ padding: "16px", background: "var(--bg2)", borderRadius: "8px", border: "1px solid var(--border)" }}>
+                                        <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", textTransform: "uppercase" }}>Views Last 24 Hours</div>
+                                        <div style={{ fontSize: "1.6rem", fontWeight: "700", marginTop: "4px", color: "var(--accent2)" }}>{analyticsStats.todayViews}</div>
+                                    </div>
+                                </div>
+
+                                <h4 style={{ marginBottom: "14px" }}>Recent Activity Stream</h4>
+                                <div style={{ overflowX: "auto" }}>
+                                    <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", fontSize: "0.85rem" }}>
+                                        <thead>
+                                            <tr style={{ borderBottom: "1px solid var(--border)", color: "var(--text-muted)" }}>
+                                                <th style={{ padding: "10px 8px" }}>Time</th>
+                                                <th style={{ padding: "10px 8px" }}>Page Path</th>
+                                                <th style={{ padding: "10px 8px" }}>Location</th>
+                                                <th style={{ padding: "10px 8px" }}>Device / OS</th>
+                                                <th style={{ padding: "10px 8px" }}>Device ID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {analyticsStats.recentViews?.map((view) => (
+                                                <tr key={view._id} style={{ borderBottom: "1px solid var(--border)" }}>
+                                                    <td style={{ padding: "10px 8px", color: "var(--text-dim)", whiteSpace: "nowrap" }}>
+                                                        {new Date(view.createdAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+                                                    </td>
+                                                    <td style={{ padding: "10px 8px" }}>
+                                                        <span style={{ fontWeight: "600", color: "var(--primary-light)" }}>{view.path}</span>
+                                                    </td>
+                                                    <td style={{ padding: "10px 8px" }}>
+                                                        {view.location?.city ? `📍 ${view.location.city}, ${view.location.country}` : "—"}
+                                                    </td>
+                                                    <td style={{ padding: "10px 8px" }}>
+                                                        {view.device?.type || "Desktop"} ({view.device?.os || "OS"} / {view.device?.browser || "Browser"})
+                                                    </td>
+                                                    <td style={{ padding: "10px 8px", fontFamily: "monospace", fontSize: "0.78rem", color: "var(--text-dim)" }}>
+                                                        {view.deviceId}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         )}
                     </div>
                 )}
@@ -438,7 +551,7 @@ const AdminDashboard = () => {
                     </div>
                 )}
 
-                {/* Lead Detail Modal */}
+                {/* Lead Detail Dossier Modal */}
                 {selectedLead && (
                     <div
                         style={{
@@ -457,16 +570,21 @@ const AdminDashboard = () => {
                         <div
                             className="card"
                             style={{
-                                maxWidth: "560px",
+                                maxWidth: "600px",
                                 width: "100%",
                                 padding: "30px",
                                 position: "relative",
+                                maxHeight: "90vh",
+                                overflowY: "auto",
                                 boxShadow: "0 20px 40px rgba(0,0,0,0.8)",
                             }}
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", borderBottom: "1px solid var(--border)", paddingBottom: "14px" }}>
-                                <h3>Inquiry Details</h3>
+                                <div>
+                                    <h3>Visitor Intelligence Dossier</h3>
+                                    <span style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>Stored securely in MongoDB Atlas</span>
+                                </div>
                                 <button
                                     className="btn btn-outline btn-sm"
                                     onClick={() => setSelectedLead(null)}
@@ -495,16 +613,34 @@ const AdminDashboard = () => {
                                     <span style={{ color: "var(--text-muted)" }}>Budget: </span>
                                     {selectedLead.budget || "Not specified"}
                                 </div>
-                                <div>
-                                    <span style={{ color: "var(--text-muted)" }}>Source: </span>
-                                    {selectedLead.source}
-                                </div>
-                                <div>
-                                    <span style={{ color: "var(--text-muted)" }}>Submitted: </span>
-                                    {new Date(selectedLead.createdAt).toLocaleString("en-IN")}
-                                </div>
-                                <div style={{ marginTop: "10px", padding: "14px", background: "var(--bg2)", borderRadius: "8px", border: "1px solid var(--border)" }}>
-                                    <div style={{ color: "var(--text-muted)", fontSize: "0.8rem", marginBottom: "6px" }}>Message Details:</div>
+
+                                {/* Rich Geolocation & Device Card */}
+                                {selectedLead.location && (
+                                    <div style={{ padding: "14px", background: "var(--bg2)", borderRadius: "8px", border: "1px solid var(--border)", display: "grid", gap: "6px", fontSize: "0.83rem" }}>
+                                        <div style={{ fontWeight: "600", color: "var(--primary-light)" }}>📍 Geolocation & Device Intelligence:</div>
+                                        <div><strong>Location:</strong> {selectedLead.location.city || "Unknown City"}, {selectedLead.location.country || "India"} ({selectedLead.location.region || ""})</div>
+                                        <div><strong>Network IP & ISP:</strong> {selectedLead.location.ip || "—"} ({selectedLead.location.isp || "Broadband"})</div>
+                                        <div><strong>Device:</strong> {selectedLead.device?.type || "Desktop"} — {selectedLead.device?.os || "OS"} ({selectedLead.device?.browser || "Browser"}) | Screen: {selectedLead.device?.screen || "—"}</div>
+                                        <div><strong>Visit Count:</strong> {selectedLead.visitCount || 1} session(s) {selectedLead.isReturning ? "(Returning Visitor)" : "(First-time Visitor)"}</div>
+                                    </div>
+                                )}
+
+                                {/* User Browsing Journey */}
+                                {selectedLead.journey && selectedLead.journey.length > 0 && (
+                                    <div style={{ padding: "12px", background: "var(--bg2)", borderRadius: "8px", border: "1px solid var(--border)", fontSize: "0.83rem" }}>
+                                        <div style={{ fontWeight: "600", color: "var(--primary-light)", marginBottom: "6px" }}>🧭 Browsing Journey:</div>
+                                        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                                            {selectedLead.journey.map((path, idx) => (
+                                                <span key={idx} style={{ background: "rgba(255,255,255,0.06)", padding: "3px 8px", borderRadius: "4px", fontFamily: "monospace" }}>
+                                                    {path}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div style={{ marginTop: "6px", padding: "14px", background: "var(--bg2)", borderRadius: "8px", border: "1px solid var(--border)" }}>
+                                    <div style={{ color: "var(--text-muted)", fontSize: "0.8rem", marginBottom: "6px" }}>Inquiry Message:</div>
                                     <div style={{ whiteSpace: "pre-wrap", lineHeight: "1.5" }}>{selectedLead.message}</div>
                                 </div>
                             </div>
