@@ -316,33 +316,40 @@ input, textarea, select {
   transition: var(--transition);
 }
 
-.nav-links a:hover,
+.nav-links a:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.05);
+}
+
 .nav-links a.active {
   color: var(--white);
-  background: rgba(108, 99, 255, 0.1);
+  background: rgba(30, 32, 54, 0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .nav-cta {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
 }
 
 .nav-phone {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #ff3366;
 }
 
 .nav-phone a {
-  color: var(--accent2);
+  color: #00E599;
   font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.2px;
 }
 
 .nav-phone a:hover {
-  color: var(--white);
+  color: #43e97b;
 }
 
 /* Hamburger */
