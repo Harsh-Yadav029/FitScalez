@@ -3560,7 +3560,24 @@ footer {
   }
 }
 
+/* Legal & Sitemap Responsive Layouts */
+@media (max-width: 900px) {
+  .legal-layout-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .legal-sidebar {
+    position: relative !important;
+    top: 0 !important;
+    margin-bottom: 20px !important;
+  }
+  .sitemap-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
 
-
-
-
+@media (max-width: 600px) {
+  .legal-subgrid {
+    grid-template-columns: 1fr !important;
+  }
+}

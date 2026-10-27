@@ -17,7 +17,7 @@ import Lead from "./pages/Lead";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import AdminDashboard from "./pages/AdminDashboard";
-import { Privacy, Terms } from "./pages/Legal";
+import { Privacy, Terms, Sitemap } from "./pages/Legal";
 
 function MainContent() {
     useScrollAnimation();
@@ -44,6 +44,7 @@ function MainContent() {
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/terms" element={<Terms />} />
+                    <Route path="/sitemap" element={<Sitemap />} />
                 </Routes>
             </main>
             <Footer />

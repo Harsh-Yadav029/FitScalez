@@ -68,7 +68,7 @@ const Footer = () => {
                     <div className="footer-bottom-links">
                         <Link to="/privacy">Privacy Policy</Link>
                         <Link to="/terms">Terms of Service</Link>
-                        <a href="/sitemap.xml">Sitemap</a>
+                        <Link to="/sitemap">Sitemap</Link>
                     </div>
                 </div>
             </div>
