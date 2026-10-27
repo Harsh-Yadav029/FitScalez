@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import dns from "dns";
 import { Blog } from "../models/blog.model.js";
 import { Job } from "../models/job.model.js";
 
@@ -9,8 +10,14 @@ dotenv.config({
     path: "./.env",
 });
 
+// Configure Google/Cloudflare DNS for Atlas SRV resolution
+try {
+    dns.setServers(["8.8.8.8", "8.8.4.4", "1.1.1.1"]);
+} catch (e) {
+    // Fallback if not supported
+}
+
 const articlesDataPath = path.resolve("../articles_data.json");
-const blogDirPath = path.resolve("../blog");
 
 const seedDatabase = async () => {
     try {
@@ -23,16 +30,7 @@ const seedDatabase = async () => {
             console.log(`Found ${rawArticles.length} articles to seed.`);
 
             for (const article of rawArticles) {
-                let htmlContent = article.summary || "";
-                const htmlFilePath = path.join(blogDirPath, `${article.slug}.html`);
-
-                if (fs.existsSync(htmlFilePath)) {
-                    const fullHtml = fs.readFileSync(htmlFilePath, "utf-8");
-                    const articleMatch = fullHtml.match(/<article[\s\S]*?<\/article>/i);
-                    if (articleMatch) {
-                        htmlContent = articleMatch[0];
-                    }
-                }
+                const htmlContent = article.contentHtml || article.summary || "";
 
                 await Blog.findOneAndUpdate(
                     { slug: article.slug },

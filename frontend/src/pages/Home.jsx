@@ -809,7 +809,28 @@ const Home = () => {
                             </div>
                             <h3>Divyansh</h3>
                             <div className="role">Lead Web Developer</div>
-                            <p className="bio">MERN Stack expert specializing in building fast, scalable and stunning web applications. Contact: <a href="tel:+919599433616" style={{ color: "var(--primary-light)" }}>+91 9599433616</a></p>
+                            <p className="bio">MERN Stack expert specializing in building fast, scalable and stunning web applications.</p>
+                            <div style={{ marginTop: "14px" }}>
+                                <a
+                                    href="tel:+919599433616"
+                                    style={{
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "6px",
+                                        fontSize: "0.82rem",
+                                        fontWeight: 600,
+                                        color: "var(--primary-light)",
+                                        background: "rgba(108, 99, 255, 0.12)",
+                                        border: "1px solid rgba(108, 99, 255, 0.3)",
+                                        padding: "6px 14px",
+                                        borderRadius: "50px",
+                                        textDecoration: "none",
+                                        transition: "all 0.25s ease"
+                                    }}
+                                >
+                                    📞 +91 9599433616
+                                </a>
+                            </div>
                         </div>
 
                         <div className="card team-card">
