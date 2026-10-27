@@ -18,6 +18,9 @@ const SeoHelmet = ({
             <meta name="description" content={description} />
             {keywords && <meta name="keywords" content={keywords} />}
             <link rel="canonical" href={fullCanonical} />
+            <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+            <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png" />
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png" />
 
             {/* Open Graph */}
             <meta property="og:title" content={title} />
