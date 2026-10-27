@@ -112,6 +112,8 @@ const seedDatabase = async () => {
                 { upsert: true, new: true }
             );
             console.log(`  Seeded job: ${job.title}`);
+        }
+
         // 3. Seed Default Admin Users
         const defaultAdmins = [
             {
