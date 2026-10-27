@@ -164,7 +164,7 @@ const Home = () => {
                 <div className="hero-content">
                     <div className="hero-text">
                         <div className="hero-badge animate-on-scroll">
-                            <span className="badge">#1 Digital Agency in Delhi</span>
+                            <span className="badge">#TOP DIGITAL AGENCY IN DELHI</span>
                         </div>
 
                         <h1 className="hero-title animate-on-scroll delay-1">
