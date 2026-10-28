@@ -195,7 +195,7 @@ const About = () => {
                     <div className="team-grid">
                         <div className="card team-card animate-on-scroll">
                             <div className="team-avatar">
-                                <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(255,101,132,0.2))" }}>👨‍💼</div>
+                                <div className="avatar-bg">👨‍💼</div>
                             </div>
                             <h3>Mr. Hariom Saini</h3>
                             <div className="role">Founder & CEO</div>
@@ -209,7 +209,7 @@ const About = () => {
 
                         <div className="card team-card animate-on-scroll delay-1">
                             <div className="team-avatar">
-                                <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(67,233,123,0.2), rgba(56,249,215,0.2))" }}>👩‍💼</div>
+                                <div className="avatar-bg">👩‍💼</div>
                             </div>
                             <h3>Ms. Anshul Sharma</h3>
                             <div className="role">Partner & Strategy Director</div>
@@ -223,7 +223,7 @@ const About = () => {
 
                         <div className="card team-card animate-on-scroll delay-2">
                             <div className="team-avatar">
-                                <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(108,99,255,0.2))" }}>👨‍💻</div>
+                                <div className="avatar-bg">👨‍💻</div>
                             </div>
                             <h3>Divyansh</h3>
                             <div className="role">Lead Web Developer</div>
@@ -237,7 +237,7 @@ const About = () => {
 
                         <div className="card team-card animate-on-scroll delay-3">
                             <div className="team-avatar">
-                                <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(251,146,60,0.2), rgba(255,101,132,0.2))" }}>🎨</div>
+                                <div className="avatar-bg">🎨</div>
                             </div>
                             <h3>Creative Team</h3>
                             <div className="role">Design & Content</div>

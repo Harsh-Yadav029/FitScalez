@@ -214,17 +214,19 @@ const Home = () => {
                         <div className="hero-card-stack float-animation">
                             <div className="glass-card hero-main-card">
                                 <div className="card-header">
-                                    <img
-                                        src="/images/logo.png"
-                                        alt="Fitscalez"
-                                        style={{ width: "36px", height: "36px", borderRadius: "8px", flexShrink: 0 }}
-                                    />
-                                    <div>
-                                        <div className="card-title">Campaign Performance</div>
-                                        <div className="card-sub">Fitscalez Growth Engine</div>
+                                    <div className="card-header-brand">
+                                        <div className="card-header-icon">
+                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                                                <polyline points="16 7 22 7 22 13" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div className="card-title">Campaign Performance</div>
+                                            <div className="card-sub">Fitscalez Growth Engine</div>
+                                        </div>
                                     </div>
                                 </div>
-
                                 <div className="metric-grid">
                                     <div className="metric-item">
                                         <div className="metric-value">+342%</div>
@@ -251,7 +253,7 @@ const Home = () => {
                                             <span>94%</span>
                                         </div>
                                         <div className="progress-bar">
-                                            <div className="progress-fill" data-width="94%" style={{ width: "0%" }}></div>
+                                            <div className="progress-fill" style={{ width: "94%" }}></div>
                                         </div>
                                     </div>
                                     <div className="progress-item">
@@ -260,7 +262,7 @@ const Home = () => {
                                             <span>78%</span>
                                         </div>
                                         <div className="progress-bar">
-                                            <div className="progress-fill" data-width="78%" style={{ width: "0%" }}></div>
+                                            <div className="progress-fill" style={{ width: "78%" }}></div>
                                         </div>
                                     </div>
                                     <div className="progress-item">
@@ -269,15 +271,16 @@ const Home = () => {
                                             <span>87%</span>
                                         </div>
                                         <div className="progress-bar">
-                                            <div className="progress-fill" data-width="87%" style={{ width: "0%" }}></div>
+                                            <div className="progress-fill" style={{ width: "87%" }}></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+
                             <div className="floating-badge floating-badge-1">
                                 <div className="dot"></div>
-                                Live Projects: 12
+                                <span>Live Projects: 12</span>
                             </div>
 
                             <div className="floating-badge floating-badge-2">
@@ -779,7 +782,6 @@ const Home = () => {
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
                     <div className="section-header animate-on-scroll">
-                        <span className="section-tag">Our Team</span>
                         <h2 className="section-title">The <span className="gradient-text">Experts</span> Behind Your Growth</h2>
                         <p className="section-desc">Passionate professionals dedicated to making your business succeed in the digital world.</p>
                     </div>
@@ -787,7 +789,7 @@ const Home = () => {
                     <div className="team-grid">
                         <div className="card team-card animate-on-scroll">
                             <div className="team-avatar">
-                                <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(255,101,132,0.2))" }}>👨‍💼</div>
+                                <div className="avatar-bg">👨‍💼</div>
                             </div>
                             <h3>Mr. Hariom Saini</h3>
                             <div className="role">Founder & CEO</div>
@@ -801,7 +803,7 @@ const Home = () => {
 
                         <div className="card team-card animate-on-scroll delay-1">
                             <div className="team-avatar">
-                                <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(67,233,123,0.2), rgba(56,249,215,0.2))" }}>👩‍💼</div>
+                                <div className="avatar-bg">👩‍💼</div>
                             </div>
                             <h3>Ms. Anshul Sharma</h3>
                             <div className="role">Partner & Strategy Director</div>
@@ -815,7 +817,7 @@ const Home = () => {
 
                         <div className="card team-card animate-on-scroll delay-2">
                             <div className="team-avatar">
-                                <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(108,99,255,0.2))" }}>👨‍💻</div>
+                                <div className="avatar-bg">👨‍💻</div>
                             </div>
                             <h3>Divyansh</h3>
                             <div className="role">Lead Web Developer</div>
@@ -829,7 +831,7 @@ const Home = () => {
 
                         <div className="card team-card animate-on-scroll delay-3">
                             <div className="team-avatar">
-                                <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(251,146,60,0.2), rgba(255,101,132,0.2))" }}>🎨</div>
+                                <div className="avatar-bg">🎨</div>
                             </div>
                             <h3>Creative Team</h3>
                             <div className="role">Design & Content</div>

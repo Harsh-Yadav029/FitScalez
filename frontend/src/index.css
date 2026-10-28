@@ -661,8 +661,40 @@ input, textarea, select {
 .hero-main-card .card-header {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 22px;
+}
+
+.card-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(13, 16, 26, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.card-status-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00E599;
+  box-shadow: 0 0 10px #00E599;
+  animation: pulse 2s infinite;
 }
 
 .card-header-icon {
@@ -714,8 +746,8 @@ input, textarea, select {
 }
 
 .metric-value {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 1.55rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.65rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #9d8df1;
@@ -804,13 +836,19 @@ input, textarea, select {
 }
 
 .floating-badge-1 {
-  top: -16px;
-  right: -16px;
+  top: -14px;
+  right: 20px;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 700;
 }
 
 .floating-badge-2 {
-  bottom: -16px;
-  left: -16px;
+  bottom: -18px;
+  left: -20px;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 700;
 }
 
 @keyframes pulse {
@@ -1441,6 +1479,9 @@ input, textarea, select {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--gradient, linear-gradient(135deg, #6c63ff 0%, #ff6584 100%));
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
 }
 
 .team-card h3 {
@@ -1472,9 +1513,18 @@ input, textarea, select {
   flex: 1 1 auto;
   min-height: 80px;
   margin-bottom: 20px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  text-align: center;
+}
+
+.team-card .bio a {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline;
+}
+
+.team-card .bio a:hover {
+  text-decoration: underline;
 }
 
 .team-social {
