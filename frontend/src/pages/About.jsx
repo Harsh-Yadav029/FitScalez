@@ -193,53 +193,61 @@ const About = () => {
                     </FadeIn>
 
                     <div className="team-grid">
-                        <SpotlightCard className="team-card" spotlightColor="rgba(108, 99, 255, 0.18)">
+                        <div className="card team-card animate-on-scroll">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(255,101,132,0.2))" }}>👨‍💼</div>
                             </div>
                             <h3>Mr. Hariom Saini</h3>
                             <div className="role">Founder & CEO</div>
-                            <p className="bio">Visionary leader and entrepreneur. Built Fitscalez from the ground up with a mission to democratize digital excellence for Indian businesses.</p>
+                            <p className="bio">Visionary entrepreneur with expertise in business strategy and digital transformation. Built Fitscalez to empower Indian businesses online.</p>
                             <div className="team-social">
-                                <a href="#">💼</a><a href="#">📸</a><a href="#">🐦</a>
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
+                                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">🐦</a>
                             </div>
-                        </SpotlightCard>
+                        </div>
 
-                        <SpotlightCard className="team-card" spotlightColor="rgba(67, 233, 123, 0.18)">
+                        <div className="card team-card animate-on-scroll delay-1">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(67,233,123,0.2), rgba(56,249,215,0.2))" }}>👩‍💼</div>
                             </div>
                             <h3>Ms. Anshul Sharma</h3>
-                            <div className="role">Co-Founder & Strategy Director</div>
-                            <p className="bio">Digital marketing strategist with deep expertise in brand building, content strategy, and growth marketing across diverse industries.</p>
+                            <div className="role">Partner & Strategy Director</div>
+                            <p className="bio">Expert in digital marketing strategy and brand development. Drives growth for clients with data-driven insights and creative solutions.</p>
                             <div className="team-social">
-                                <a href="#">💼</a><a href="#">📸</a><a href="#">🐦</a>
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
+                                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">🐦</a>
                             </div>
-                        </SpotlightCard>
+                        </div>
 
-                        <SpotlightCard className="team-card" spotlightColor="rgba(56, 189, 248, 0.2)">
+                        <div className="card team-card animate-on-scroll delay-2">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(108,99,255,0.2))" }}>👨‍💻</div>
                             </div>
                             <h3>Divyansh</h3>
                             <div className="role">Lead Web Developer</div>
-                            <p className="bio">MERN Stack specialist delivering fast, secure & scalable web applications. Available for direct consultations and project discussions.</p>
+                            <p className="bio">MERN Stack expert specializing in building fast, scalable and stunning web applications. Contact: <a href="tel:+919599433616" style={{ color: "var(--primary-light)" }}>+91 9599433616</a></p>
                             <div className="team-social">
-                                <a href="tel:+919599433616">📞</a><a href="#">💼</a><a href="#">🐙</a>
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+                                <a href="tel:+919599433616" aria-label="Call Divyansh">📞</a>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">🐙</a>
                             </div>
-                        </SpotlightCard>
+                        </div>
 
-                        <SpotlightCard className="team-card" spotlightColor="rgba(251, 146, 60, 0.18)">
+                        <div className="card team-card animate-on-scroll delay-3">
                             <div className="team-avatar">
                                 <div className="avatar-bg" style={{ background: "linear-gradient(135deg, rgba(251,146,60,0.2), rgba(255,101,132,0.2))" }}>🎨</div>
                             </div>
-                            <h3>Design Studio</h3>
-                            <div className="role">Creative & Content Team</div>
-                            <p className="bio">Talented designers, content creators, video editors and photographers who craft stunning visual identities and engaging content.</p>
+                            <h3>Creative Team</h3>
+                            <div className="role">Design & Content</div>
+                            <p className="bio">Our talented designers, content creators and video editors work together to create stunning visual identities and engaging content.</p>
                             <div className="team-social">
-                                <a href="#">🎨</a><a href="#">📸</a><a href="#">🐦</a>
+                                <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" aria-label="Dribbble">🎨</a>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">🏀</a>
+                                <a href="https://behance.net" target="_blank" rel="noopener noreferrer" aria-label="Behance">📸</a>
                             </div>
-                        </SpotlightCard>
+                        </div>
                     </div>
                 </div>
             </section>
