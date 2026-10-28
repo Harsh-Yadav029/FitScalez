@@ -5,38 +5,42 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-/* ---- CSS Variables / Design Tokens ---- */
+/* ---- CSS Variables / Design Tokens (FITSCALEZ DIGITAL GROWTH STUDIO) ---- */
 :root {
-  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --primary: #6c63ff;
-  --primary-dark: #5a54d4;
-  --primary-light: #8b85ff;
-  --accent: #ff6584;
-  --accent2: #00E599;
-  --emerald: #00E599;
-  --emerald-glow: rgba(0, 229, 153, 0.35);
-  --bg: #07080c;
-  --bg2: #0d0f16;
-  --bg3: #121520;
-  --card: #10121b;
-  --card2: #161925;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-highlight: rgba(255, 255, 255, 0.18);
-  --text: #f4f4f7;
-  --text-muted: #9ba1b5;
-  --text-dim: #646a80;
-  --white: #ffffff;
-  --gradient: linear-gradient(135deg, #6c63ff 0%, #38bdf8 50%, #00e599 100%);
-  --gradient2: linear-gradient(135deg, #00E599 0%, #38BDF8 100%);
-  --glow: 0 0 50px rgba(108, 99, 255, 0.25);
-  --glow-accent: 0 0 40px rgba(0, 229, 153, 0.2);
-  --shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-  --radius: 14px;
-  --radius-lg: 24px;
-  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --font-mono: 'IBM Plex Mono', monospace;
+  
+  /* Color Tokens */
+  --bg: #101010;
+  --bg-primary: #101010;
+  --bg2: #191919;
+  --bg3: #222222;
+  --card: #191919;
+  --card2: #222222;
+  --surface-elevated: #222222;
+  
+  --text: #F5F3EF;
+  --text-primary: #F5F3EF;
+  --text-muted: #929292;
+  --text-dim: #707070;
+  --white: #FFFFFF;
+  
+  --primary: #F2A65A;
+  --primary-dark: #d98d41;
+  --primary-light: #f7bc82;
+  --accent: #F2A65A;
+  --accent-amber: #F2A65A;
+  --accent-lime: #C8F169;
+  
+  --border: #343434;
+  --border-subtle: #262626;
+  --border-highlight: #484848;
+  --border-light: #DEDBD4;
+  
+  --radius: 6px;
+  --radius-lg: 12px;
+  --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   --nav-height: 80px;
 }
 

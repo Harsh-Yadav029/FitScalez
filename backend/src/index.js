@@ -1,10 +1,17 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Ensure .env is loaded reliably whether run from /backend or project root
 dotenv.config({
-    path: "./.env",
+    path: path.resolve(__dirname, "../.env"),
 });
+dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
@@ -35,4 +42,3 @@ connectDB()
         console.error("MongoDB connection failed, starting server in fallback mode: ", err.message);
         startServer();
     });
-
