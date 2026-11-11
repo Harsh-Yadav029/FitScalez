@@ -81,8 +81,24 @@ export async function getGeoContext() {
     return null;
 }
 
+let isBackendOffline = false;
+let lastCheckTime = 0;
+
 // Track page view and send to MongoDB backend
 export async function trackPageView(path, title) {
+    if (typeof window === "undefined") return;
+
+    // In local dev without an explicit VITE_API_URL, do not attempt to ping port 5000 if backend is offline
+    if (!import.meta.env.VITE_API_URL && window.location.hostname === "localhost" && isBackendOffline) {
+        return;
+    }
+
+    // If backend was detected offline, avoid spamming failed network calls on every route transition
+    const now = Date.now();
+    if (isBackendOffline && now - lastCheckTime < 120000) {
+        return;
+    }
+
     try {
         const deviceId = getOrCreateDeviceId();
         const visitCount = parseInt(localStorage.getItem(STORAGE_KEYS.VISIT_COUNT) || "0", 10) + 1;
@@ -118,7 +134,14 @@ export async function trackPageView(path, title) {
                 device,
                 location,
             }),
-        }).catch(() => {});
+        })
+            .then(() => {
+                isBackendOffline = false;
+            })
+            .catch(() => {
+                isBackendOffline = true;
+                lastCheckTime = Date.now();
+            });
     } catch {
         // Never crash user experience
     }

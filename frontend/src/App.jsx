@@ -5,6 +5,10 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import PageProgressBar from "./components/PageProgressBar";
+import SmoothScroll from "./components/utils/SmoothScroll";
+import Cursor from "./components/Cursor";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import { useScrollAnimation } from "./hooks/useScrollAnimation";
 import { trackPageView } from "./services/tracker.service";
@@ -17,8 +21,8 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import Career from "./pages/Career";
 import Lead from "./pages/Lead";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
+import Blog from "./pages/Blog.jsx";
+import BlogPost from "./pages/BlogPost.jsx";
 import AdminDashboard from "./pages/AdminDashboard";
 import { Privacy, Terms, Sitemap } from "./pages/Legal";
 
@@ -27,6 +31,16 @@ function MainContent() {
     const location = useLocation();
 
     useEffect(() => {
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 40,
+            easing: "ease-out-cubic",
+        });
+    }, []);
+
+    useEffect(() => {
+        AOS.refresh();
         trackPageView(location.pathname, document.title);
     }, [location.pathname]);
 
@@ -51,6 +65,7 @@ function MainContent() {
                             <Route path="/projects" element={<Projects />} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/career" element={<Career />} />
+                            <Route path="/careers" element={<Career />} />
                             <Route path="/lead" element={<Lead />} />
                             <Route path="/blog" element={<Blog />} />
                             <Route path="/blog/:slug" element={<BlogPost />} />
@@ -69,9 +84,12 @@ function MainContent() {
 
 function App() {
     return (
-        <Router>
-            <MainContent />
-        </Router>
+        <SmoothScroll>
+            <Cursor />
+            <Router>
+                <MainContent />
+            </Router>
+        </SmoothScroll>
     );
 }
 

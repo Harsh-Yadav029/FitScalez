@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SeoHelmet from "../components/SeoHelmet";
+import { TypeAnimation } from "react-type-animation";
+import Magnet from "../components/effects/Magnet";
+import BlurText from "../components/effects/BlurText";
+import { FiArrowUpRight, FiTrendingUp } from "react-icons/fi";
+import HomeServices from "../components/home/HomeServices";
+import HomeProjects from "../components/home/Projects";
+import LetsWorkTogether from "../components/home/LetsWorkTogether";
 
 const Home = () => {
     // Typewriter effect state
@@ -157,134 +164,180 @@ const Home = () => {
             />
 
             {/* ============ HERO SECTION ============ */}
-            <section className="hero" id="home">
-                <div className="hero-bg"></div>
-                <div className="hero-grid"></div>
+            <section id="Banner" className="relative pt-8 lg:pt-16 overflow-hidden pb-12 lg:pb-20">
+                {/* Ambient Terracotta Glow Orbs */}
+                <div className="pointer-events-none absolute inset-0 -z-10">
+                    <div className="absolute left-[-10%] top-10 h-80 w-80 rounded-full bg-[#BF4A1A]/12 blur-3xl" />
+                    <div className="absolute right-[-8%] top-36 h-80 w-80 rounded-full bg-[#BF4A1A]/8 blur-3xl" />
+                </div>
 
-                <div className="hero-content">
-                    <div className="hero-text">
-                        <div className="hero-badge animate-on-scroll">
-                            <span className="badge">#TOP DIGITAL AGENCY IN DELHI</span>
+                <div className="container">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                        {/* Left Column: Typography & CTAs */}
+                        <div className="lg:col-span-7 bannerText">
+                            <div className="inline-flex items-center gap-2 rounded-full border border-Primary/15 bg-brand px-3.5 py-1.5 shadow-sm mb-4">
+                                <span className="size-2 rounded-full bg-coffee animate-pulse" />
+                                <span className="font-poppins text-xs font-semibold tracking-wider uppercase text-Primary/80">
+                                    #Top Digital & MERN Stack Agency in Delhi
+                                </span>
+                            </div>
+
+                            <h1 className="font-soldier text-Primary text-[46px] sm:text-6xl md:text-7xl lg:text-[80px] font-bold uppercase tracking-tight leading-[0.95] mb-4">
+                                We Build <span className="text-coffee">Digital Systems</span>
+                                <div className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-poppins text-second font-medium mt-2 normal-case tracking-normal">
+                                    <TypeAnimation
+                                        sequence={[
+                                            "Websites That Convert.",
+                                            1600,
+                                            "Custom MERN Stack Apps.",
+                                            1600,
+                                            "High-ROI SEO Campaigns.",
+                                            1600,
+                                            "Viral Social Strategies.",
+                                            1600,
+                                            "Brand Identity & Media.",
+                                            1600,
+                                        ]}
+                                        speed={50}
+                                        repeat={Infinity}
+                                        wrapper="span"
+                                    />
+                                </div>
+                            </h1>
+
+                            <div className="max-w-xl text-second/85 font-poppins text-sm sm:text-base leading-relaxed mb-8">
+                                <BlurText
+                                    text="Fitscalez is India's premier Web Development & Digital Marketing Agency helping businesses nationwide scale with cutting-edge MERN engineering, conversion design, and data-driven growth."
+                                    delay={180}
+                                    animateBy="words"
+                                    direction="top"
+                                />
+                            </div>
+
+                            {/* Dual Magnetic Buttons */}
+                            <div className="flex flex-wrap items-center gap-4 mb-10">
+                                <Magnet padding={15} disabled={false} magnetStrength={3}>
+                                    <div>
+                                        <Link
+                                            to="/contact"
+                                            className="ContactButton transition-trigger transition-link inline-flex items-center gap-3 px-7 py-3 font-poppins font-semibold text-sm lg:text-base text-Primary hover-this rounded-full shadow-sm hover:bg-coffee hover:text-brand transition-all duration-300"
+                                        >
+                                            Start Your Project
+                                            <FiArrowUpRight className="text-lg" />
+                                        </Link>
+                                    </div>
+                                </Magnet>
+
+                                <Magnet padding={15} disabled={false} magnetStrength={3}>
+                                    <Link
+                                        to="/services"
+                                        className="inline-flex items-center gap-2 px-7 py-3 font-poppins font-semibold text-sm lg:text-base text-Primary hover:text-white rounded-full border border-Primary/30 hover:bg-Primary hover:border-Primary transition-all duration-300 shadow-sm"
+                                    >
+                                        <span>Explore Services</span>
+                                        <FiArrowUpRight className="text-base" />
+                                    </Link>
+                                </Magnet>
+                            </div>
+
+                            {/* Metrics Dock */}
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-Primary/15">
+                                <div>
+                                    <div className="font-soldier text-3xl sm:text-4xl font-bold text-coffee">150+</div>
+                                    <div className="font-poppins text-xs font-medium text-second/75 mt-0.5">Projects Delivered</div>
+                                </div>
+                                <div>
+                                    <div className="font-soldier text-3xl sm:text-4xl font-bold text-coffee">80+</div>
+                                    <div className="font-poppins text-xs font-medium text-second/75 mt-0.5">Happy Clients</div>
+                                </div>
+                                <div>
+                                    <div className="font-soldier text-3xl sm:text-4xl font-bold text-coffee">300%</div>
+                                    <div className="font-poppins text-xs font-medium text-second/75 mt-0.5">Avg Traffic Growth</div>
+                                </div>
+                                <div>
+                                    <div className="font-soldier text-3xl sm:text-4xl font-bold text-coffee">5★</div>
+                                    <div className="font-poppins text-xs font-medium text-second/75 mt-0.5">Google Rating</div>
+                                </div>
+                            </div>
                         </div>
 
-                        <h1 className="hero-title animate-on-scroll delay-1">
-                            <span className="line1">We Build</span>
-                            <span className="gradient-text line2" id="typedText">
-                                {typedText}
-                            </span>
-                            <span className="line2">That Converts</span>
-                        </h1>
+                        {/* Right Column: Fitscalez Growth Engine Card Stack */}
+                        <div className="lg:col-span-5 flex justify-center">
+                            <div className="relative w-full max-w-[420px] select-none">
+                                {/* Top-Right Floating Live Badge (Image 1 match) */}
+                                <div className="absolute -top-3.5 right-4 z-20 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[#12131C] px-4 py-2 shadow-md backdrop-blur-md font-poppins text-xs font-semibold text-white">
+                                    <span className="size-2 rounded-full bg-[#00E599] shadow-[0_0_8px_#00E599] animate-pulse" />
+                                    <span>Live Projects: 12</span>
+                                </div>
 
-                        <p className="hero-subtitle animate-on-scroll delay-2">
-                            Fitscalez is a premium <strong>Web Development & Digital Marketing Agency</strong> helping businesses across
-                            India grow online. From MERN Stack apps to SEO & Social Media — we scale your brand with precision.
-                        </p>
-
-                        <div className="hero-actions animate-on-scroll delay-3">
-                            <Link to="/contact" className="btn btn-primary">
-                                🚀 Start Your Project
-                            </Link>
-                            <Link to="/services" className="btn btn-outline">
-                                View Services →
-                            </Link>
-                        </div>
-
-                        <div className="hero-stats animate-on-scroll delay-4">
-                            <div className="stat-item">
-                                <span className="stat-number">150+</span>
-                                <span className="stat-label">Projects Delivered</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number">80+</span>
-                                <span className="stat-label">Happy Clients</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number">5★</span>
-                                <span className="stat-label">Avg Rating</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number">3+</span>
-                                <span className="stat-label">Years Exp.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Hero Visual Card Stack */}
-                    <div className="hero-visual animate-on-scroll delay-2">
-                        <div className="hero-card-stack float-animation">
-                            <div className="glass-card hero-main-card">
-                                <div className="card-header">
-                                    <div className="card-header-brand">
-                                        <div className="card-header-icon">
-                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                                                <polyline points="16 7 22 7 22 13" />
-                                            </svg>
+                                {/* Main Dark Glass Card (Image 1 match) */}
+                                <div className="rounded-[26px] border border-white/10 bg-[#12131C] p-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl text-white">
+                                    {/* Card Header */}
+                                    <div className="flex items-center gap-3.5 mb-5 pb-4 border-b border-white/10">
+                                        <div className="flex size-11 items-center justify-center rounded-xl bg-[#1E1F30] text-white border border-[#2B2D42] shadow-sm flex-shrink-0">
+                                            <FiTrendingUp className="text-xl text-indigo-400" />
                                         </div>
                                         <div>
-                                            <div className="card-title">Campaign Performance</div>
-                                            <div className="card-sub">Fitscalez Growth Engine</div>
+                                            <div className="font-poppins text-sm font-bold text-white">Campaign Performance</div>
+                                            <div className="font-poppins text-xs text-white/50">Fitscalez Growth Engine</div>
+                                        </div>
+                                    </div>
+
+                                    {/* 2x2 Metric Grid */}
+                                    <div className="grid grid-cols-2 gap-3 mb-5">
+                                        <div className="rounded-xl border border-white/5 bg-[#1B1C2A] p-3.5">
+                                            <div className="font-soldier text-2xl font-bold text-[#8B70FF] leading-none">+342%</div>
+                                            <div className="font-poppins text-[11px] font-medium text-white/55 mt-1">Organic Traffic</div>
+                                        </div>
+                                        <div className="rounded-xl border border-white/5 bg-[#1B1C2A] p-3.5">
+                                            <div className="font-soldier text-2xl font-bold text-[#8B70FF] leading-none">₹4.2L</div>
+                                            <div className="font-poppins text-[11px] font-medium text-white/55 mt-1">Revenue Generated</div>
+                                        </div>
+                                        <div className="rounded-xl border border-white/5 bg-[#1B1C2A] p-3.5">
+                                            <div className="font-soldier text-2xl font-bold text-[#8B70FF] leading-none">89%</div>
+                                            <div className="font-poppins text-[11px] font-medium text-white/55 mt-1">Client Satisfaction</div>
+                                        </div>
+                                        <div className="rounded-xl border border-white/5 bg-[#1B1C2A] p-3.5">
+                                            <div className="font-soldier text-2xl font-bold text-[#8B70FF] leading-none">12x</div>
+                                            <div className="font-poppins text-[11px] font-medium text-white/55 mt-1">ROI Delivered</div>
+                                        </div>
+                                    </div>
+
+                                    {/* Progress Trackers */}
+                                    <div className="flex flex-col gap-3 font-poppins text-xs">
+                                        <div>
+                                            <div className="flex justify-between font-medium text-white/75 mb-1">
+                                                <span>SEO Rankings</span>
+                                                <span className="font-bold text-white/90">94%</span>
+                                            </div>
+                                            <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                                                <div className="h-full rounded-full bg-gradient-to-r from-[#7B61FF] to-[#FF6584]" style={{ width: "94%" }} />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="flex justify-between font-medium text-white/75 mb-1">
+                                                <span>Social Media Reach</span>
+                                                <span className="font-bold text-white/90">78%</span>
+                                            </div>
+                                            <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                                                <div className="h-full rounded-full bg-gradient-to-r from-[#7B61FF] to-[#FF6584]" style={{ width: "78%" }} />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="flex justify-between font-medium text-white/75 mb-1">
+                                                <span>Conversion Rate</span>
+                                                <span className="font-bold text-white/90">87%</span>
+                                            </div>
+                                            <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                                                <div className="h-full rounded-full bg-gradient-to-r from-[#7B61FF] to-[#FF6584]" style={{ width: "87%" }} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="metric-grid">
-                                    <div className="metric-item">
-                                        <div className="metric-value">+342%</div>
-                                        <div className="metric-label">Organic Traffic</div>
-                                    </div>
-                                    <div className="metric-item">
-                                        <div className="metric-value">₹4.2L</div>
-                                        <div className="metric-label">Revenue Generated</div>
-                                    </div>
-                                    <div className="metric-item">
-                                        <div className="metric-value">89%</div>
-                                        <div className="metric-label">Client Satisfaction</div>
-                                    </div>
-                                    <div className="metric-item">
-                                        <div className="metric-value">12x</div>
-                                        <div className="metric-label">ROI Delivered</div>
-                                    </div>
+
+                                {/* Bottom-Left Floating Agency Badge (Image 1 match) */}
+                                <div className="absolute -bottom-3.5 -left-3 z-20 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[#12131C] px-4 py-2 shadow-md backdrop-blur-md font-poppins text-xs font-bold text-white">
+                                    🏆 Top Rated Agency 2024
                                 </div>
-
-                                <div className="progress-list">
-                                    <div className="progress-item">
-                                        <div className="progress-label">
-                                            <span>SEO Rankings</span>
-                                            <span>94%</span>
-                                        </div>
-                                        <div className="progress-bar">
-                                            <div className="progress-fill" style={{ width: "94%" }}></div>
-                                        </div>
-                                    </div>
-                                    <div className="progress-item">
-                                        <div className="progress-label">
-                                            <span>Social Media Reach</span>
-                                            <span>78%</span>
-                                        </div>
-                                        <div className="progress-bar">
-                                            <div className="progress-fill" style={{ width: "78%" }}></div>
-                                        </div>
-                                    </div>
-                                    <div className="progress-item">
-                                        <div className="progress-label">
-                                            <span>Conversion Rate</span>
-                                            <span>87%</span>
-                                        </div>
-                                        <div className="progress-bar">
-                                            <div className="progress-fill" style={{ width: "87%" }}></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div className="floating-badge floating-badge-1">
-                                <div className="dot"></div>
-                                <span>Live Projects: 12</span>
-                            </div>
-
-                            <div className="floating-badge floating-badge-2">
-                                🏆 Top Rated Agency 2024
                             </div>
                         </div>
                     </div>
@@ -364,7 +417,7 @@ const Home = () => {
                         <div className="about-text animate-on-scroll delay-2">
                             <span className="section-tag">About Fitscalez</span>
                             <h2 className="section-title">
-                                Your Growth Partner in the <span className="gradient-text">Digital Age</span>
+                                Your Growth Partner in the <span className="text-coffee">Digital Age</span>
                             </h2>
                             <p className="about-desc">
                                 Fitscalez was founded with a bold vision — to redefine how businesses grow online. We are a Delhi-based
@@ -414,208 +467,18 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* ============ SERVICES SECTION ============ */}
-            <section className="section-padding" id="services" style={{ background: "var(--bg2)" }}>
-                <div className="container">
-                    <div className="section-header animate-on-scroll">
-                        <span className="section-tag">What We Do</span>
-                        <h2 className="section-title">Services That Scale Your <span className="gradient-text">Business</span></h2>
-                        <p className="section-desc">From stunning websites to viral marketing campaigns — we have everything your business needs to dominate online.</p>
-                    </div>
+            {/* ============ SERVICES SECTION (Munna Stacking Cards) ============ */}
+            <HomeServices />
 
-                    <div className="services-grid">
-                        <div className="card service-card">
-                            <div className="service-icon icon-purple">💻</div>
-                            <h3>MERN Stack Web Development</h3>
-                            <p>Full-stack web applications using MongoDB, Express, React & Node.js. Fast, scalable, modern websites starting from ₹25,000.</p>
-                            <div className="service-features">
-                                <span className="service-feature">Custom Web Design & Development</span>
-                                <span className="service-feature">E-commerce & Portal Solutions</span>
-                                <span className="service-feature">API Integration & Backend</span>
-                                <span className="service-feature">Mobile Responsive & SEO Ready</span>
-                            </div>
-                        </div>
-
-                        <div className="card service-card">
-                            <div className="service-icon icon-pink">📱</div>
-                            <h3>Social Media Marketing</h3>
-                            <p>Create, Connect, Convert — our strategic social media approach builds genuine audiences and turns followers into loyal paying customers.</p>
-                            <div className="service-features">
-                                <span className="service-feature">Content Strategy & Creation</span>
-                                <span className="service-feature">Community Management</span>
-                                <span className="service-feature">Influencer Partnerships</span>
-                                <span className="service-feature">Instagram, Facebook, LinkedIn</span>
-                            </div>
-                        </div>
-
-                        <div className="card service-card">
-                            <div className="service-icon icon-green">🔍</div>
-                            <h3>SEO & Search Rankings</h3>
-                            <p>Rank #1 on Google with our proven SEO strategies. Keyword research, on-page optimization, technical SEO & quality link building.</p>
-                            <div className="service-features">
-                                <span className="service-feature">Keyword Research & Planning</span>
-                                <span className="service-feature">On-Page & Technical SEO</span>
-                                <span className="service-feature">Link Building Campaigns</span>
-                                <span className="service-feature">Monthly Reporting</span>
-                            </div>
-                        </div>
-
-                        <div className="card service-card">
-                            <div className="service-icon icon-blue">💰</div>
-                            <h3>Paid Ads (PPC)</h3>
-                            <p>ROI-driven advertising campaigns on Google, Facebook, Instagram & LinkedIn. Every rupee spent generates maximum returns.</p>
-                            <div className="service-features">
-                                <span className="service-feature">Google Ads Management</span>
-                                <span className="service-feature">Facebook & Instagram Ads</span>
-                                <span className="service-feature">LinkedIn Advertising</span>
-                                <span className="service-feature">Performance Analytics</span>
-                            </div>
-                        </div>
-
-                        <div className="card service-card">
-                            <div className="service-icon icon-orange">🎬</div>
-                            <h3>Video Production & Editing</h3>
-                            <p>Turning moments into masterpieces. Professional video editing that blends storytelling with stunning visuals for maximum impact.</p>
-                            <div className="service-features">
-                                <span className="service-feature">Commercial Video Production</span>
-                                <span className="service-feature">Social Media Reels & Shorts</span>
-                                <span className="service-feature">Motion Graphics & Animation</span>
-                                <span className="service-feature">Color Grading & Post-Production</span>
-                            </div>
-                        </div>
-
-                        <div className="card service-card">
-                            <div className="service-icon icon-teal">📊</div>
-                            <h3>Business Growth Strategy</h3>
-                            <p>Data-driven market research and business intelligence that reveals untapped opportunities and empowers visionary decisions.</p>
-                            <div className="service-features">
-                                <span className="service-feature">Market Analysis & Research</span>
-                                <span className="service-feature">Competitor Intelligence</span>
-                                <span className="service-feature">Growth Planning & Roadmap</span>
-                                <span className="service-feature">Business Consulting</span>
-                            </div>
-                        </div>
-
-                        <div className="card service-card">
-                            <div className="service-icon icon-red">📧</div>
-                            <h3>Email Marketing</h3>
-                            <p>Targeted email campaigns that nurture leads, retain customers and drive conversions with personalized automation workflows.</p>
-                            <div className="service-features">
-                                <span className="service-feature">Campaign Design & Copywriting</span>
-                                <span className="service-feature">List Management & Segmentation</span>
-                                <span className="service-feature">Automated Drip Campaigns</span>
-                                <span className="service-feature">Analytics & A/B Testing</span>
-                            </div>
-                        </div>
-
-                        <div className="card service-card">
-                            <div className="service-icon icon-yellow">📸</div>
-                            <h3>Product Shoots & Content</h3>
-                            <p>High-quality product photography and creative content production that showcases your brand with clarity, style and impact.</p>
-                            <div className="service-features">
-                                <span className="service-feature">Professional Product Photography</span>
-                                <span className="service-feature">Brand Content Strategy</span>
-                                <span className="service-feature">Lifestyle Shoots</span>
-                                <span className="service-feature">Catalog & E-commerce Shoots</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style={{ textAlign: "center", marginTop: "48px" }}>
-                        <Link to="/services" className="btn btn-primary">
-                            View All Services →
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
-            {/* ============ FEATURED PROJECTS ============ */}
-            <section className="section-padding" id="portfolio">
-                <div className="container">
-                    <div className="section-header animate-on-scroll">
-                        <span className="section-tag">Featured Work</span>
-                        <h2 className="section-title">Client Projects That <span className="gradient-text">Deliver Impact</span></h2>
-                        <p className="section-desc">Take a look at some of our live, production web applications and digital platforms engineered for ambitious businesses.</p>
-                    </div>
-
-                    <div className="projects-grid">
-                        {/* Walk The Plan */}
-                        <div className="card project-card">
-                            <div className="project-image">
-                                <img
-                                    src="/images/project-walktheplan.jpg"
-                                    alt="Walk The Plan"
-                                    onError={(e) => { e.target.src = "/images/og-image.jpg"; }}
-                                />
-                                <div className="project-live-badge"><span className="live-dot"></span> Live Project</div>
-                                <a href="https://walktheplan.in" target="_blank" rel="noopener noreferrer" className="project-overlay">
-                                    <span className="project-overlay-btn">Explore Live Site ↗</span>
-                                </a>
-                            </div>
-                            <div className="project-body">
-                                <div className="project-cat">Web Application • Tech Innovation</div>
-                                <h3>Walk The Plan — 1:1 Blueprint Projection</h3>
-                                <p>Groundbreaking web platform developed for India's 1:1 scale architectural projection experience center. Features online slot reservation and Razorpay payment integration.</p>
-                                <div className="project-tags">
-                                    <span className="project-tag">React.js</span>
-                                    <span className="project-tag">Razorpay</span>
-                                    <span className="project-tag">Vite</span>
-                                    <span className="project-tag">TailwindCSS</span>
-                                </div>
-                                <div style={{ marginTop: "18px" }}>
-                                    <a href="https://walktheplan.in" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">
-                                        Visit walktheplan.in ↗
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* House of Symmetry */}
-                        <div className="card project-card">
-                            <div className="project-image">
-                                <img
-                                    src="/images/project-houseofsymmetry.jpg"
-                                    alt="House of Symmetry"
-                                    onError={(e) => { e.target.src = "/images/og-image.jpg"; }}
-                                />
-                                <div className="project-live-badge"><span className="live-dot"></span> Live Project</div>
-                                <a href="https://www.houseofsymmetry.in" target="_blank" rel="noopener noreferrer" className="project-overlay">
-                                    <span className="project-overlay-btn">Explore Live Site ↗</span>
-                                </a>
-                            </div>
-                            <div className="project-body">
-                                <div className="project-cat">Luxury Architecture • Portfolio</div>
-                                <h3>House of Symmetry — Architecture & Design</h3>
-                                <p>Bespoke digital presence crafted for an elite architectural studio. Immersive spatial portfolio, balanced visual geometry, and optimized high-ticket client inquiry funnels.</p>
-                                <div className="project-tags">
-                                    <span className="project-tag">Architecture</span>
-                                    <span className="project-tag">UI/UX Design</span>
-                                    <span className="project-tag">SEO Optimized</span>
-                                    <span className="project-tag">Responsive</span>
-                                </div>
-                                <div style={{ marginTop: "18px" }}>
-                                    <a href="https://www.houseofsymmetry.in" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">
-                                        Visit houseofsymmetry.in ↗
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style={{ textAlign: "center", marginTop: "40px" }} className="animate-on-scroll">
-                        <Link to="/projects" className="btn btn-outline">
-                            Explore All Projects →
-                        </Link>
-                    </div>
-                </div>
-            </section>
+            {/* ============ FEATURED PROJECTS (Munna Alternating Cards) ============ */}
+            <HomeProjects />
 
             {/* ============ PROCESS SECTION ============ */}
             <section className="section-padding">
                 <div className="container">
                     <div className="section-header animate-on-scroll">
                         <span className="section-tag">How We Work</span>
-                        <h2 className="section-title">Our <span className="gradient-text">Proven Process</span></h2>
+                        <h2 className="section-title">Our <span className="text-coffee">Proven Process</span></h2>
                         <p className="section-desc">A streamlined 5-step approach that ensures quality, transparency and results every single time.</p>
                     </div>
 
@@ -654,7 +517,7 @@ const Home = () => {
                 <div className="container">
                     <div className="section-header animate-on-scroll">
                         <span className="section-tag">Transparent Pricing</span>
-                        <h2 className="section-title">Affordable Plans for <span className="gradient-text">Every Business</span></h2>
+                        <h2 className="section-title">Affordable Plans for <span className="text-coffee">Every Business</span></h2>
                         <p className="section-desc">No hidden fees. No surprises. Clear pricing that delivers maximum value for your investment.</p>
                     </div>
 
@@ -734,7 +597,7 @@ const Home = () => {
                 <div className="container">
                     <div className="section-header animate-on-scroll">
                         <span className="section-tag">Client Love</span>
-                        <h2 className="section-title">What Our <span className="gradient-text">Clients Say</span></h2>
+                        <h2 className="section-title">What Our <span className="text-coffee">Clients Say</span></h2>
                         <p className="section-desc">Real results. Real businesses. Real growth stories from clients who trusted Fitscalez.</p>
                     </div>
 
@@ -782,7 +645,7 @@ const Home = () => {
             <section className="section-padding" style={{ background: "var(--bg2)" }}>
                 <div className="container">
                     <div className="section-header animate-on-scroll">
-                        <h2 className="section-title">The <span className="gradient-text">Experts</span> Behind Your Growth</h2>
+                        <h2 className="section-title">The <span className="text-coffee">Experts</span> Behind Your Growth</h2>
                         <p className="section-desc">Passionate professionals dedicated to making your business succeed in the digital world.</p>
                     </div>
 
@@ -821,7 +684,10 @@ const Home = () => {
                             </div>
                             <h3>Divyansh</h3>
                             <div className="role">Lead Web Developer</div>
-                            <p className="bio">MERN Stack expert specializing in building fast, scalable and stunning web applications. Contact: <a href="tel:+919599433616" style={{ color: "var(--primary-light)" }}>+91 9599433616</a></p>
+                            <p className="bio">
+                                MERN Stack expert specializing in building fast, scalable and stunning web applications.
+                                <span className="block mt-1.5 font-medium">Contact: <a href="tel:+919599433616" className="text-coffee font-semibold whitespace-nowrap hover:underline">+91 9599433616</a></span>
+                            </p>
                             <div className="team-social">
                                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
                                 <a href="tel:+919599433616" aria-label="Call Divyansh">📞</a>
@@ -851,7 +717,7 @@ const Home = () => {
                 <div className="container" style={{ maxWidth: "860px" }}>
                     <div className="section-header animate-on-scroll">
                         <span className="section-tag">Got Questions?</span>
-                        <h2 className="section-title">Frequently Asked <span className="gradient-text">Questions</span></h2>
+                        <h2 className="section-title">Frequently Asked <span className="text-coffee">Questions</span></h2>
                         <p className="section-desc">Got questions about our web development and marketing services? We have answers.</p>
                     </div>
 
@@ -904,26 +770,8 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* ============ CTA BANNER SECTION ============ */}
-            <section className="section-padding">
-                <div className="container">
-                    <div className="cta-section animate-on-scroll">
-                        <h2>Ready to <span className="gradient-text">Scale Your Business?</span></h2>
-                        <p>Join 80+ businesses that have transformed their online presence with Fitscalez. Let's build something extraordinary together.</p>
-                        <div className="cta-actions">
-                            <Link to="/contact" className="btn btn-primary">🚀 Start Your Project</Link>
-                            <Link to="/services" className="btn btn-outline">View All Services</Link>
-                        </div>
-                        <div className="cta-contact-strip">
-                            <a href="tel:+919599433616">📞 +91 9599433616</a>
-                            <div className="divider"></div>
-                            <a href="mailto:fitscalezofficial@gmail.com">✉️ fitscalezofficial@gmail.com</a>
-                            <div className="divider"></div>
-                            <a href="https://wa.me/919599433616" target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {/* ============ MUNNA KINETIC CTA SECTION ============ */}
+            <LetsWorkTogether />
         </>
     );
 };

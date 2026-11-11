@@ -56,6 +56,7 @@ app.use("/users", userRouter);
 
 app.use("/api/v1/leads", leadRouter);
 app.use("/leads", leadRouter);
+app.use("/contact", leadRouter);
 
 app.use("/api/v1/blogs", blogRouter);
 app.use("/blogs", blogRouter);
@@ -65,6 +66,11 @@ app.use("/careers", careerRouter);
 
 app.use("/api/v1/analytics", analyticsRouter);
 app.use("/analytics", analyticsRouter);
+
+// Projects Featured endpoint (supports both /api/v1/* and root route alias)
+app.get(["/api/v1/projects/featured", "/projects/featured", "/projects"], (req, res) => {
+    res.status(200).json({ success: true, data: [] });
+});
 
 // Centralized Error Handling Middleware
 app.use((err, req, res, next) => {

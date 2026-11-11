@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 import { store } from "./store";
 import App from "./App.jsx";
+import "./App.css";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(

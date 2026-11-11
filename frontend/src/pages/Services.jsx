@@ -1,27 +1,376 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { FiChevronDown, FiCheck, FiArrowRight } from "react-icons/fi";
 import SeoHelmet from "../components/SeoHelmet";
-import { FadeIn, SpotlightCard } from "../components/Motion";
+import PageBanner from "../components/common/PageBanner";
+import CategoryHoverShowcase from "../components/ui/AnimatedSlideshow";
+import WorkTogetherCTA from "../components/About Me/WorkTogetherCTA";
+import ExploreMyWork from "../components/common/ExploreMyWork";
+import ProjectCtaSection from "../components/common/ProjectCtaSection";
+
+const servicesData = {
+    "tab-dev": {
+        tag: "Web Solutions",
+        title: "High-Performance",
+        highlight: "Web Development",
+        desc: "From conversion-optimized landing pages to complex full-stack MERN enterprise platforms — fast, secure, scalable, and responsive.",
+        items: [
+            {
+                icon: "💻",
+                title: "MERN Stack Development",
+                description:
+                    "Full-stack web applications using MongoDB, Express.js, React.js and Node.js. Scalable, blazing fast and modern. Starting from ₹25,000.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "React.js Frontend Architecture",
+                    "Node.js + Express REST API Backend",
+                    "MongoDB Scalable Schema Design",
+                    "JWT Authentication & RBAC",
+                    "Production Deployment & CI/CD",
+                ],
+            },
+            {
+                icon: "🛒",
+                title: "E-Commerce Platforms",
+                description:
+                    "High-converting online stores with payment gateway integration, inventory management and friction-free checkout flows.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Product Catalog & Cart System",
+                    "Razorpay & PayPal Gateway Integration",
+                    "Order Management & Invoicing",
+                    "Mobile-First Responsive UX",
+                ],
+            },
+            {
+                icon: "🎨",
+                title: "UI/UX Design & Prototyping",
+                description:
+                    "User-centered interfaces that captivate visitors and convert them into loyal clients. Figma systems, wireframing and pixel-perfect builds.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Interactive Figma Prototypes",
+                    "Design System & Component Kits",
+                    "User Journey & Behavior Research",
+                    "Conversion Rate Optimization",
+                ],
+            },
+            {
+                icon: "🔧",
+                title: "Website Maintenance & Care",
+                description:
+                    "Keep your web applications secure, up-to-date and performing at peak speed with our ongoing maintenance and monitoring.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Continuous Security Updates",
+                    "Speed & Core Web Vitals Optimization",
+                    "Ongoing UI & Feature Polish",
+                    "99.9% Uptime & Error Monitoring",
+                ],
+            },
+        ],
+        callout: {
+            title: "🚀 Live Client Work: Walk The Plan & House of Symmetry",
+            description:
+                "Check out live platforms engineered by Fitscalez: 1:1 scale architectural blueprint tech & bespoke luxury interior studios.",
+            links: [
+                { label: "walktheplan.in ↗", href: "https://walktheplan.in" },
+                { label: "houseofsymmetry.in ↗", href: "https://www.houseofsymmetry.in" },
+            ],
+        },
+    },
+    "tab-marketing": {
+        tag: "Digital Marketing",
+        title: "Grow Your",
+        highlight: "Online Presence",
+        desc: "Proven search engine optimization, precision pay-per-click advertising, and targeted organic social media growth.",
+        items: [
+            {
+                icon: "🔍",
+                title: "Search Engine Optimization (SEO)",
+                description:
+                    "Rank #1 on Google with data-driven SEO. Deep keyword research, technical performance tuning, on-page optimization, and authority link acquisition.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Keyword Intent Research & Mapping",
+                    "On-Page & Core Technical SEO",
+                    "High-Authority Backlink Building",
+                    "Local SEO for Delhi & Pan-India",
+                ],
+            },
+            {
+                icon: "📱",
+                title: "Social Media Marketing",
+                description:
+                    "Build a magnetic social media footprint across Instagram, LinkedIn, Facebook, and Twitter that drives real business inquiries.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Content Strategy & Publishing Calendar",
+                    "High-Engagement Reels & Creatives",
+                    "Community & Inbound DM Management",
+                    "Targeted Influencer Partnerships",
+                ],
+            },
+            {
+                icon: "💰",
+                title: "Pay-Per-Click Advertising (PPC)",
+                description:
+                    "High-ROI paid ad campaigns on Google Search, Meta (Instagram/Facebook), and YouTube. Every rupee optimized for maximum customer acquisition.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Google Search & Display Ad Campaigns",
+                    "Meta Conversion Funnels",
+                    "Audience Retargeting Sequences",
+                    "Continuous A/B Creative Testing",
+                ],
+            },
+            {
+                icon: "📧",
+                title: "Email & Funnel Automation",
+                description:
+                    "Automated email marketing sequences that nurture cold prospects and retain existing clients with personalized automated messaging.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Drip Nurture Campaign Design",
+                    "Audience Segmentation & Tagging",
+                    "High-Converting Sales Copy",
+                    "Open & Click-Through Analytics",
+                ],
+            },
+        ],
+    },
+    "tab-creative": {
+        tag: "Creative Services",
+        title: "Content That",
+        highlight: "Captivates",
+        desc: "High-impact visual production, video storytelling, professional photography, and distinctive brand identities.",
+        items: [
+            {
+                icon: "🎬",
+                title: "Video Production & Editing",
+                description:
+                    "High-production video content that tells your brand story. From corporate films to viral social reels, crafted with cinematic polish.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Brand Story Commercials",
+                    "Instagram Reels & YouTube Shorts",
+                    "Motion Graphics & Dynamic Titles",
+                    "Professional Color Grading & Sound Mix",
+                ],
+            },
+            {
+                icon: "📸",
+                title: "Product & Studio Photography",
+                description:
+                    "Crisp, studio-grade product imagery for e-commerce stores, catalogs, and marketing campaigns that elevates brand perception.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "E-Commerce Catalog Shoots",
+                    "Lifestyle & Contextual Photography",
+                    "360° Interactive Product Angles",
+                    "High-End Retouching & Compositing",
+                ],
+            },
+            {
+                icon: "✍️",
+                title: "Content Writing & Copywriting",
+                description:
+                    "Compelling, SEO-infused copy that ranks on Google and turns passive readers into active buyers across all touchpoints.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Rank-Winning SEO Articles",
+                    "High-Ticket Landing Page Copy",
+                    "Conversion-Focused Product Descriptions",
+                    "Brand Storytelling & Taglines",
+                ],
+            },
+            {
+                icon: "🎨",
+                title: "Brand Identity Design",
+                description:
+                    "Memorable visual identity systems that give your business authority — typography, custom logomarks, color palettes, and brand manuals.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Vector Logomark & Variations",
+                    "Typography & Color Hierarchy",
+                    "Brand Style Guidelines Manual",
+                    "Stationery & Social Media Kit",
+                ],
+            },
+        ],
+    },
+    "tab-strategy": {
+        tag: "Business Strategy",
+        title: "Data-Driven",
+        highlight: "Growth Plans",
+        desc: "In-depth competitor intelligence, intelligent workflow automation, and sustainable revenue roadmap design.",
+        items: [
+            {
+                icon: "📊",
+                title: "Market Research & Intelligence",
+                description:
+                    "Deep market analysis, competitive gap research, and consumer insights that uncover lucrative opportunities for your business.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Market Sizing & Demographic Analysis",
+                    "Competitor Benchmarking & Gaps",
+                    "Consumer Psychology & Friction Points",
+                    "Strategic Opportunity Mapping",
+                ],
+            },
+            {
+                icon: "📈",
+                title: "Growth Strategy Consulting",
+                description:
+                    "Customized growth frameworks and milestone roadmaps that help businesses scale profitably from local to national prominence.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Go-To-Market (GTM) Strategy",
+                    "Revenue Diversification Planning",
+                    "Key Performance Indicator (KPI) Architecture",
+                    "Strategic Partnership Sourcing",
+                ],
+            },
+            {
+                icon: "📱",
+                title: "App Store Optimization (ASO)",
+                description:
+                    "Maximize your mobile app's visibility, installs, and organic retention across both Google Play Store and Apple App Store.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "App Title & Keyword Optimization",
+                    "Conversion-Optimized Icon & Screenshots",
+                    "Rating & Review Acceleration Flow",
+                    "Organic Install Growth Strategy",
+                ],
+            },
+            {
+                icon: "🤖",
+                title: "Marketing & CRM Automation",
+                description:
+                    "Connect your digital funnels with smart automated workflows that capture, qualify, and route leads on autopilot 24/7.",
+                imageUrl:
+                    "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+                features: [
+                    "Lead Qualification Pipelines",
+                    "CRM Integration (HubSpot, Zoho, Notion)",
+                    "Automated WhatsApp & Email Triggers",
+                    "Unified Executive Performance Dashboard",
+                ],
+            },
+        ],
+    },
+};
+
+const pricingPlans = [
+    {
+        tag: "Starter",
+        name: "Business Website",
+        price: "₹25K",
+        period: "one-time",
+        description:
+            "Ideal for small businesses and founders wanting a sleek, modern web presence that establishes instant credibility.",
+        features: [
+            "5-7 Custom Designed Pages",
+            "100% Mobile Responsive Layout",
+            "Contact Form & WhatsApp Direct Button",
+            "On-Page SEO & Google Maps Setup",
+            "1 Month Post-Launch Support",
+        ],
+        btnLabel: "Get Started",
+        featured: false,
+    },
+    {
+        tag: "Full-Stack",
+        name: "Full-Stack MERN App",
+        price: "₹49K",
+        period: "starting",
+        popularBadge: "🔥 Most Popular",
+        description:
+            "For ambitious businesses needing full functionality — databases, authentication, custom APIs, payments & dedicated admin panel.",
+        features: [
+            "React.js Frontend + Node.js/Express Backend",
+            "MongoDB Production Database Design",
+            "User Authentication & Role-Based Access",
+            "Custom Admin Management Dashboard",
+            "Razorpay / Payment Gateway Integration",
+            "3 Months Dedicated Engineering Support",
+        ],
+        btnLabel: "Start Project →",
+        featured: true,
+    },
+    {
+        tag: "Growth",
+        name: "Growth Marketing",
+        price: "₹15K",
+        period: "/month",
+        description:
+            "Comprehensive monthly digital marketing retainer for businesses serious about continuous online customer acquisition.",
+        features: [
+            "Social Media Management (3 Platforms)",
+            "20 Custom Brand Creatives / Month",
+            "Targeted SEO & Keyword Optimization",
+            "Monthly Transparent Analytics Report",
+            "Dedicated Account Manager",
+            "PPC Ad Campaign Setup & Optimization",
+        ],
+        btnLabel: "Get Started",
+        featured: false,
+    },
+];
+
+const faqs = [
+    {
+        q: "How much does a website cost at Fitscalez?",
+        a: "Our custom websites start from ₹25,000 for a polished 5-7 page business website. Full-stack MERN applications with databases, authentication, and custom logic typically start from ₹49,000. Final investment depends on custom feature requirements. Contact Divyansh at +91 9599433616 for a transparent quote.",
+    },
+    {
+        q: "How long does it take to build a website?",
+        a: "A standard 5-7 page business website typically delivers in 2 to 3 weeks. Full-stack MERN applications generally take 4 to 8 weeks depending on database schemas, third-party API integrations, and admin panel complexity.",
+    },
+    {
+        q: "Do you provide comprehensive SEO services?",
+        a: "Yes! We implement complete on-page and technical SEO, high-authority link acquisition, and keyword optimization aligned with Google's latest helpful content standards. Clients typically see 200% to 400% organic growth in 3 to 6 months.",
+    },
+    {
+        q: "Do you work with clients outside Delhi?",
+        a: "Absolutely! While based in Delhi, we collaborate with clients across PAN-India (Mumbai, Bengaluru, Pune, Hyderabad, Jaipur) and internationally via Google Meet, weekly milestone dashboards, and direct WhatsApp updates.",
+    },
+    {
+        q: "What technologies and frameworks do you use?",
+        a: "Our core engineering stack is MERN (MongoDB, Express.js, React.js, Node.js), complemented by Tailwind CSS, Framer Motion, Next.js, PostgreSQL, and secure Indian payment gateways like Razorpay.",
+    },
+    {
+        q: "Do you offer post-launch support and warranty?",
+        a: "Yes! All projects include 1 to 3 months of complimentary warranty support post-deployment, covering bug fixes, speed tuning, and performance checks, followed by affordable monthly maintenance plans.",
+    },
+];
 
 const Services = () => {
     const [activeTab, setActiveTab] = useState("tab-dev");
     const [openFaq, setOpenFaq] = useState(null);
 
-    // Whenever activeTab changes, immediately ensure newly rendered cards are visible
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            const elements = document.querySelectorAll(".tab-content .animate-on-scroll");
-            elements.forEach((el) => {
-                el.classList.add("animated");
-            });
-        }, 10);
-        return () => clearTimeout(timer);
-    }, [activeTab]);
-
     const toggleFaq = (idx) => {
         setOpenFaq(openFaq === idx ? null : idx);
     };
+
+    const currentTab = servicesData[activeTab];
 
     const servicesSchema = {
         "@context": "https://schema.org",
@@ -52,568 +401,342 @@ const Services = () => {
                 schema={servicesSchema}
             />
 
-            {/* Page Hero */}
-            <div className="page-hero">
-                <FadeIn className="container">
-                    <div className="breadcrumb">
-                        <Link to="/">Home</Link>
-                        <span>›</span>
-                        <span>Services</span>
-                    </div>
-                    <div className="badge" style={{ marginBottom: "16px" }}>What We Offer</div>
-                    <h1>
-                        Our <span className="gradient-text">Services</span>
-                    </h1>
-                    <p>
-                        Comprehensive digital solutions designed to grow your business. From stunning websites to ROI-driven marketing campaigns — we do it all.
-                    </p>
-                </FadeIn>
-            </div>
+            <section className="my-20">
+                {/* Unified Editorial PageBanner */}
+                <PageBanner
+                    id="ServicesBanner"
+                    kicker="FITSCALEZ CAPABILITIES"
+                    kickerMobile="Our Services"
+                    title="OUR SERVICES"
+                    description="Comprehensive digital solutions engineered for scale. From production-grade MERN web applications to ROI-driven marketing funnels — we craft digital platforms that dominate."
+                    scrollTarget="#ServicesContent"
+                />
 
-            {/* Services Tabs Section */}
-            <section className="section-padding">
-                <div className="container">
-                    {/* Category Tab Buttons */}
-                    <div className="tab-buttons animate-on-scroll">
-                        <button
-                            className={`tab-btn ${activeTab === "tab-dev" ? "active" : ""}`}
-                            onClick={() => setActiveTab("tab-dev")}
+                {/* Main Services Interactive Section */}
+                <div id="ServicesContent" className="mt-[112px]">
+                    <div className="container">
+                        {/* Category Tab Buttons */}
+                        <div
+                            data-aos="fade-up"
+                            className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 p-2 rounded-2xl md:rounded-full bg-[#DFDCD5] border border-Primary/12 max-w-4xl mx-auto shadow-[0_10px_30px_rgba(22,22,22,0.04)]"
                         >
-                            💻 Web Development
-                        </button>
-                        <button
-                            className={`tab-btn ${activeTab === "tab-marketing" ? "active" : ""}`}
-                            onClick={() => setActiveTab("tab-marketing")}
-                        >
-                            📈 Digital Marketing
-                        </button>
-                        <button
-                            className={`tab-btn ${activeTab === "tab-creative" ? "active" : ""}`}
-                            onClick={() => setActiveTab("tab-creative")}
-                        >
-                            🎬 Creative & Video
-                        </button>
-                        <button
-                            className={`tab-btn ${activeTab === "tab-strategy" ? "active" : ""}`}
-                            onClick={() => setActiveTab("tab-strategy")}
-                        >
-                            📊 Business Strategy
-                        </button>
-                    </div>
+                            {[
+                                { id: "tab-dev", label: "💻 Web Development" },
+                                { id: "tab-marketing", label: "📈 Digital Marketing" },
+                                { id: "tab-creative", label: "🎬 Creative & Video" },
+                                { id: "tab-strategy", label: "📊 Business Strategy" },
+                            ].map((tab) => (
+                                <button
+                                    key={tab.id}
+                                    type="button"
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`px-5 py-2.5 rounded-full font-poppins text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                                        activeTab === tab.id
+                                            ? "bg-Primary text-brand shadow-[0_6px_20px_rgba(22,22,22,0.2)] scale-102"
+                                            : "text-second hover:text-Primary hover:bg-black/5"
+                                    }`}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
 
-                    {/* Tab 1: Web Development */}
-                    {activeTab === "tab-dev" && (
-                        <div id="tab-dev" className="tab-content active">
-                            <div className="section-header">
-                                <span className="section-tag">Web Solutions</span>
-                                <h2 className="section-title">
-                                    High-Performance <span className="gradient-text">Web Development</span>
-                                </h2>
-                                <p className="section-desc">
-                                    From simple landing pages to complex MERN Stack applications — fast, secure and beautiful.
-                                </p>
-                            </div>
+                        {/* Active Tab Header */}
+                        <div className="mt-14 section-header" data-aos="fade-up">
+                            <span className="section-tag">{currentTab.tag}</span>
+                            <h2 className="section-title">
+                                {currentTab.title} <span className="text-coffee">{currentTab.highlight}</span>
+                            </h2>
+                            <p className="section-desc">{currentTab.desc}</p>
+                        </div>
 
-                            <div className="services-grid">
-                                <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.22)">
-                                    <div className="service-icon icon-purple">💻</div>
-                                    <h3>MERN Stack Development</h3>
-                                    <p>Full-stack web applications using MongoDB, Express.js, React.js and Node.js. Scalable, fast and modern. Starting from ₹25,000.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">React.js Frontend</span>
-                                        <span className="service-feature">Node.js + Express Backend</span>
-                                        <span className="service-feature">MongoDB Database</span>
-                                        <span className="service-feature">REST API Development</span>
-                                        <span className="service-feature">Authentication & Authorization</span>
+                        {/* Interactive Hover Showcase for Active Category */}
+                        <div className="mt-10" data-aos="fade-up">
+                            <CategoryHoverShowcase
+                                key={activeTab}
+                                slides={currentTab.items}
+                                tag={currentTab.tag}
+                                title={currentTab.title}
+                                highlight={currentTab.highlight}
+                            />
+                        </div>
+
+                        {/* Detailed Service Cards Grid - Munna Inverting Style */}
+                        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {currentTab.items.map((item, idx) => (
+                                <div
+                                    key={item.title}
+                                    data-aos="fade-up"
+                                    data-aos-delay={idx * 80}
+                                    className="group relative overflow-hidden rounded-[24px] border border-Primary/15 bg-[#DFDCD5] p-7 flex flex-col justify-between shadow-[0_20px_50px_rgba(22,22,22,0.06)] transition-all duration-500 hover:-translate-y-2 hover:border-coffee/50 hover:bg-Primary hover:shadow-[0_28px_80px_rgba(22,22,22,0.25)]"
+                                >
+                                    {/* Top terracotta highlight line on hover */}
+                                    <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-coffee/70 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                                    {/* Subtle decorative background circle */}
+                                    <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full border border-Primary/10 transition-all duration-500 group-hover:scale-125 group-hover:border-brand/10" />
+
+                                    <div className="relative z-10">
+                                        <div className="flex items-start justify-between gap-4 mb-5">
+                                            <div className="w-13 h-13 rounded-xl bg-Primary text-brand border border-Primary/15 flex items-center justify-center text-2xl transition-all duration-500 group-hover:scale-105 group-hover:bg-coffee group-hover:border-coffee group-hover:text-white">
+                                                {item.icon}
+                                            </div>
+                                            <span className="font-soldier text-3xl font-medium leading-none text-Primary/20 transition-colors duration-500 group-hover:text-brand/20">
+                                                0{idx + 1}
+                                            </span>
+                                        </div>
+                                        <h3 className="font-soldier text-2xl font-bold uppercase text-Primary mb-3 leading-snug group-hover:text-coffee transition-colors duration-300">
+                                            {item.title}
+                                        </h3>
+                                        <p className="font-poppins text-xs sm:text-sm text-second/85 leading-relaxed mb-6 group-hover:text-brand/75 transition-colors duration-300">
+                                            {item.description}
+                                        </p>
                                     </div>
-                                </SpotlightCard>
 
-                                <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.22)">
-                                    <div className="service-icon icon-blue">🛒</div>
-                                    <h3>E-Commerce Development</h3>
-                                    <p>Feature-rich online stores with payment gateway integration, inventory management and seamless user experience that converts visitors.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Product Catalog Management</span>
-                                        <span className="service-feature">Payment Gateway (Razorpay, PayPal)</span>
-                                        <span className="service-feature">Order Management System</span>
-                                        <span className="service-feature">Mobile-Responsive Design</span>
+                                    {/* Features List */}
+                                    <div className="relative z-10 pt-4 border-t border-Primary/10 group-hover:border-brand/10 transition-colors duration-300">
+                                        <ul className="flex flex-col gap-2 font-poppins text-xs text-second/90 group-hover:text-brand/85 transition-colors duration-300">
+                                            {item.features.map((feat) => (
+                                                <li key={feat} className="flex items-start gap-2">
+                                                    <span className="text-coffee font-bold mt-0.5">•</span>
+                                                    <span>{feat}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
-                                </SpotlightCard>
+                                </div>
+                            ))}
+                        </div>
 
-                                <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.22)">
-                                    <div className="service-icon icon-green">🎨</div>
-                                    <h3>UI/UX Design</h3>
-                                    <p>User-centered design that looks stunning and converts visitors into customers. Figma designs, prototyping and implementation.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Wireframing & Prototyping</span>
-                                        <span className="service-feature">Figma Design Systems</span>
-                                        <span className="service-feature">User Research & Testing</span>
-                                        <span className="service-feature">Conversion Rate Optimization</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(251, 146, 60, 0.22)">
-                                    <div className="service-icon icon-orange">🔧</div>
-                                    <h3>Website Maintenance</h3>
-                                    <p>Keep your website secure, up-to-date and performing at peak level with our comprehensive maintenance and support plans.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Security Updates & Patches</span>
-                                        <span className="service-feature">Performance Optimization</span>
-                                        <span className="service-feature">Content Updates</span>
-                                        <span className="service-feature">99.9% Uptime Monitoring</span>
-                                    </div>
-                                </SpotlightCard>
-                            </div>
-
-                            {/* Verified Live Projects Callout */}
+                        {/* Verified Live Projects Callout (if available) */}
+                        {currentTab.callout && (
                             <div
-                                style={{
-                                    marginTop: "36px",
-                                    padding: "22px 28px",
-                                    background: "rgba(108, 99, 255, 0.08)",
-                                    border: "1px solid rgba(108, 99, 255, 0.3)",
-                                    borderRadius: "16px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                    flexWrap: "wrap",
-                                    gap: "16px",
-                                }}
+                                data-aos="fade-up"
+                                className="mt-10 rounded-[22px] border border-coffee/30 bg-[#DFDCD5] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_15px_35px_rgba(191,74,26,0.08)]"
                             >
                                 <div>
-                                    <div style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--text)", marginBottom: "4px" }}>
-                                        🚀 Live Client Work: Walk The Plan & House of Symmetry
-                                    </div>
-                                    <div style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
-                                        Check out live platforms engineered by Fitscalez: architectural projection tech & luxury design studios.
-                                    </div>
+                                    <h4 className="font-soldier text-xl md:text-2xl font-bold uppercase text-Primary mb-1">
+                                        {currentTab.callout.title}
+                                    </h4>
+                                    <p className="font-poppins text-xs sm:text-sm text-second/80">
+                                        {currentTab.callout.description}
+                                    </p>
                                 </div>
-                                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                                    <a
-                                        href="https://walktheplan.in"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="btn btn-outline btn-sm"
-                                    >
-                                        walktheplan.in ↗
-                                    </a>
-                                    <a
-                                        href="https://www.houseofsymmetry.in"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="btn btn-primary btn-sm"
-                                    >
-                                        houseofsymmetry.in ↗
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Tab 2: Digital Marketing */}
-                    {activeTab === "tab-marketing" && (
-                        <div id="tab-marketing" className="tab-content active">
-                            <div className="section-header">
-                                <span className="section-tag">Digital Marketing</span>
-                                <h2 className="section-title">
-                                    Grow Your <span className="gradient-text">Online Presence</span>
-                                </h2>
-                                <p className="section-desc">
-                                    Proven search engine optimization, laser-targeted advertising and social engagement.
-                                </p>
-                            </div>
-
-                            <div className="services-grid">
-                                <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.22)">
-                                    <div className="service-icon icon-green">🔍</div>
-                                    <h3>Search Engine Optimization (SEO)</h3>
-                                    <p>Rank #1 on Google with our proven SEO strategies. Comprehensive keyword research, technical SEO, content optimization and quality link building.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Keyword Research & Mapping</span>
-                                        <span className="service-feature">On-Page & Technical SEO</span>
-                                        <span className="service-feature">Authority Link Building</span>
-                                        <span className="service-feature">Local SEO for Delhi & India</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(255, 101, 132, 0.22)">
-                                    <div className="service-icon icon-pink">📱</div>
-                                    <h3>Social Media Marketing</h3>
-                                    <p>Build a powerful social media presence across Instagram, Facebook, LinkedIn and Twitter. Strategic content that drives real engagement and growth.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Content Strategy & Calendar</span>
-                                        <span className="service-feature">Daily/Weekly Posting</span>
-                                        <span className="service-feature">Community Management</span>
-                                        <span className="service-feature">Influencer Collaboration</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.22)">
-                                    <div className="service-icon icon-blue">💰</div>
-                                    <h3>Pay-Per-Click Advertising</h3>
-                                    <p>ROI-driven ad campaigns on Google, Facebook and Instagram. Every rupee optimized for maximum conversions and lowest cost-per-acquisition.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Google Search & Display Ads</span>
-                                        <span className="service-feature">Facebook & Instagram Ads</span>
-                                        <span className="service-feature">Remarketing Campaigns</span>
-                                        <span className="service-feature">A/B Testing & Optimization</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(239, 68, 68, 0.22)">
-                                    <div className="service-icon icon-red">📧</div>
-                                    <h3>Email Marketing</h3>
-                                    <p>Automated email campaigns that nurture leads and retain customers. Personalized sequences that deliver the right message at the right time.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Drip Campaign Design</span>
-                                        <span className="service-feature">List Segmentation</span>
-                                        <span className="service-feature">Newsletter Creation</span>
-                                        <span className="service-feature">Analytics & Reporting</span>
-                                    </div>
-                                </SpotlightCard>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Tab 3: Creative Services */}
-                    {activeTab === "tab-creative" && (
-                        <div id="tab-creative" className="tab-content active">
-                            <div className="section-header">
-                                <span className="section-tag">Creative Services</span>
-                                <h2 className="section-title">
-                                    Content That <span className="gradient-text">Captivates</span>
-                                </h2>
-                                <p className="section-desc">
-                                    High-impact visual production, video storytelling, and brand identity design.
-                                </p>
-                            </div>
-
-                            <div className="services-grid">
-                                <SpotlightCard className="service-card" spotlightColor="rgba(251, 146, 60, 0.22)">
-                                    <div className="service-icon icon-orange">🎬</div>
-                                    <h3>Video Production & Editing</h3>
-                                    <p>Professional video content that tells your brand story. From corporate films to viral social media reels — every frame crafted with precision.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Commercial Video Production</span>
-                                        <span className="service-feature">Instagram Reels & YouTube Shorts</span>
-                                        <span className="service-feature">Motion Graphics & Animation</span>
-                                        <span className="service-feature">Color Grading & Audio Mix</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(234, 179, 8, 0.22)">
-                                    <div className="service-icon icon-yellow">📸</div>
-                                    <h3>Product Photography</h3>
-                                    <p>High-quality product shoots that make your items irresistible. Studio and lifestyle photography for e-commerce, catalogs and marketing.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">E-commerce Product Shoots</span>
-                                        <span className="service-feature">Lifestyle Photography</span>
-                                        <span className="service-feature">360° Product Views</span>
-                                        <span className="service-feature">Professional Photo Editing</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.22)">
-                                    <div className="service-icon icon-purple">✍️</div>
-                                    <h3>Content Writing & Copywriting</h3>
-                                    <p>Compelling content that ranks on Google and converts readers into customers. SEO-optimized articles, landing page copy and brand storytelling.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">SEO Blog Articles</span>
-                                        <span className="service-feature">Website Copywriting</span>
-                                        <span className="service-feature">Product Descriptions</span>
-                                        <span className="service-feature">Social Media Captions</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(56, 249, 215, 0.22)">
-                                    <div className="service-icon icon-teal">🎨</div>
-                                    <h3>Brand Identity Design</h3>
-                                    <p>Complete brand identity that sets you apart — logo design, color palette, typography, brand guidelines and visual assets.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Logo Design & Variations</span>
-                                        <span className="service-feature">Brand Guidelines Manual</span>
-                                        <span className="service-feature">Business Card & Stationery</span>
-                                        <span className="service-feature">Social Media Branding Kit</span>
-                                    </div>
-                                </SpotlightCard>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Tab 4: Strategy */}
-                    {activeTab === "tab-strategy" && (
-                        <div id="tab-strategy" className="tab-content active">
-                            <div className="section-header">
-                                <span className="section-tag">Business Strategy</span>
-                                <h2 className="section-title">
-                                    Data-Driven <span className="gradient-text">Growth Plans</span>
-                                </h2>
-                                <p className="section-desc">
-                                    Deep competitor insights, intelligent automation, and sustainable revenue scaling.
-                                </p>
-                            </div>
-
-                            <div className="services-grid">
-                                <SpotlightCard className="service-card" spotlightColor="rgba(56, 189, 248, 0.22)">
-                                    <div className="service-icon icon-blue">📊</div>
-                                    <h3>Market Research & Intelligence</h3>
-                                    <p>Deep market analysis, competitor research and consumer insights that reveal untapped opportunities and inform smart business decisions.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Market Sizing & Analysis</span>
-                                        <span className="service-feature">Competitor Deep-Dive</span>
-                                        <span className="service-feature">Consumer Behavior Research</span>
-                                        <span className="service-feature">Opportunity Mapping</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(67, 233, 123, 0.22)">
-                                    <div className="service-icon icon-green">📈</div>
-                                    <h3>Growth Strategy Consulting</h3>
-                                    <p>Custom growth strategies and actionable roadmaps that help businesses scale sustainably — whether you're a startup or established enterprise.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Go-To-Market Strategy</span>
-                                        <span className="service-feature">Revenue Growth Planning</span>
-                                        <span className="service-feature">Partnership Development</span>
-                                        <span className="service-feature">Performance KPI Setup</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(108, 99, 255, 0.22)">
-                                    <div className="service-icon icon-purple">📱</div>
-                                    <h3>App Store Optimization (ASO)</h3>
-                                    <p>Maximize your mobile app's visibility, downloads and user retention with specialized ASO strategies for Google Play and Apple App Store.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">App Store Keyword Research</span>
-                                        <span className="service-feature">Listing Optimization</span>
-                                        <span className="service-feature">Rating & Review Strategy</span>
-                                        <span className="service-feature">User Acquisition Campaigns</span>
-                                    </div>
-                                </SpotlightCard>
-
-                                <SpotlightCard className="service-card" spotlightColor="rgba(255, 101, 132, 0.22)">
-                                    <div className="service-icon icon-pink">🤖</div>
-                                    <h3>Marketing Automation</h3>
-                                    <p>Set up powerful automation workflows that nurture leads, engage customers and drive revenue on autopilot 24/7.</p>
-                                    <div className="service-features">
-                                        <span className="service-feature">Lead Nurturing Sequences</span>
-                                        <span className="service-feature">CRM Integration</span>
-                                        <span className="service-feature">Chatbot Setup</span>
-                                        <span className="service-feature">Analytics Dashboard</span>
-                                    </div>
-                                </SpotlightCard>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </section>
-
-            {/* Pricing Section */}
-            <section className="section-padding" style={{ background: "var(--bg2)" }}>
-                <div className="container">
-                    <FadeIn className="section-header">
-                        <span className="section-tag">Pricing</span>
-                        <h2 className="section-title">
-                            Transparent & Simple <span className="gradient-text">Pricing</span>
-                        </h2>
-                        <p className="section-desc">
-                            No hidden costs. Choose a plan that fits your business needs, or contact us for a custom quote.
-                        </p>
-                    </FadeIn>
-
-                    <div className="pricing-grid">
-                        <SpotlightCard className="pricing-card" spotlightColor="rgba(255, 255, 255, 0.12)">
-                            <div className="pricing-tag">Starter</div>
-                            <div className="pricing-name">Business Website</div>
-                            <div className="pricing-price">
-                                <span className="price-amount">₹25K</span>
-                                <span className="price-period">one-time</span>
-                            </div>
-                            <p className="pricing-desc">Ideal for small businesses wanting a sleek, modern web presence that establishes credibility.</p>
-                            <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check">✓</span> 5-7 Custom Designed Pages</li>
-                                <li className="pricing-feature"><span className="check">✓</span> 100% Mobile Responsive</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Contact Form & WhatsApp Button</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Basic SEO & Google Maps</li>
-                                <li className="pricing-feature"><span className="check">✓</span> 1 Month Free Support</li>
-                            </ul>
-                            <Link to="/contact" className="btn btn-outline" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
-                                Get Started
-                            </Link>
-                        </SpotlightCard>
-
-                        <SpotlightCard className="pricing-card featured" spotlightColor="rgba(108, 99, 255, 0.28)" borderColor="rgba(108, 99, 255, 0.45)">
-                            <div className="popular-badge">🔥 Most Popular</div>
-                            <div className="pricing-name">Full-Stack MERN App</div>
-                            <div className="pricing-price">
-                                <span className="price-amount">₹49K</span>
-                                <span className="price-period">starting</span>
-                            </div>
-                            <p className="pricing-desc">For ambitious businesses needing full functionality — databases, auth, APIs, payments & admin panel.</p>
-                            <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check">✓</span> React Frontend + Node.js Backend</li>
-                                <li className="pricing-feature"><span className="check">✓</span> MongoDB Database Design</li>
-                                <li className="pricing-feature"><span className="check">✓</span> User Authentication & Roles</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Custom Admin Dashboard</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Payment Gateway Integration</li>
-                                <li className="pricing-feature"><span className="check">✓</span> 3 Months Free Support</li>
-                            </ul>
-                            <Link to="/contact" className="btn btn-primary" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
-                                Start Project →
-                            </Link>
-                        </SpotlightCard>
-
-                        <SpotlightCard className="pricing-card" spotlightColor="rgba(255, 255, 255, 0.12)">
-                            <div className="pricing-tag">Growth</div>
-                            <div className="pricing-name">Growth Marketing</div>
-                            <div className="pricing-price">
-                                <span className="price-amount">₹15K</span>
-                                <span className="price-period">/month</span>
-                            </div>
-                            <p className="pricing-desc">Comprehensive digital marketing retainer for businesses serious about continuous online growth.</p>
-                            <ul className="pricing-features">
-                                <li className="pricing-feature"><span className="check">✓</span> Social Media (3 Platforms)</li>
-                                <li className="pricing-feature"><span className="check">✓</span> 20 Posts / Month</li>
-                                <li className="pricing-feature"><span className="check">✓</span> SEO Optimization</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Monthly Analytics Report</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Dedicated Account Manager</li>
-                                <li className="pricing-feature"><span className="check">✓</span> Ad Campaign Management</li>
-                            </ul>
-                            <Link to="/contact" className="btn btn-outline" style={{ width: "100%", justifyContent: "center", borderRadius: "8px" }}>
-                                Get Started
-                            </Link>
-                        </SpotlightCard>
-                    </div>
-
-                    <p style={{ textAlign: "center", color: "var(--text-muted)", marginTop: "28px", fontSize: "0.9rem" }}>
-                        💬 Custom project? <a href="tel:+919599433616" style={{ color: "var(--primary-light)" }}>Call Divyansh: +91 9599433616</a> for a personalized quote.
-                    </p>
-                </div>
-            </section>
-
-            {/* FAQ Section */}
-            <section className="section-padding">
-                <div className="container" style={{ maxWidth: "800px" }}>
-                    <FadeIn className="section-header">
-                        <span className="section-tag">FAQ</span>
-                        <h2 className="section-title">
-                            Frequently Asked <span className="gradient-text">Questions</span>
-                        </h2>
-                    </FadeIn>
-
-                    <div className="faq-grid">
-                        {[
-                            {
-                                q: "How much does a website cost at Fitscalez?",
-                                a: "Our websites start from ₹25,000 for a basic business website. A full MERN Stack web application typically starts from ₹49,000. The final cost depends on features, complexity and timeline. Contact Divyansh at +91 9599433616 for a custom quote.",
-                            },
-                            {
-                                q: "How long does it take to build a website?",
-                                a: "A standard 5-7 page business website typically takes 2-3 weeks. A full-stack MERN application takes 4-8 weeks depending on features.",
-                            },
-                            {
-                                q: "Do you provide SEO services?",
-                                a: "Yes! We provide comprehensive SEO services including keyword research, on-page optimization, technical SEO, link building and monthly performance reporting. Clients typically see a 200-400% increase in organic traffic within 3-6 months.",
-                            },
-                            {
-                                q: "Do you work with clients outside Delhi?",
-                                a: "Absolutely! We work with clients across PAN-India and internationally with remote project management via video calls, email and WhatsApp.",
-                            },
-                            {
-                                q: "What technologies do you use?",
-                                a: "Our primary stack is MERN (MongoDB, Express.js, React.js, Node.js), HTML/CSS/JS, WordPress, Next.js, PostgreSQL and various payment APIs like Razorpay.",
-                            },
-                            {
-                                q: "Do you offer post-launch support?",
-                                a: "Yes! All projects include 1 month of free support after launch, followed by flexible maintenance plans starting from ₹3,000/month.",
-                            },
-                        ].map((faq, idx) => (
-                            <div
-                                key={idx}
-                                className={`faq-item ${openFaq === idx ? "open" : ""}`}
-                                style={{
-                                    borderRadius: "16px",
-                                    overflow: "hidden",
-                                    border: openFaq === idx ? "1px solid rgba(108, 99, 255, 0.45)" : "1px solid rgba(255, 255, 255, 0.08)",
-                                    transition: "border-color 0.3s ease, background 0.3s ease",
-                                    marginBottom: "14px",
-                                    background: openFaq === idx ? "rgba(24, 27, 40, 0.85)" : "rgba(18, 20, 29, 0.6)",
-                                    backdropFilter: "blur(16px)",
-                                }}
-                            >
-                                <button
-                                    type="button"
-                                    className="faq-question"
-                                    onClick={() => toggleFaq(idx)}
-                                    aria-expanded={openFaq === idx}
-                                    style={{
-                                        width: "100%",
-                                        textAlign: "left",
-                                        background: "none",
-                                        border: "none",
-                                        color: "inherit",
-                                        cursor: "pointer",
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                        padding: "20px 24px",
-                                        fontFamily: "inherit",
-                                    }}
-                                >
-                                    <span style={{ fontSize: "1.05rem", fontWeight: 600, paddingRight: "16px" }}>{faq.q}</span>
-                                    <motion.span
-                                        animate={{ rotate: openFaq === idx ? 180 : 0 }}
-                                        transition={{ duration: 0.25 }}
-                                        style={{ display: "inline-block", fontSize: "0.85rem", color: "var(--primary-light)", flexShrink: 0 }}
-                                    >
-                                        ▼
-                                    </motion.span>
-                                </button>
-                                <AnimatePresence initial={false}>
-                                    {openFaq === idx && (
-                                        <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: "auto", opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                                            style={{ overflow: "hidden" }}
+                                <div className="flex items-center gap-3 shrink-0 flex-wrap">
+                                    {currentTab.callout.links.map((link) => (
+                                        <a
+                                            key={link.label}
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-Primary/20 bg-brand text-Primary font-poppins text-xs sm:text-sm font-semibold transition-all duration-200 hover:bg-Primary hover:text-brand hover:border-Primary"
                                         >
-                                            <div style={{ padding: "0 24px 22px 24px", color: "var(--text-muted)", lineHeight: 1.7, fontSize: "0.95rem" }}>
-                                                <p style={{ margin: 0 }}>{faq.a}</p>
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+                                            {link.label}
+                                        </a>
+                                    ))}
+                                </div>
                             </div>
-                        ))}
+                        )}
                     </div>
                 </div>
-            </section>
 
-            {/* CTA Section */}
-            <section className="section-padding" style={{ background: "var(--bg2)" }}>
-                <div className="container">
-                    <FadeIn className="cta-section">
-                        <h2>
-                            Let's Build Something <span className="gradient-text">Great Together</span>
-                        </h2>
-                        <p>
-                            Ready to take your business to the next level? Contact us today for a free consultation and project quote.
+                {/* Transparent Pricing Section */}
+                <div id="Pricing" className="mt-[112px]">
+                    <div className="container">
+                        <div className="section-header" data-aos="fade-up">
+                            <span className="section-tag">TRANSPARENT PRICING</span>
+                            <h2 className="section-title">
+                                Simple & Predictable <span className="text-coffee">Pricing</span>
+                            </h2>
+                            <p className="section-desc">
+                                No hidden fees, no surprise invoices. Choose a plan that matches your business vision, or request a custom quote.
+                            </p>
+                        </div>
+
+                        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                            {pricingPlans.map((plan, idx) => (
+                                <div
+                                    key={plan.name}
+                                    data-aos="fade-up"
+                                    data-aos-delay={idx * 100}
+                                    className={`relative rounded-[28px] p-8 md:p-10 flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 ${
+                                        plan.featured
+                                            ? "bg-[#161616] text-[#E5E3DC] border-2 border-coffee shadow-[0_25px_60px_rgba(191,74,26,0.22)]"
+                                            : "bg-[#DFDCD5] text-Primary border border-Primary/12 shadow-[0_15px_35px_rgba(22,22,22,0.05)]"
+                                    }`}
+                                >
+                                    {/* Popular Badge */}
+                                    {plan.popularBadge && (
+                                        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-coffee px-4 py-1 font-poppins text-xs font-bold uppercase tracking-wider text-white shadow-md">
+                                            {plan.popularBadge}
+                                        </div>
+                                    )}
+
+                                    <div>
+                                        <div className="font-poppins text-xs font-bold uppercase tracking-widest text-coffee mb-2">
+                                            {plan.tag}
+                                        </div>
+                                        <h3
+                                            className={`font-soldier text-3xl font-bold uppercase mb-4 leading-tight ${
+                                                plan.featured ? "text-[#E5E3DC]" : "text-Primary"
+                                            }`}
+                                        >
+                                            {plan.name}
+                                        </h3>
+
+                                        <div className="flex items-baseline gap-2 mb-4">
+                                            <span className="font-soldier text-5xl font-bold text-coffee leading-none">
+                                                {plan.price}
+                                            </span>
+                                            <span
+                                                className={`font-poppins text-xs uppercase font-medium ${
+                                                    plan.featured ? "text-[#E5E3DC]/70" : "text-second/70"
+                                                }`}
+                                            >
+                                                {plan.period}
+                                            </span>
+                                        </div>
+
+                                        <p
+                                            className={`font-poppins text-xs sm:text-sm leading-relaxed mb-6 ${
+                                                plan.featured ? "text-[#E5E3DC]/80" : "text-second/80"
+                                            }`}
+                                        >
+                                            {plan.description}
+                                        </p>
+
+                                        {/* Features List */}
+                                        <div
+                                            className={`pt-6 border-t ${
+                                                plan.featured ? "border-white/10" : "border-Primary/10"
+                                            }`}
+                                        >
+                                            <ul className="flex flex-col gap-3 font-poppins text-xs sm:text-sm">
+                                                {plan.features.map((feat) => (
+                                                    <li key={feat} className="flex items-start gap-2.5">
+                                                        <span className="text-coffee font-bold mt-0.5">✓</span>
+                                                        <span
+                                                            className={
+                                                                plan.featured ? "text-[#E5E3DC]/90" : "text-second"
+                                                            }
+                                                        >
+                                                            {feat}
+                                                        </span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    {/* Action Button */}
+                                    <div className="mt-8 pt-6">
+                                        <Link
+                                            to="/contact"
+                                            className={`w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-full font-poppins text-sm font-semibold transition-all duration-300 ${
+                                                plan.featured
+                                                    ? "bg-gradient-to-r from-[#BF4A1A] via-[#D45D2B] to-[#E06D3B] text-white shadow-lg shadow-coffee/30 hover:scale-102 hover:shadow-coffee/50"
+                                                    : "bg-Primary text-brand hover:bg-coffee hover:text-white"
+                                            }`}
+                                        >
+                                            <span>{plan.btnLabel}</span>
+                                            <FiArrowRight className="text-base" />
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <p className="text-center font-poppins text-xs sm:text-sm text-second/80 mt-8" data-aos="fade-up">
+                            💬 Custom project requirements?{" "}
+                            <a
+                                href="tel:+919599433616"
+                                className="text-coffee font-semibold hover:underline"
+                            >
+                                Call Divyansh: +91 9599433616
+                            </a>{" "}
+                            for an exact milestone scope.
                         </p>
-                        <div className="cta-actions">
-                            <Link to="/contact" className="btn btn-primary">
-                                🚀 Start Your Project
-                            </Link>
-                            <a href="tel:+919599433616" className="btn btn-outline">
-                                📞 Call Now
-                            </a>
-                        </div>
-                        <div className="cta-contact-strip">
-                            <a href="tel:+919599433616">📞 +91 9599433616 (Divyansh)</a>
-                            <div className="divider"></div>
-                            <a href="https://wa.me/919599433616" target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
-                        </div>
-                    </FadeIn>
+                    </div>
                 </div>
+
+                {/* Interactive FAQ Section */}
+                <div id="FAQ" className="mt-[112px]">
+                    <div className="container max-w-4xl">
+                        <div className="section-header" data-aos="fade-up">
+                            <span className="section-tag">COMMON INQUIRIES</span>
+                            <h2 className="section-title">
+                                Frequently Asked <span className="text-coffee">Questions</span>
+                            </h2>
+                            <p className="section-desc">
+                                Transparent answers to the most common questions founders ask before partnering with Fitscalez.
+                            </p>
+                        </div>
+
+                        <div className="mt-10 flex flex-col gap-4">
+                            {faqs.map((faq, idx) => {
+                                const isOpen = openFaq === idx;
+
+                                return (
+                                    <div
+                                        key={faq.q}
+                                        data-aos="fade-up"
+                                        data-aos-delay={idx * 60}
+                                        className={`rounded-[20px] transition-all duration-300 overflow-hidden border ${
+                                            isOpen
+                                                ? "border-coffee bg-[#DFDCD5] shadow-[0_12px_30px_rgba(191,74,26,0.12)]"
+                                                : "border-Primary/12 bg-[#DFDCD5] hover:border-Primary/30"
+                                        }`}
+                                    >
+                                        <button
+                                            type="button"
+                                            onClick={() => toggleFaq(idx)}
+                                            aria-expanded={isOpen}
+                                            className="w-full p-6 text-left flex items-center justify-between gap-4 font-poppins font-semibold text-Primary text-sm sm:text-base cursor-pointer"
+                                        >
+                                            <span>{faq.q}</span>
+                                            <span
+                                                className={`w-8 h-8 rounded-full border border-Primary/15 flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                                                    isOpen
+                                                        ? "rotate-180 bg-coffee text-white border-coffee"
+                                                        : "text-Primary bg-brand"
+                                                }`}
+                                            >
+                                                <FiChevronDown className="text-base" />
+                                            </span>
+                                        </button>
+
+                                        <AnimatePresence initial={false}>
+                                            {isOpen && (
+                                                <motion.div
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: "auto", opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    transition={{ duration: 0.28, ease: "easeInOut" }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="px-6 pb-6 pt-1 font-poppins text-xs sm:text-sm text-second/85 leading-relaxed border-t border-Primary/10">
+                                                        <p>{faq.a}</p>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Unified CTA Section */}
+                <WorkTogetherCTA />
+
+                {/* Explore Work (Project Showcase) */}
+                <div className="pt-[60px]">
+                    <ExploreMyWork />
+                </div>
+
+                {/* Want To See Your Project Here CTA */}
+                <ProjectCtaSection />
             </section>
         </>
     );

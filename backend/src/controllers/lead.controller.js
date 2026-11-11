@@ -21,18 +21,21 @@ const createLead = asyncHandler(async (req, res) => {
         journey,
     } = req.body;
 
-    if (!name || !email || !phone || !service || !message) {
-        throw new ApiError(400, "Name, email, phone, service, and message are required fields");
+    if (!name || !email || !message) {
+        throw new ApiError(400, "Name, email, and message are required fields");
     }
 
+    const finalPhone = phone ? String(phone).trim() : "Not Provided";
+    const finalService = service ? String(service).trim() : "Web Development";
+
     const lead = await Lead.create({
-        name,
-        email,
-        phone,
+        name: String(name).trim(),
+        email: String(email).trim().toLowerCase(),
+        phone: finalPhone,
         company: company || "",
-        service,
+        service: finalService,
         budget: budget || "",
-        message,
+        message: String(message).trim(),
         source: source || "contact_page",
         deviceId: deviceId || "",
         visitCount: visitCount || 1,
